@@ -1,12 +1,12 @@
-#include "ktelephone.h"
 #include <QApplication>
+
+#include "ktelephone.h"
+#include "ktelephonemanager.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    ktelephone w;
-    w.show();
-
+    KTelephoneManager m;
     return app.exec();
 }
 

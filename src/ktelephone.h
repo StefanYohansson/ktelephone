@@ -3,20 +3,37 @@
 
 #include <QMainWindow>
 
+#include "ktelephonemanager.h"
+#include "ktelephonepreferences.h"
+
+class KTelephoneManager;
+
 namespace Ui {
-class ktelephone;
+  class ktelephone;
 }
 
-class ktelephone : public QMainWindow
+class KTelephone : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ktelephone(QWidget *parent = 0);
-    ~ktelephone();
+    explicit KTelephone(QWidget *parent = 0);
+    ~KTelephone();
+    void setManager(KTelephoneManager *manager);
+    void setTelephone(Telephone_t telephone);
+    KTelephoneManager* getManager();
+    Telephone_t mTelephone;
 
 private:
     Ui::ktelephone *ui;
+    KTelephonePreferences *preferences;
+
+ protected:
+    KTelephoneManager *mManager = NULL;
+
+public slots:
+    void actionPreferences();
+    void actionAbout();
 };
 
 #endif // KTELEPHONE_H
