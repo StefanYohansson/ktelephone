@@ -41,6 +41,16 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
   qDebug() << telephones;
 }
 
+void KTelephoneManager::updateKTelephone(Telephone_t telephone)
+{
+  mTelephone = telephones[telephone.domain];
+  mTelephone->setTelephone(telephone);
+  telephones[telephone.domain] = mTelephone;
+  this->updateTelephone(telephone);
+  mTelephone = NULL;
+  qDebug() << telephones;
+}
+
 QHash<QString, KTelephone*> KTelephoneManager::getTelephones()
 {
   return telephones;
@@ -107,6 +117,29 @@ void KTelephoneManager::saveTelephone(Telephone_t telephone)
 
   if (query.lastInsertId().canConvert(QMetaType::QString)) {
     telephone.id = query.lastInsertId().toString();
+  }
+}
+
+void KTelephoneManager::updateTelephone(Telephone_t telephone)
+{
+  if (telephone.id.isEmpty() || telephone.id.isNull()) {
+    qWarning() << "No id provided on update.";
+    return;
+  }
+
+  QSqlQuery query;
+  query.prepare("UPDATE telephones SET description=:description, name=:name, domain=:domain, username=:username, password=:password, active=:active WHERE id = :id");
+  query.bindValue(":description", telephone.description);
+  query.bindValue(":name", telephone.name);
+  query.bindValue(":domain", telephone.domain);
+  query.bindValue(":username", telephone.username);
+  query.bindValue(":password", telephone.password);
+  query.bindValue(":active", telephone.active);
+  query.bindValue(":id", telephone.id);
+
+  if(!query.exec()) {
+    qWarning() << "KTelephoneManager::updateTelephone - ERROR: " << query.lastError().text();
+    return;
   }
 }
 

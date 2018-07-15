@@ -2,6 +2,7 @@
 #define KTELEPHONEPREFERENCES_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 
 #include "ktelephone.h"
 
@@ -22,6 +23,12 @@ class KTelephonePreferences : public QDialog
 
  protected:
    QHash<QString, KTelephone*> mTelephones;
+   Telephone_t mTelephone;
+   KTelephone *mParent;
+
+ public slots:
+   void itemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+   void saveChanges();
    
 };
 

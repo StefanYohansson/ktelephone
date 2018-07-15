@@ -26,7 +26,9 @@ class KTelephoneManager
     ~KTelephoneManager();
 
     void newKTelephone(Telephone_t);
+    void updateKTelephone(Telephone_t);
     void saveTelephone(Telephone_t);
+    void updateTelephone(Telephone_t);
     QHash<QString, KTelephone*> getTelephones();
 
  protected:

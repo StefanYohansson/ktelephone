@@ -9,7 +9,7 @@ KTelephone::KTelephone(QWidget *parent) :
     ui(new Ui::ktelephone)
 {
   ui->setupUi(this);
-    
+
   connect(ui->actionPreferences,
           SIGNAL(triggered()), this,
           SLOT(actionPreferences()));
