@@ -7,7 +7,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Find the QtWidgets library
+
 find_package(Qt5 REQUIRED COMPONENTS Widgets Sql)
+include (FindPkgConfig)
+if (PKG_CONFIG_FOUND) # true if pkg-config works on the system
+  pkg_check_modules(PJSIP REQUIRED libpjproject)
+  include_directories(${PJSIP_INCLUDE_DIRS})
+endif()
 
 set(ktelephone_SRC
   src/main.cpp
@@ -15,6 +21,8 @@ set(ktelephone_SRC
   src/ktelephoneguide.cpp
   src/ktelephone.cpp
   src/ktelephonepreferences.cpp
+  src/ua.cpp
+  src/uamanager.cpp
 )
 
 # Create code from a list of Qt designer ui files.
@@ -26,6 +34,8 @@ add_executable(ktelephone ${ktelephone_SRC})
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(ktelephone Qt5::Widgets Qt5::Sql)
+
+target_link_libraries(ktelephone ${PJSIP_LIBRARIES})
 
 # Install the executable
 install(TARGETS ktelephone DESTINATION bin)
