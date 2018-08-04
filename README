@@ -1,6 +1,8 @@
 KTelephone
 ----------------------
 
+NOTE: this is a work in progress, currently it is not working as expected.
+
 You need Qt5 and CMake 2.8.11 or higher
 
 -- Build instructions --
