@@ -27,7 +27,7 @@ set(ktelephone_SRC
 
 # Create code from a list of Qt designer ui files.
 #set(CMAKE_AUTOUIC ON) # use this if you have CMake 3.x instead of the following
-qt5_wrap_ui(ktelephone_SRC src/ktelephone.ui src/startguide.ui src/settings.ui)
+qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/settings.ui)
 
 # Tell CMake to create the helloworld executable
 add_executable(ktelephone ${ktelephone_SRC})
