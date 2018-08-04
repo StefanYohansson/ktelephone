@@ -3,30 +3,34 @@
 #include <QDebug>
 #include <QString>
 
-int UserAgentManager::bootstrapManager()
+UserAgentManager::UserAgentManager()
 {
-  Endpoint ep;
-
-  ep.libCreate();
-
-  // Initialize endpoint
-  EpConfig ep_cfg;
-  ep.libInit( ep_cfg );
-
-  // Create SIP transport. Error handling sample is shown
-  TransportConfig tcfg;
-  tcfg.port = 5060;
   try {
-    ep.transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
+    Endpoint *ep = new Endpoint;
+    ep->libCreate();
+
+    // Initialize endpoint
+    ep->libInit( ep_cfg );
+
+    // Create SIP transport. Error handling sample is shown
+    tcfg.port = 5060;
+
+    ep->transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
+
+    // Start the library (worker threads etc)
+    ep->libStart();
+
+    qDebug() << "*** PJSUA2 STARTED ***";
   } catch (Error &err) {
-    return 1;
+    qDebug() << "Error starting UserAgentManager";
+    return;
   }
+}
 
-  // Start the library (worker threads etc)
-  ep.libStart();
-  qDebug() << "*** PJSUA2 STARTED ***";
-
-  return 0;
+UserAgentManager::~UserAgentManager()
+{
+  //  ep->libDestroy();
+  //  delete ep;
 }
 
 AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
@@ -34,10 +38,31 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
   // Configure an AccountConfig
   AccountConfig acfg;
   QString sip = "sip:";
-  acfg.idUri = (sip.append(mTelephone.domain)).toUtf8().constData();
-  acfg.regConfig.registrarUri = (sip.append(mTelephone.domain.split('@').takeLast())).toUtf8().constData();
+  QString sipUri = QString();
+  acfg.idUri = sipUri.append(sip).append(mTelephone.domain).toStdString();
+  QString domain = QString();
+  domain.append(sip);
+  if (!mTelephone.domain.split('@').isEmpty()) {
+    domain.append(mTelephone.domain.split('@').takeLast());
+  }
+  acfg.regConfig.registrarUri = domain.toStdString();
 
-  AuthCredInfo cred("digest", "*", mTelephone.username.toUtf8().constData(), 0, mTelephone.password.toUtf8().constData());
+  AuthCredInfo cred("digest", "*", mTelephone.username.toStdString(), 0, mTelephone.password.toStdString());
   acfg.sipConfig.authCreds.push_back( cred );
   return acfg;
+}
+
+void UserAgentManager::newUserAgent(QString domain, AccountConfig acfg)
+{
+  UserAgent *acc = new UserAgent;
+  acc->create(acfg);
+  mAccounts[domain] = acc;
+}
+
+void UserAgentManager::removeUserAgent(QString domain)
+{
+  if (mAccounts.contains(domain)) {
+    delete mAccounts.value(domain);
+    mAccounts.remove(domain);
+  }
 }

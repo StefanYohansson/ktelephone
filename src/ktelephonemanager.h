@@ -19,6 +19,10 @@ struct Telephone {
 
 typedef struct Telephone Telephone_t;
 
+#include "uamanager.h"
+
+class UserAgentManager;
+
 class KTelephoneManager
 {
  public:
@@ -30,15 +34,18 @@ class KTelephoneManager
     void saveTelephone(Telephone_t);
     void updateTelephone(Telephone_t);
     QHash<QString, KTelephone*> getTelephones();
+    UserAgentManager *getUserAgentManager();
 
  protected:
     QHash<QString, KTelephone*> telephones;
     KTelephone *mTelephone = NULL;
     KTelephoneGuide *mGuide = NULL;
+    UserAgentManager *mUAManager = NULL;
     void startGuide();
     void connectDatabase();
     void bootstrapDatabase();
     void loadFromDatabase();
+    void unloadKTelephones();
 };
 
 #endif // KTELEPHONEMANAGER_H

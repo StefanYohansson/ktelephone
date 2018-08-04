@@ -13,6 +13,7 @@ KTelephoneManager::KTelephoneManager()
 {
   this->connectDatabase();
   this->bootstrapDatabase();
+  mUAManager = new UserAgentManager;
   this->loadFromDatabase();
   if (!telephones.keys().length()) {
     this->startGuide();
@@ -22,12 +23,22 @@ KTelephoneManager::KTelephoneManager()
 
 KTelephoneManager::~KTelephoneManager()
 {
+  this->unloadKTelephones();
+
   if (mTelephone) {
     delete mTelephone;
   }
   if (mGuide) {
     delete mGuide;
   }
+  if (mUAManager) {
+    delete mUAManager;
+  }
+}
+
+UserAgentManager* KTelephoneManager::getUserAgentManager()
+{
+  return mUAManager;
 }
 
 void KTelephoneManager::newKTelephone(Telephone_t telephone)
@@ -35,8 +46,13 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
   mTelephone = new KTelephone();
   mTelephone->setManager(this);
   mTelephone->setTelephone(telephone);
-  mTelephone->show();
   telephones[telephone.domain] = mTelephone;
+  if (telephone.active == 1) {
+    mTelephone->show();
+    AccountConfig acfg = mUAManager->getAccountConfig(telephone);
+    mUAManager->newUserAgent(telephone.domain,
+                             acfg);
+  }
   mTelephone = NULL;
   qDebug() << telephones;
 }
@@ -49,6 +65,12 @@ void KTelephoneManager::updateKTelephone(Telephone_t telephone)
   this->updateTelephone(telephone);
   mTelephone = NULL;
   qDebug() << telephones;
+
+  mUAManager->removeUserAgent(telephone.domain);
+  if (telephone.active == 1) {
+    mUAManager->newUserAgent(telephone.domain,
+                             mUAManager->getAccountConfig(telephone));
+  }
 }
 
 QHash<QString, KTelephone*> KTelephoneManager::getTelephones()
@@ -96,6 +118,14 @@ void KTelephoneManager::loadFromDatabase()
     };
 
     this->newKTelephone(telephone);
+  }
+}
+
+void KTelephoneManager::unloadKTelephones()
+{
+  const QHash<QString, KTelephone*> telephones = this->getTelephones();
+  foreach( QString item, telephones.keys() ) {
+    mUAManager->removeUserAgent(item);
   }
 }
 

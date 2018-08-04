@@ -10,6 +10,8 @@ KTelephone::KTelephone(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  this->setAttribute(Qt::WA_DeleteOnClose);
+
   connect(ui->actionPreferences,
           SIGNAL(triggered()), this,
           SLOT(actionPreferences()));
@@ -20,6 +22,7 @@ KTelephone::KTelephone(QWidget *parent) :
 
 KTelephone::~KTelephone()
 {
+  mManager->getUserAgentManager()->removeUserAgent(mTelephone.domain);
   delete ui;
 }
 
@@ -36,6 +39,16 @@ KTelephoneManager* KTelephone::getManager()
 void KTelephone::setTelephone(Telephone_t telephone)
 {
   mTelephone = telephone;
+  QString title = QString("");
+  title.append(mTelephone.username);
+  if (!mTelephone.description.isEmpty()) {
+    title.append(QString(" - "));
+    title.append(mTelephone.description);
+  } else {
+    title.append(QString(" - "));
+    title.append(mTelephone.domain);
+  }
+  this->setWindowTitle(title);
 }
 
 void KTelephone::actionPreferences()

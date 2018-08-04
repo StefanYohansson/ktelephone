@@ -9,16 +9,22 @@
 
 using namespace pj;
 
+class KTelephoneManager;
+
 class UserAgentManager
 {
  public:
-  int bootstrapManager();
+  UserAgentManager();
+  ~UserAgentManager();
   AccountConfig getAccountConfig(Telephone_t mTelephone);
   void newUserAgent(QString domain, AccountConfig acfg);
-  void removeUserAgent(QString);
+  void removeUserAgent(QString domain);
 
  protected:
-  QHash<QString, UserAgent*> accounts;
+  QHash<QString, UserAgent*> mAccounts;
+  Endpoint *ep;
+  EpConfig ep_cfg;
+  TransportConfig tcfg;
   
 };
 
