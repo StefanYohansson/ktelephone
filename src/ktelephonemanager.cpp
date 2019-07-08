@@ -57,16 +57,16 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
   qDebug() << telephones;
 }
 
-void KTelephoneManager::updateKTelephone(Telephone_t telephone)
+void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephone)
 {
-  mTelephone = telephones[telephone.domain];
+  mTelephone = telephones[oldDomain];
   mTelephone->setTelephone(telephone);
   telephones[telephone.domain] = mTelephone;
   this->updateTelephone(telephone);
   mTelephone = NULL;
   qDebug() << telephones;
 
-  mUAManager->removeUserAgent(telephone.domain);
+  mUAManager->removeUserAgent(oldDomain);
   if (telephone.active == 1) {
     mUAManager->newUserAgent(telephone.domain,
                              mUAManager->getAccountConfig(telephone));

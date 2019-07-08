@@ -22,7 +22,7 @@ KTelephonePreferences::KTelephonePreferences(KTelephone *parent) :
   if (!mParent->getManager()) {
     return;
   }
-  
+
   mTelephones = mParent->getManager()->getTelephones();
 
   foreach( QString item, mTelephones.keys() ) {
@@ -65,7 +65,7 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 void KTelephonePreferences::saveChanges()
 {
   const bool shouldUpdateInstance = mTelephone.active != ui->activeCheckbox->checkState();
-
+  const QString oldDomain = mTelephone.domain;
   mTelephone.description = ui->descriptionEdit->text();
   mTelephone.name = ui->nameEdit->text();
   mTelephone.username = ui->usernameEdit->text();
@@ -84,7 +84,8 @@ void KTelephonePreferences::saveChanges()
   ui->usernameEdit->setEnabled(shouldEnableInputs);
   ui->passwordEdit->setEnabled(shouldEnableInputs);
 
-  mParent->getManager()->updateKTelephone(mTelephone);
+  mParent->getManager()->updateKTelephone(oldDomain, mTelephone);
+  mTelephones = mParent->getManager()->getTelephones();
 
   if (shouldUpdateInstance && mTelephone.active) {
     mTelephones.value(mTelephone.domain)->show();

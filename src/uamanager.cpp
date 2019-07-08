@@ -61,13 +61,19 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
 void UserAgentManager::newUserAgent(QString domain, AccountConfig acfg)
 {
   UserAgent *acc = new UserAgent;
-  acc->create(acfg);
-  mAccounts[domain] = acc;
+  try {
+    acc->create(acfg);
+    mAccounts[domain] = acc;
+  } catch(Error& err) {
+    qDebug() << "Account creation error";
+    delete acc;
+  }
 }
 
 void UserAgentManager::removeUserAgent(QString domain)
 {
   if (mAccounts.contains(domain)) {
+    // delete Account in order to unregister
     delete mAccounts.value(domain);
     mAccounts.remove(domain);
   }
