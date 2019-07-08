@@ -1,0 +1,5 @@
+version: '3'
+services:
+  telephony:
+    build: .
+    network_mode: 'host'
