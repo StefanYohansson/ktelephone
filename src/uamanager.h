@@ -19,13 +19,14 @@ class UserAgentManager
   AccountConfig getAccountConfig(Telephone_t mTelephone);
   void newUserAgent(QString domain, AccountConfig acfg);
   void removeUserAgent(QString domain);
+  void start(int port);
 
  protected:
   QHash<QString, UserAgent*> mAccounts;
   Endpoint *ep;
   EpConfig ep_cfg;
   TransportConfig tcfg;
-  
+
 };
 
 #endif // KTELEPHONEUAMANAGER_H

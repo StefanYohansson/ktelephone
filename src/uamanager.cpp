@@ -5,15 +5,26 @@
 
 UserAgentManager::UserAgentManager()
 {
+  Endpoint *ep = new Endpoint;
+  ep->libCreate();
+
+  // Initialize endpoint
+  ep->libInit( ep_cfg );
+
+  this->start(5060);
+}
+
+UserAgentManager::~UserAgentManager()
+{
+  //  ep->libDestroy();
+  //  delete ep;
+}
+
+void UserAgentManager::start(int port)
+{
   try {
-    Endpoint *ep = new Endpoint;
-    ep->libCreate();
-
-    // Initialize endpoint
-    ep->libInit( ep_cfg );
-
     // Create SIP transport. Error handling sample is shown
-    tcfg.port = 5060;
+    tcfg.port = port;
 
     ep->transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
 
@@ -23,14 +34,9 @@ UserAgentManager::UserAgentManager()
     qDebug() << "*** PJSUA2 STARTED ***";
   } catch (Error &err) {
     qDebug() << "Error starting UserAgentManager";
+    this->start(port+1);
     return;
   }
-}
-
-UserAgentManager::~UserAgentManager()
-{
-  //  ep->libDestroy();
-  //  delete ep;
 }
 
 AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
