@@ -12,6 +12,9 @@ KTelephone::KTelephone(QWidget *parent) :
 
   this->setAttribute(Qt::WA_DeleteOnClose);
 
+  statusLabel = new QLabel(this);
+  ui->statusBar->addPermanentWidget(statusLabel);
+
   connect(ui->actionPreferences,
           SIGNAL(triggered()), this,
           SLOT(actionPreferences()));
@@ -34,6 +37,11 @@ void KTelephone::setManager(KTelephoneManager *manager)
 KTelephoneManager* KTelephone::getManager()
 {
   return mManager;
+}
+
+void KTelephone::statusMessage(QString message)
+{
+  statusLabel->setText(message);
 }
 
 void KTelephone::setTelephone(Telephone_t telephone)

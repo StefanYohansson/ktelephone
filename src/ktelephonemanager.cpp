@@ -52,6 +52,7 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
     AccountConfig acfg = mUAManager->getAccountConfig(telephone);
     mUAManager->newUserAgent(telephone.domain,
                              acfg);
+    mTelephone->statusMessage("Registering...");
   }
   mTelephone = NULL;
   qDebug() << telephones;
@@ -70,6 +71,7 @@ void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephon
   if (telephone.active == 1) {
     mUAManager->newUserAgent(telephone.domain,
                              mUAManager->getAccountConfig(telephone));
+    mTelephone->statusMessage("Registering...");
   }
 }
 
