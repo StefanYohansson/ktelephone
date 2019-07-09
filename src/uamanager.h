@@ -9,6 +9,7 @@
 
 using namespace pj;
 
+class UserAgent;
 class KTelephoneManager;
 
 class UserAgentManager
@@ -17,7 +18,7 @@ class UserAgentManager
   UserAgentManager();
   ~UserAgentManager();
   AccountConfig getAccountConfig(Telephone_t mTelephone);
-  void newUserAgent(QString domain, AccountConfig acfg);
+  void newUserAgent(KTelephone* telephone, QString domain, AccountConfig acfg);
   void removeUserAgent(QString domain);
   void start(int port);
 

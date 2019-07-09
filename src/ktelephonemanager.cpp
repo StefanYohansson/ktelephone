@@ -50,7 +50,8 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
   if (telephone.active == 1) {
     mTelephone->show();
     AccountConfig acfg = mUAManager->getAccountConfig(telephone);
-    mUAManager->newUserAgent(telephone.domain,
+    mUAManager->newUserAgent(mTelephone,
+                             telephone.domain,
                              acfg);
     mTelephone->statusMessage("Registering...");
   }
@@ -64,15 +65,16 @@ void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephon
   mTelephone->setTelephone(telephone);
   telephones[telephone.domain] = mTelephone;
   this->updateTelephone(telephone);
-  mTelephone = NULL;
   qDebug() << telephones;
 
   mUAManager->removeUserAgent(oldDomain);
   if (telephone.active == 1) {
-    mUAManager->newUserAgent(telephone.domain,
+    mUAManager->newUserAgent(mTelephone,
+                             telephone.domain,
                              mUAManager->getAccountConfig(telephone));
     mTelephone->statusMessage("Registering...");
   }
+  mTelephone = NULL;
 }
 
 QHash<QString, KTelephone*> KTelephoneManager::getTelephones()

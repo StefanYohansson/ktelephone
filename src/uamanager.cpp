@@ -62,10 +62,11 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
   return acfg;
 }
 
-void UserAgentManager::newUserAgent(QString domain, AccountConfig acfg)
+void UserAgentManager::newUserAgent(KTelephone* telephone, QString domain, AccountConfig acfg)
 {
   UserAgent *acc = new UserAgent;
   try {
+    acc->setInstance(telephone);
     acc->create(acfg);
     mAccounts[domain] = acc;
   } catch(Error& err) {
