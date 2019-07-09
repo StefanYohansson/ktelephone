@@ -45,15 +45,19 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
   AccountConfig acfg;
   QString sip = "sip:";
   QString sipUri = QString();
-  acfg.idUri = sipUri.append(sip).append(mTelephone.domain).toStdString();
+  acfg.idUri = sipUri.append(sip).append(mTelephone.username).toStdString();
+  QString username = QString();
   QString domain = QString();
   domain.append(sip);
-  if (!mTelephone.domain.split('@').isEmpty()) {
-    domain.append(mTelephone.domain.split('@').takeLast());
+  if (!mTelephone.username.split('@').isEmpty()) {
+    domain.append(mTelephone.username.split('@').takeLast());
+    username.append(mTelephone.username.split('@').takeFirst());
+  } else {
+    username.append(mTelephone.username);
   }
   acfg.regConfig.registrarUri = domain.toStdString();
 
-  AuthCredInfo cred("digest", "*", mTelephone.username.toStdString(), 0, mTelephone.password.toStdString());
+  AuthCredInfo cred("digest", "*",  username.toStdString(), 0, mTelephone.password.toStdString());
   acfg.sipConfig.authCreds.push_back( cred );
   return acfg;
 }
