@@ -83,3 +83,10 @@ void UserAgentManager::removeUserAgent(QString domain)
     mAccounts.remove(domain);
   }
 }
+
+void UserAgentManager::setRegister(QString domain, bool status)
+{
+  if(mAccounts[domain]) {
+    mAccounts[domain]->setRegistration(status);
+  }
+}

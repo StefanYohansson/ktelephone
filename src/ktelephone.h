@@ -23,6 +23,7 @@ public:
     void setManager(KTelephoneManager *manager);
     void setTelephone(Telephone_t telephone);
     void statusMessage(QString);
+    void changeRegistrationStatus(bool status);
     KTelephoneManager* getManager();
     Telephone_t mTelephone;
     QLabel* statusLabel;
@@ -37,6 +38,7 @@ private:
 public slots:
     void actionPreferences();
     void actionAbout();
+    void changeStatus(int index);
 };
 
 #endif // KTELEPHONE_H

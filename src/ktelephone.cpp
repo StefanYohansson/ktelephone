@@ -21,6 +21,9 @@ KTelephone::KTelephone(QWidget *parent) :
   connect(ui->actionAbout,
           SIGNAL(triggered()), this,
           SLOT(actionAbout()));
+  connect(ui->statusComboBox,
+          SIGNAL(currentIndexChanged(int)), this,
+          SLOT(changeStatus(int)));
 }
 
 KTelephone::~KTelephone()
@@ -37,6 +40,22 @@ void KTelephone::setManager(KTelephoneManager *manager)
 KTelephoneManager* KTelephone::getManager()
 {
   return mManager;
+}
+
+void KTelephone::changeRegistrationStatus(bool status)
+{
+  disconnect(ui->statusComboBox,
+             SIGNAL(currentIndexChanged(int)), 0, 0);
+  if (status) {
+    statusLabel->setText("Registered");
+    ui->statusComboBox->setCurrentIndex(0);
+  } else {
+    statusLabel->setText("Unregistered");
+    ui->statusComboBox->setCurrentIndex(1);
+  }
+  connect(ui->statusComboBox,
+          SIGNAL(currentIndexChanged(int)), this,
+          SLOT(changeStatus(int)));
 }
 
 void KTelephone::statusMessage(QString message)
@@ -68,4 +87,16 @@ void KTelephone::actionPreferences()
 void KTelephone::actionAbout()
 {
   qDebug() << "about";
+}
+
+void KTelephone::changeStatus(int index)
+{
+  switch (index) {
+    case 0:
+      mManager->getUserAgentManager()->setRegister(mTelephone.domain, true);
+      break;
+    case 1:
+      mManager->getUserAgentManager()->setRegister(mTelephone.domain, false);
+      break;
+  }
 }

@@ -5,7 +5,7 @@
 void UserAgent::onRegState(OnRegStateParam &prm)
 {
   AccountInfo ai = getInfo();
-  ai.regIsActive ? this->mTelephone->statusMessage("Registered") : this->mTelephone->statusMessage("Unregistered");
+  ai.regIsActive ? this->mTelephone->changeRegistrationStatus(true) : this->mTelephone->changeRegistrationStatus(false);
   qDebug() << (ai.regIsActive? "*** Register:" : "*** Unregister:")
             << " code=" << prm.code;
 }

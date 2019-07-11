@@ -20,6 +20,7 @@ class UserAgentManager
   AccountConfig getAccountConfig(Telephone_t mTelephone);
   void newUserAgent(KTelephone* telephone, QString domain, AccountConfig acfg);
   void removeUserAgent(QString domain);
+  void setRegister(QString domain, bool status);
   void start(int port);
 
  protected:
