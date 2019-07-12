@@ -11,7 +11,7 @@ UserAgentManager::UserAgentManager()
   // Initialize endpoint
   ep->libInit( ep_cfg );
 
-  this->start(5060);
+  this->start(5090);
 }
 
 UserAgentManager::~UserAgentManager()
