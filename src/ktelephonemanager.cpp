@@ -63,6 +63,9 @@ void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephon
 {
   mTelephone = telephones[oldDomain];
   mTelephone->setTelephone(telephone);
+  if (QString::compare(telephone.domain, oldDomain)) {
+    telephones.remove(oldDomain);
+  }
   telephones[telephone.domain] = mTelephone;
   this->updateTelephone(telephone);
   qDebug() << telephones;
@@ -74,6 +77,14 @@ void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephon
                              mUAManager->getAccountConfig(telephone));
     mTelephone->statusMessage("Registering...");
   }
+  mTelephone = NULL;
+}
+
+void KTelephoneManager::removeKTelephone(Telephone_t telephone)
+{
+  telephones.remove(telephone.domain);
+  mUAManager->removeUserAgent(telephone.domain);
+  qDebug() << telephones;
   mTelephone = NULL;
 }
 
@@ -133,16 +144,16 @@ void KTelephoneManager::unloadKTelephones()
   }
 }
 
-void KTelephoneManager::saveTelephone(Telephone_t telephone)
+void KTelephoneManager::saveTelephone(Telephone_t* telephone)
 {
   QSqlQuery query;
   query.prepare("INSERT INTO telephones (description, name, domain, username, password, active) VALUES (:description, :name, :domain, :username, :password, :active)");
-  query.bindValue(":description", telephone.description);
-  query.bindValue(":name", telephone.name);
-  query.bindValue(":domain", telephone.domain);
-  query.bindValue(":username", telephone.username);
-  query.bindValue(":password", telephone.password);
-  query.bindValue(":active", telephone.active);
+  query.bindValue(":description", telephone->description);
+  query.bindValue(":name", telephone->name);
+  query.bindValue(":domain", telephone->domain);
+  query.bindValue(":username", telephone->username);
+  query.bindValue(":password", telephone->password);
+  query.bindValue(":active", telephone->active);
 
   if(!query.exec()) {
     qWarning() << "KTelephoneManager::saveTelephone - ERROR: " << query.lastError().text();
@@ -150,7 +161,7 @@ void KTelephoneManager::saveTelephone(Telephone_t telephone)
   }
 
   if (query.lastInsertId().canConvert(QMetaType::QString)) {
-    telephone.id = query.lastInsertId().toString();
+    telephone->id = query.lastInsertId().toString();
   }
 }
 
@@ -171,8 +182,27 @@ void KTelephoneManager::updateTelephone(Telephone_t telephone)
   query.bindValue(":active", telephone.active);
   query.bindValue(":id", telephone.id);
 
+  qDebug() << telephone.id;
+
   if(!query.exec()) {
     qWarning() << "KTelephoneManager::updateTelephone - ERROR: " << query.lastError().text();
+    return;
+  }
+}
+
+void KTelephoneManager::deleteTelephone(Telephone_t telephone)
+{
+  if (telephone.id.isEmpty() || telephone.id.isNull()) {
+    qWarning() << "No id provided on delete.";
+    return;
+  }
+
+  QSqlQuery query;
+  query.prepare("DELETE FROM telephones WHERE id = :id");
+  query.bindValue(":id", telephone.id);
+
+  if(!query.exec()) {
+    qWarning() << "KTelephoneManager::deleteTelephone - ERROR: " << query.lastError().text();
     return;
   }
 }

@@ -13,6 +13,12 @@ KTelephonePreferences::KTelephonePreferences(KTelephone *parent) :
   connect(ui->telephonesList,
           SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)), this,
           SLOT(itemChanged(QListWidgetItem*, QListWidgetItem*)));
+  connect(ui->addButton,
+          SIGNAL(clicked()), this,
+          SLOT(newItem()));
+  connect(ui->removeButton,
+          SIGNAL(clicked()), this,
+          SLOT(removeItem()));
   connect(ui->saveButton,
           SIGNAL(released()), this,
           SLOT(saveChanges()));
@@ -60,6 +66,8 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
   ui->passwordEdit->setText(mTelephone.password);
   ui->passwordEdit->setEnabled(shouldEnableInputs);
   ui->activeCheckbox->setChecked(mTelephone.active);
+
+  currentTelephone = current;
 }
 
 void KTelephonePreferences::saveChanges()
@@ -87,9 +95,49 @@ void KTelephonePreferences::saveChanges()
   mParent->getManager()->updateKTelephone(oldDomain, mTelephone);
   mTelephones = mParent->getManager()->getTelephones();
 
+  if (currentTelephone) {
+    currentTelephone->setText(mTelephone.domain);
+    ui->telephonesList->editItem(currentTelephone);
+  }
+
   if (shouldUpdateInstance && mTelephone.active) {
     mTelephones.value(mTelephone.domain)->show();
   } else if (shouldUpdateInstance && !mTelephone.active) {
     mTelephones.value(mTelephone.domain)->hide();
   }
+}
+
+void KTelephonePreferences::newItem()
+{
+  Telephone_t telephone {
+    QString("0"),
+    QString("dummy"),
+    QString("dummy"),
+    QString("dummy@0.0.0.0"),
+    QString("dummy"),
+    QString("dummypass"),
+    0 // active
+  };
+
+  mParent->getManager()->saveTelephone(&telephone);
+  mParent->getManager()->newKTelephone(telephone);
+  ui->telephonesList->addItem(telephone.domain);
+  mTelephones = mParent->getManager()->getTelephones();
+}
+
+void KTelephonePreferences::removeItem()
+{
+  if (!currentTelephone || !mTelephones.contains(currentTelephone->text())) {
+    qDebug() << "No item selected";
+    return;
+  }
+
+  const KTelephone *item = mTelephones.value(currentTelephone->text());
+  mTelephone = item->mTelephone;
+
+  mParent->getManager()->deleteTelephone(mTelephone);
+  mParent->getManager()->removeKTelephone(mTelephone);
+  delete ui->telephonesList->takeItem(ui->telephonesList->row(currentTelephone));
+
+  currentTelephone = NULL;
 }

@@ -45,7 +45,7 @@ void KTelephoneGuide::accept()
     1
   };
 
-  mManager->saveTelephone(telephone);
+  mManager->saveTelephone(&telephone);
   mManager->newKTelephone(telephone);
   this->close();
 }
