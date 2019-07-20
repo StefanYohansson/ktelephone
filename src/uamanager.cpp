@@ -62,31 +62,31 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone)
   return acfg;
 }
 
-void UserAgentManager::newUserAgent(KTelephone* telephone, QString domain, AccountConfig acfg)
+void UserAgentManager::newUserAgent(KTelephone* telephone, QString username, AccountConfig acfg)
 {
   UserAgent *acc = new UserAgent;
   try {
     acc->setInstance(telephone);
     acc->create(acfg);
-    mAccounts[domain] = acc;
+    mAccounts[username] = acc;
   } catch(Error& err) {
     qDebug() << "Account creation error";
     delete acc;
   }
 }
 
-void UserAgentManager::removeUserAgent(QString domain)
+void UserAgentManager::removeUserAgent(QString username)
 {
-  if (mAccounts.contains(domain)) {
+  if (mAccounts.contains(username)) {
     // delete Account in order to unregister
-    delete mAccounts.value(domain);
-    mAccounts.remove(domain);
+    delete mAccounts.value(username);
+    mAccounts.remove(username);
   }
 }
 
-void UserAgentManager::setRegister(QString domain, bool status)
+void UserAgentManager::setRegister(QString username, bool status)
 {
-  if(mAccounts[domain]) {
-    mAccounts[domain]->setRegistration(status);
+  if(mAccounts[username]) {
+    mAccounts[username]->setRegistration(status);
   }
 }

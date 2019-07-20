@@ -46,12 +46,12 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
   mTelephone = new KTelephone();
   mTelephone->setManager(this);
   mTelephone->setTelephone(telephone);
-  telephones[telephone.domain] = mTelephone;
+  telephones[telephone.username] = mTelephone;
   if (telephone.active == 1) {
     mTelephone->show();
     AccountConfig acfg = mUAManager->getAccountConfig(telephone);
     mUAManager->newUserAgent(mTelephone,
-                             telephone.domain,
+                             telephone.username,
                              acfg);
     mTelephone->statusMessage("Registering...");
   }
@@ -59,21 +59,21 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone)
   qDebug() << telephones;
 }
 
-void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephone)
+void KTelephoneManager::updateKTelephone(QString oldUsername, Telephone_t telephone)
 {
-  mTelephone = telephones[oldDomain];
+  mTelephone = telephones[oldUsername];
   mTelephone->setTelephone(telephone);
-  if (QString::compare(telephone.domain, oldDomain)) {
-    telephones.remove(oldDomain);
+  if (QString::compare(telephone.username, oldUsername)) {
+    telephones.remove(oldUsername);
   }
-  telephones[telephone.domain] = mTelephone;
+  telephones[telephone.username] = mTelephone;
   this->updateTelephone(telephone);
   qDebug() << telephones;
 
-  mUAManager->removeUserAgent(oldDomain);
+  mUAManager->removeUserAgent(oldUsername);
   if (telephone.active == 1) {
     mUAManager->newUserAgent(mTelephone,
-                             telephone.domain,
+                             telephone.username,
                              mUAManager->getAccountConfig(telephone));
     mTelephone->statusMessage("Registering...");
   }
@@ -82,8 +82,8 @@ void KTelephoneManager::updateKTelephone(QString oldDomain, Telephone_t telephon
 
 void KTelephoneManager::removeKTelephone(Telephone_t telephone)
 {
-  telephones.remove(telephone.domain);
-  mUAManager->removeUserAgent(telephone.domain);
+  telephones.remove(telephone.username);
+  mUAManager->removeUserAgent(telephone.username);
   qDebug() << telephones;
   mTelephone = NULL;
 }

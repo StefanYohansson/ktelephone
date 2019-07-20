@@ -32,7 +32,7 @@ KTelephonePreferences::KTelephonePreferences(KTelephone *parent) :
   mTelephones = mParent->getManager()->getTelephones();
 
   foreach( QString item, mTelephones.keys() ) {
-    ui->telephonesList->addItem(mTelephones[item]->mTelephone.domain);
+    ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
   }
 }
 
@@ -73,7 +73,7 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 void KTelephonePreferences::saveChanges()
 {
   const bool shouldUpdateInstance = mTelephone.active != ui->activeCheckbox->checkState();
-  const QString oldDomain = mTelephone.domain;
+  const QString oldUsername = mTelephone.username;
   mTelephone.description = ui->descriptionEdit->text();
   mTelephone.name = ui->nameEdit->text();
   mTelephone.username = ui->usernameEdit->text();
@@ -92,18 +92,18 @@ void KTelephonePreferences::saveChanges()
   ui->usernameEdit->setEnabled(shouldEnableInputs);
   ui->passwordEdit->setEnabled(shouldEnableInputs);
 
-  mParent->getManager()->updateKTelephone(oldDomain, mTelephone);
+  mParent->getManager()->updateKTelephone(oldUsername, mTelephone);
   mTelephones = mParent->getManager()->getTelephones();
 
   if (currentTelephone) {
-    currentTelephone->setText(mTelephone.domain);
+    currentTelephone->setText(mTelephone.username);
     ui->telephonesList->editItem(currentTelephone);
   }
 
   if (shouldUpdateInstance && mTelephone.active) {
-    mTelephones.value(mTelephone.domain)->show();
+    mTelephones.value(mTelephone.username)->show();
   } else if (shouldUpdateInstance && !mTelephone.active) {
-    mTelephones.value(mTelephone.domain)->hide();
+    mTelephones.value(mTelephone.username)->hide();
   }
 }
 
@@ -113,15 +113,15 @@ void KTelephonePreferences::newItem()
     QString("0"),
     QString("dummy"),
     QString("dummy"),
+    QString("0.0.0.0"),
     QString("dummy@0.0.0.0"),
-    QString("dummy"),
     QString("dummypass"),
     0 // active
   };
 
   mParent->getManager()->saveTelephone(&telephone);
   mParent->getManager()->newKTelephone(telephone);
-  ui->telephonesList->addItem(telephone.domain);
+  ui->telephonesList->addItem(telephone.username);
   mTelephones = mParent->getManager()->getTelephones();
 }
 

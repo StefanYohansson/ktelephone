@@ -28,7 +28,7 @@ KTelephone::KTelephone(QWidget *parent) :
 
 KTelephone::~KTelephone()
 {
-  mManager->getUserAgentManager()->removeUserAgent(mTelephone.domain);
+  mManager->getUserAgentManager()->removeUserAgent(mTelephone.username);
   delete ui;
 }
 
@@ -71,9 +71,6 @@ void KTelephone::setTelephone(Telephone_t telephone)
   if (!mTelephone.description.isEmpty()) {
     title.append(QString(" - "));
     title.append(mTelephone.description);
-  } else {
-    title.append(QString(" - "));
-    title.append(mTelephone.domain);
   }
   this->setWindowTitle(title);
 }
@@ -93,10 +90,10 @@ void KTelephone::changeStatus(int index)
 {
   switch (index) {
     case 0:
-      mManager->getUserAgentManager()->setRegister(mTelephone.domain, true);
+      mManager->getUserAgentManager()->setRegister(mTelephone.username, true);
       break;
     case 1:
-      mManager->getUserAgentManager()->setRegister(mTelephone.domain, false);
+      mManager->getUserAgentManager()->setRegister(mTelephone.username, false);
       break;
   }
 }
