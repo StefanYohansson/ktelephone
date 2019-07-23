@@ -3,6 +3,12 @@ KTelephone
 
 NOTE: this is a work in progress, currently it is not working as expected.
 
+## Docker
+
+`docker-compose up`
+`docker-compose exec telephony fs_cli`
+
+
 You need Qt5 and CMake 2.8.11 or higher
 
 -- Build instructions --
