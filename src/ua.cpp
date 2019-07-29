@@ -10,6 +10,21 @@ void UserAgent::onRegState(OnRegStateParam &prm)
             << " code=" << prm.code;
 }
 
+void UserAgent::onIncomingCall(OnIncomingCallParam &iprm)
+{
+  qDebug() << "receiving a call";
+  Call *call = new MyCall(*this, iprm.callId);
+
+  // Just hangup for now
+  CallOpParam op;
+  op.statusCode = PJSIP_SC_BUSY_HERE;
+  call->hangup(op);
+  qDebug() << "hangup the call";
+
+  // And delete the call
+  delete call;
+}
+
 void UserAgent::setInstance(KTelephone* telephone)
 {
   this->mTelephone = telephone;
