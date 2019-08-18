@@ -91,8 +91,7 @@ void KTelephone::actionOutboundCall()
 
 void KTelephone::actionPreferences()
 {
-  preferences = new KTelephonePreferences(this);
-  preferences->show();
+  mManager->openPreferences();
 }
 
 void KTelephone::actionAbout()
