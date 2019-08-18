@@ -36,13 +36,12 @@ private:
  protected:
     KTelephoneManager *mManager = NULL;
 
-
-
  public slots:
     void actionPreferences();
     void actionAbout();
     void changeStatus(int index);
-    void actionNewCall(MyCall* call);
+    void actionInboundCall(MyCall* call);
+    void actionOutboundCall();
 };
 
 #endif // KTELEPHONE_H

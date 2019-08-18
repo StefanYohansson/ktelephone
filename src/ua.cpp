@@ -29,5 +29,5 @@ void UserAgent::onIncomingCall(OnIncomingCallParam &iprm)
 void UserAgent::setInstance(KTelephone* telephone)
 {
   this->mTelephone = telephone;
-  QObject::connect(this, SIGNAL(sNewCall(MyCall*)), this->mTelephone, SLOT(actionNewCall(MyCall*)));
+  QObject::connect(this, SIGNAL(sNewCall(MyCall*)), this->mTelephone, SLOT(actionInboundCall(MyCall*)));
 }

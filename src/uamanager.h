@@ -6,6 +6,7 @@
 #include <QHash>
 
 #include "ua.h"
+#include "mycall.h"
 #include "ktelephonemanager.h"
 
 using namespace pj;
@@ -23,6 +24,7 @@ class UserAgentManager : public QObject
   void newUserAgent(KTelephone* telephone, QString username, AccountConfig acfg);
   void removeUserAgent(QString domain);
   void setRegister(QString domain, bool status);
+  void placeCall(QString username, QString dest);
   void start(int port);
 
  protected:
