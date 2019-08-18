@@ -44,8 +44,8 @@ KTelephoneManager* KTelephone::getManager()
 
 void KTelephone::changeRegistrationStatus(bool status)
 {
-  static const char* statusNames[]  = { "Registered",
-                                        "Unregistered",
+  static const char* statusNames[]  = { "Unregistered",
+                                        "Registered",
                                         nullptr };
   disconnect(ui->statusComboBox,
              SIGNAL(currentIndexChanged(int)), 0, 0);
