@@ -2,7 +2,7 @@
 #define KTELEPHONEMYCALL_H
 
 #include <pjsua2.hpp>
-#include "call.h"
+#include "ktelephonecall.h"
 
 using namespace pj;
 

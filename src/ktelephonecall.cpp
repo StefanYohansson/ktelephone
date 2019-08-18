@@ -1,4 +1,4 @@
-#include "call.h"
+#include "ktelephonecall.h"
 
 #include "ui_call.h"
 #include <QDebug>

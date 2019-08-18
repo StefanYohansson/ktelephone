@@ -25,7 +25,7 @@ set(ktelephone_SRC
   src/mycall.cpp
   src/ua.cpp
   src/uamanager.cpp
-  src/call.cpp
+  src/ktelephonecall.cpp
 )
 
 # Create code from a list of Qt designer ui files.
