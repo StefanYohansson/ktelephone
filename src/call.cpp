@@ -38,10 +38,12 @@ void KTelephoneCall::callDestroy()
 
 void KTelephoneCall::actionAnswer()
 {
+  ui->answerButton->setEnabled(false);
   this->mCall->doAnswer();
 }
 
 void KTelephoneCall::actionHangup()
 {
   this->mCall->doHangup();
+  this->close();
 }

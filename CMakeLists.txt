@@ -12,6 +12,7 @@ find_package(Qt5 REQUIRED COMPONENTS Widgets Sql)
 include (FindPkgConfig)
 if (PKG_CONFIG_FOUND) # true if pkg-config works on the system
   pkg_check_modules(PJSIP REQUIRED libpjproject)
+  # pkg_check_modules(OPUS REQUIRED opus)
   include_directories(${PJSIP_INCLUDE_DIRS})
 endif()
 

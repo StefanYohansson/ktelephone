@@ -13,6 +13,13 @@ UserAgentManager::UserAgentManager(QObject *parent)
   ep->libInit( ep_cfg );
 
   this->start(5090);
+
+  // @TODO: import codec on CMake and remove this line
+  ep->codecSetPriority("opus/48000", 0);
+
+  for (auto c : ep->codecEnum()) {
+    qDebug() << " - " << QString::fromStdString(c->codecId) << " (priority: " << QString::fromStdString(std::to_string(static_cast<int>(c->priority))) << ")\n";
+  }
 }
 
 UserAgentManager::~UserAgentManager()
