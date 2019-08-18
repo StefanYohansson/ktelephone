@@ -75,6 +75,14 @@ void KTelephone::setTelephone(Telephone_t telephone)
   this->setWindowTitle(title);
 }
 
+void KTelephone::actionNewCall(MyCall* call)
+{
+  KTelephoneCall *dialog = new KTelephoneCall(this);
+  dialog->setInstance(call);
+  call->setInstance(dialog);
+  dialog->show();
+}
+
 void KTelephone::actionPreferences()
 {
   preferences = new KTelephonePreferences(this);

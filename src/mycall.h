@@ -1,10 +1,12 @@
 #ifndef KTELEPHONEMYCALL_H
 #define KTELEPHONEMYCALL_H
 
-#include "call.h"
 #include <pjsua2.hpp>
+#include "call.h"
 
 using namespace pj;
+
+class KTelephoneCall;
 
 class MyCall : public Call
 {
@@ -19,6 +21,10 @@ class MyCall : public Call
   virtual void onCallMediaState(OnCallMediaStateParam &prm);
 
   void setInstance(KTelephoneCall* telephoneCall);
+
+  void doAnswer();
+
+  void doHangup();
 
 protected:
   KTelephoneCall *mCall = NULL;

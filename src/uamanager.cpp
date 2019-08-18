@@ -3,7 +3,8 @@
 #include <QDebug>
 #include <QString>
 
-UserAgentManager::UserAgentManager()
+UserAgentManager::UserAgentManager(QObject *parent)
+  : QObject(parent)
 {
   Endpoint *ep = new Endpoint;
   ep->libCreate();

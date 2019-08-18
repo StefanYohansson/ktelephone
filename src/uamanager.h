@@ -1,6 +1,7 @@
 #ifndef KTELEPHONEUAMANAGER_H
 #define KTELEPHONEUAMANAGER_H
 
+#include <QObject>
 #include <pjsua2.hpp>
 #include <QHash>
 
@@ -12,10 +13,11 @@ using namespace pj;
 class UserAgent;
 class KTelephoneManager;
 
-class UserAgentManager
+class UserAgentManager : public QObject
 {
+  Q_OBJECT
  public:
-  UserAgentManager();
+  explicit UserAgentManager(QObject *parent = 0);
   ~UserAgentManager();
   AccountConfig getAccountConfig(Telephone_t mTelephone);
   void newUserAgent(KTelephone* telephone, QString username, AccountConfig acfg);

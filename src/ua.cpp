@@ -2,6 +2,15 @@
 
 #include <QDebug>
 
+UserAgent::UserAgent(QObject *parent)
+  : QObject(parent)
+{
+}
+
+UserAgent::~UserAgent()
+{
+}
+
 void UserAgent::onRegState(OnRegStateParam &prm)
 {
   AccountInfo ai = getInfo();
@@ -12,20 +21,13 @@ void UserAgent::onRegState(OnRegStateParam &prm)
 
 void UserAgent::onIncomingCall(OnIncomingCallParam &iprm)
 {
-  qDebug() << "receiving a call";
-  Call *call = new MyCall(*this, iprm.callId);
-
-  // Just hangup for now
-  CallOpParam op;
-  op.statusCode = PJSIP_SC_BUSY_HERE;
-  call->hangup(op);
-  qDebug() << "hangup the call";
-
-  // And delete the call
-  delete call;
+  MyCall *call = new MyCall(*this, iprm.callId);
+  emit sNewCall(call);
+  mCalls.insert(QString::fromStdString(std::to_string(iprm.callId)), call);
 }
 
 void UserAgent::setInstance(KTelephone* telephone)
 {
   this->mTelephone = telephone;
+  QObject::connect(this, SIGNAL(sNewCall(MyCall*)), this->mTelephone, SLOT(actionNewCall(MyCall*)));
 }

@@ -6,6 +6,7 @@
 
 #include "ktelephonemanager.h"
 #include "ktelephonepreferences.h"
+#include "mycall.h"
 
 class KTelephoneManager;
 
@@ -35,10 +36,13 @@ private:
  protected:
     KTelephoneManager *mManager = NULL;
 
-public slots:
+
+
+ public slots:
     void actionPreferences();
     void actionAbout();
     void changeStatus(int index);
+    void actionNewCall(MyCall* call);
 };
 
 #endif // KTELEPHONE_H

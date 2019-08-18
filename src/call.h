@@ -3,6 +3,10 @@
 
 #include <QDialog>
 
+class MyCall;
+
+#include "ktelephone.h"
+
 namespace Ui {
   class call;
 }
@@ -12,11 +16,18 @@ class KTelephoneCall : public QDialog
   Q_OBJECT
 
  public:
-   explicit KTelephoneCall(QWidget *parent = 0);
+   explicit KTelephoneCall(KTelephone *parent = 0);
    ~KTelephoneCall();
+   void setInstance(MyCall* telephoneCall);
+   void callDestroy();
 
  private:
    Ui::call *ui;
+   MyCall *mCall = NULL;
+
+ public slots:
+  void actionHangup();
+  void actionAnswer();
 
 };
 

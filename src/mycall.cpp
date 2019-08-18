@@ -8,6 +8,8 @@ void MyCall::onCallState(OnCallStateParam &prm)
     if (ci.state == PJSIP_INV_STATE_DISCONNECTED) {
         /* Schedule/Dispatch call deletion to another thread here */
         // del_call_scheduled = true;
+        if (this->mCall)
+          this->mCall->callDestroy();
     }
 }
 
@@ -25,6 +27,20 @@ void MyCall::onCallMediaState(OnCallMediaStateParam &prm)
             mgr.getCaptureDevMedia().startTransmit(*aud_med);
         }
     }
+}
+
+void MyCall::doAnswer()
+{
+  CallOpParam prm;
+  prm.statusCode = PJSIP_SC_OK;
+  this->answer(prm);
+}
+
+void MyCall::doHangup()
+{
+  CallOpParam prm;
+  prm.statusCode = PJSIP_SC_OK;
+  this->hangup(prm);
 }
 
 void MyCall::setInstance(KTelephoneCall* telephoneCall)

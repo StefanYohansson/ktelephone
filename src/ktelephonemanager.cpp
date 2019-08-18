@@ -9,11 +9,12 @@
 
 #include <QDebug>
 
-KTelephoneManager::KTelephoneManager()
+KTelephoneManager::KTelephoneManager(QWidget *parent) :
+    QWidget(parent)
 {
   this->connectDatabase();
   this->bootstrapDatabase();
-  mUAManager = new UserAgentManager;
+  mUAManager = new UserAgentManager(this);
   this->loadFromDatabase();
   if (!telephones.keys().length()) {
     this->startGuide();
