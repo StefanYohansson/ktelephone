@@ -64,10 +64,10 @@ void KTelephone::statusMessage(QString message)
 void KTelephone::setTelephone(Telephone_t telephone)
 {
   mTelephone = telephone;
-  QString title = QString("");
+  QString title = "";
   title.append(mTelephone.username);
   if (!mTelephone.description.isEmpty()) {
-    title.append(QString(" - "));
+    title.append(" - ");
     title.append(mTelephone.description);
   }
   this->setWindowTitle(title);
