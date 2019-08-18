@@ -100,11 +100,11 @@ void UserAgentManager::setRegister(QString username, bool status)
   }
 }
 
-void UserAgentManager::placeCall(QString username, QString dest)
+MyCall* UserAgentManager::placeCall(QString username, QString dest)
 {
   QString sip = "sip:";
   QString sipUri = QString();
-  Call *call = new MyCall(*mAccounts[username]);
+  MyCall *call = new MyCall(*mAccounts[username]);
   CallOpParam prm(true);
   sipUri.append(sip);
   sipUri.append(dest);
@@ -112,6 +112,7 @@ void UserAgentManager::placeCall(QString username, QString dest)
   sipUri.append(username.split('@').takeLast());
   try {
     call->makeCall(sipUri.toStdString(), prm);
+    return call;
   } catch(Error& err) {
     qDebug() << "Cannot place call";
   }

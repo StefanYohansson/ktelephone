@@ -24,7 +24,7 @@ class UserAgentManager : public QObject
   void newUserAgent(KTelephone* telephone, QString username, AccountConfig acfg);
   void removeUserAgent(QString domain);
   void setRegister(QString domain, bool status);
-  void placeCall(QString username, QString dest);
+  MyCall* placeCall(QString username, QString dest);
   void start(int port);
 
  protected:

@@ -76,7 +76,7 @@ void KTelephone::setTelephone(Telephone_t telephone)
 
 void KTelephone::actionInboundCall(MyCall* call)
 {
-  KTelephoneCall *dialog = new KTelephoneCall(this);
+  KTelephoneCall *dialog = new KTelephoneCall(this, "inbound");
   dialog->setInstance(call);
   call->setInstance(dialog);
   dialog->show();
@@ -85,8 +85,13 @@ void KTelephone::actionInboundCall(MyCall* call)
 void KTelephone::actionOutboundCall()
 {
   const QString dest = ui->sipInput->text();
-  if (!dest.isEmpty())
-    mManager->getUserAgentManager()->placeCall(mTelephone.username, dest);
+  if (!dest.isEmpty()) {
+    MyCall* call = mManager->getUserAgentManager()->placeCall(mTelephone.username, dest);
+    KTelephoneCall *dialog = new KTelephoneCall(this, "outbound");
+    dialog->setInstance(call);
+    call->setInstance(dialog);
+    dialog->show();
+  }
 }
 
 void KTelephone::actionPreferences()
