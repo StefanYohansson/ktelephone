@@ -208,6 +208,17 @@ void KTelephoneManager::deleteTelephone(Telephone_t telephone)
   }
 }
 
+void KTelephoneManager::openPreferences(void) {
+  mPreferences = new KTelephonePreferences(this);
+  mPreferences->setManager(this);
+  mPreferences->show();
+}
+
+void KTelephoneManager::closePreferences() {
+  delete mPreferences;
+  mPreferences = NULL;
+}
+
 void KTelephoneManager::startGuide()
 {
   mGuide = new KTelephoneGuide();

@@ -9,6 +9,7 @@
 class KTelephone;
 class KTelephoneGuide;
 class KTelephoneCall;
+class KTelephonePreferences;
 
 struct Telephone {
   QString id;
@@ -42,10 +43,14 @@ class KTelephoneManager : public QWidget
     QHash<QString, KTelephone*> getTelephones();
     UserAgentManager *getUserAgentManager();
 
+    void openPreferences();
+    void closePreferences();
+
  protected:
     QHash<QString, KTelephone*> telephones;
     KTelephone *mTelephone = NULL;
     KTelephoneGuide *mGuide = NULL;
+    KTelephonePreferences *mPreferences = NULL;
     UserAgentManager *mUAManager = NULL;
     void startGuide();
     void connectDatabase();
