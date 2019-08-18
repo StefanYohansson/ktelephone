@@ -46,7 +46,7 @@ void KTelephonePreferences::setManager(KTelephoneManager *manager)
 
 void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
-  if (!mTelephones.contains(current->text())) {
+  if (!current || !mTelephones.contains(current->text())) {
     return;
   }
 
