@@ -34,6 +34,7 @@ void KTelephoneCall::callDestroy()
   if (this->mCall) {
     delete this->mCall;
   }
+  this->close();
 }
 
 void KTelephoneCall::actionAnswer()
