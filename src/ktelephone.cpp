@@ -44,15 +44,13 @@ KTelephoneManager* KTelephone::getManager()
 
 void KTelephone::changeRegistrationStatus(bool status)
 {
+  static const char* statusNames[]  = { "Registered",
+                                        "Unregistered",
+                                        nullptr };
   disconnect(ui->statusComboBox,
              SIGNAL(currentIndexChanged(int)), 0, 0);
-  if (status) {
-    statusLabel->setText("Registered");
-    ui->statusComboBox->setCurrentIndex(0);
-  } else {
-    statusLabel->setText("Unregistered");
-    ui->statusComboBox->setCurrentIndex(1);
-  }
+  statusMessage(statusNames[status]);
+  ui->statusComboBox->setCurrentIndex(!status);
   connect(ui->statusComboBox,
           SIGNAL(currentIndexChanged(int)), this,
           SLOT(changeStatus(int)));
