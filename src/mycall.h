@@ -23,6 +23,7 @@ class MyCall : public Call
   void setInstance(KTelephoneCall* telephoneCall);
 
   void doHold(bool);
+  void doMute(bool);
   void doAnswer();
   void doHangup();
 

@@ -57,6 +57,25 @@ void MyCall::doHold(bool hold)
   }
 }
 
+void MyCall::doMute(bool mute)
+{
+  CallInfo ci = getInfo();
+  // Iterate all the call medias
+  for (unsigned i = 0; i < ci.media.size(); i++) {
+      if (ci.media[i].type==PJMEDIA_TYPE_AUDIO && getMedia(i)) {
+          AudioMedia *aud_med = (AudioMedia *)getMedia(i);
+
+          // Connect the call audio media to sound device
+          AudDevManager& mgr = Endpoint::instance().audDevManager();
+          if (!mute) {
+            mgr.getCaptureDevMedia().stopTransmit(*aud_med);
+          } else {
+            mgr.getCaptureDevMedia().startTransmit(*aud_med);
+          }
+      }
+  }
+}
+
 void MyCall::setInstance(KTelephoneCall* telephoneCall)
 {
   this->mCall = telephoneCall;

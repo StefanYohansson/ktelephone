@@ -86,7 +86,13 @@ void KTelephoneCall::actionHold()
 
 void KTelephoneCall::actionMute()
 {
-
+  if (!this->mute) {
+    ui->muteButton->setText("Unmute");
+  } else {
+    ui->muteButton->setText("Mute");
+  }
+  this->mCall->doMute(this->mute);
+  this->mute = !this->mute;
 }
 
 void KTelephoneCall::actionTransfer()
