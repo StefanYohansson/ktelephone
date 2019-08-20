@@ -25,10 +25,15 @@ class KTelephoneCall : public QDialog
    Ui::call *ui;
    MyCall *mCall = NULL;
    QString callDirection;
+   bool hold = false;
+   bool mute = false;
 
  public slots:
   void actionHangup();
   void actionAnswer();
+  void actionMute();
+  void actionHold();
+  void actionTransfer();
 
 };
 

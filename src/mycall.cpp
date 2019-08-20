@@ -43,6 +43,20 @@ void MyCall::doHangup()
   this->hangup(prm);
 }
 
+void MyCall::doHold(bool hold)
+{
+  if (!hold) {
+    CallOpParam prm = new CallOpParam(hold);
+    this->setHold(prm);
+  } else {
+    CallOpParam prm = new CallOpParam();
+    prm.opt.audioCount = 1;
+    prm.opt.videoCount = 0;
+    prm.opt.flag = 1;
+    this->reinvite(prm);
+  }
+}
+
 void MyCall::setInstance(KTelephoneCall* telephoneCall)
 {
   this->mCall = telephoneCall;

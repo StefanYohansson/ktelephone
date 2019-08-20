@@ -18,6 +18,16 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction) :
           SIGNAL(clicked()), this,
           SLOT(actionHangup()));
 
+  connect(ui->muteButton,
+          SIGNAL(clicked()), this,
+          SLOT(actionMute()));
+  connect(ui->holdButton,
+          SIGNAL(clicked()), this,
+          SLOT(actionHold()));
+  connect(ui->transferButton,
+          SIGNAL(clicked()), this,
+          SLOT(actionTransfer()));
+
   if (callDirection == "outbound") {
     ui->answerButton->deleteLater();
   }
@@ -61,4 +71,25 @@ void KTelephoneCall::actionHangup()
 {
   this->mCall->doHangup();
   this->close();
+}
+
+void KTelephoneCall::actionHold()
+{
+  if (!this->hold) {
+    ui->holdButton->setText("Release");
+  } else {
+    ui->holdButton->setText("Hold");
+  }
+  this->mCall->doHold(this->hold);
+  this->hold = !this->hold;
+}
+
+void KTelephoneCall::actionMute()
+{
+
+}
+
+void KTelephoneCall::actionTransfer()
+{
+
 }
