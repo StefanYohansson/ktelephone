@@ -4,8 +4,8 @@
 
 #include <QDebug>
 
-KTelephonePreferences::KTelephonePreferences(KTelephone *parent) :
-    QDialog(),
+KTelephonePreferences::KTelephonePreferences(QWidget *parent) :
+    QMainWindow(),
     ui(new Ui::settings)
 {
   ui->setupUi(this);
@@ -22,18 +22,6 @@ KTelephonePreferences::KTelephonePreferences(KTelephone *parent) :
   connect(ui->saveButton,
           SIGNAL(released()), this,
           SLOT(saveChanges()));
-
-  mParent = parent;
-
-  if (!mParent->getManager()) {
-    return;
-  }
-
-  mTelephones = mParent->getManager()->getTelephones();
-
-  foreach( QString item, mTelephones.keys() ) {
-    ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
-  }
 }
 
 KTelephonePreferences::~KTelephonePreferences()
@@ -41,9 +29,24 @@ KTelephonePreferences::~KTelephonePreferences()
   delete ui;
 }
 
+void KTelephonePreferences::setManager(KTelephoneManager *manager)
+{
+  if (!mManager) {
+    return;
+  }
+
+  mManager = manager;
+
+  mTelephones = mManager->getTelephones();
+
+  foreach( QString item, mTelephones.keys() ) {
+    ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
+  }
+}
+
 void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
-  if (!mTelephones.contains(current->text())) {
+  if (!current || !mTelephones.contains(current->text())) {
     return;
   }
 
@@ -92,8 +95,8 @@ void KTelephonePreferences::saveChanges()
   ui->usernameEdit->setEnabled(shouldEnableInputs);
   ui->passwordEdit->setEnabled(shouldEnableInputs);
 
-  mParent->getManager()->updateKTelephone(oldUsername, mTelephone);
-  mTelephones = mParent->getManager()->getTelephones();
+  mManager->updateKTelephone(oldUsername, mTelephone);
+  mTelephones = mManager->getTelephones();
 
   if (currentTelephone) {
     currentTelephone->setText(mTelephone.username);
@@ -119,10 +122,10 @@ void KTelephonePreferences::newItem()
     0 // active
   };
 
-  mParent->getManager()->saveTelephone(&telephone);
-  mParent->getManager()->newKTelephone(telephone);
+  mManager->saveTelephone(&telephone);
+  mManager->newKTelephone(telephone);
   ui->telephonesList->addItem(telephone.username);
-  mTelephones = mParent->getManager()->getTelephones();
+  mTelephones = mManager->getTelephones();
 }
 
 void KTelephonePreferences::removeItem()
@@ -135,8 +138,8 @@ void KTelephonePreferences::removeItem()
   const KTelephone *item = mTelephones.value(currentTelephone->text());
   mTelephone = item->mTelephone;
 
-  mParent->getManager()->deleteTelephone(mTelephone);
-  mParent->getManager()->removeKTelephone(mTelephone);
+  mManager->deleteTelephone(mTelephone);
+  mManager->removeKTelephone(mTelephone);
   delete ui->telephonesList->takeItem(ui->telephonesList->row(currentTelephone));
 
   currentTelephone = NULL;

@@ -17,6 +17,12 @@ cd /your/ktelephone/build
 cmake ../
 make
 
+To compile for debugging, use
+
+cd /your/ktelephone/build
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+make
+
 ./ktelephone
 
 

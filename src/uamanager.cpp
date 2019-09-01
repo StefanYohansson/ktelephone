@@ -3,7 +3,8 @@
 #include <QDebug>
 #include <QString>
 
-UserAgentManager::UserAgentManager()
+UserAgentManager::UserAgentManager(QObject *parent)
+  : QObject(parent)
 {
   Endpoint *ep = new Endpoint;
   ep->libCreate();
@@ -12,6 +13,14 @@ UserAgentManager::UserAgentManager()
   ep->libInit( ep_cfg );
 
   this->start(5090);
+
+  // @TODO: import codec on CMake and remove this line
+  ep->codecSetPriority("opus/48000", 0);
+  ep->codecSetPriority("G722/16000", 131);
+
+  for (auto c : ep->codecEnum()) {
+    qDebug() << " - " << QString::fromStdString(c->codecId) << " (priority: " << QString::fromStdString(std::to_string(static_cast<int>(c->priority))) << ")\n";
+  }
 }
 
 UserAgentManager::~UserAgentManager()
@@ -88,5 +97,23 @@ void UserAgentManager::setRegister(QString username, bool status)
 {
   if(mAccounts[username]) {
     mAccounts[username]->setRegistration(status);
+  }
+}
+
+MyCall* UserAgentManager::placeCall(const QString& username, const QString& dest)
+{
+  QString sip = "sip:";
+  QString sipUri = QString();
+  MyCall *call = new MyCall(*mAccounts[username]);
+  CallOpParam prm(true);
+  sipUri.append(sip);
+  sipUri.append(dest);
+  sipUri.append('@');
+  sipUri.append(username.split('@').takeLast());
+  try {
+    call->makeCall(sipUri.toStdString(), prm);
+    return call;
+  } catch(Error& err) {
+    qDebug() << "Cannot place call";
   }
 }

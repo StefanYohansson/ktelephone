@@ -9,11 +9,12 @@
 
 #include <QDebug>
 
-KTelephoneManager::KTelephoneManager()
+KTelephoneManager::KTelephoneManager(QWidget *parent) :
+    QWidget(parent)
 {
   this->connectDatabase();
   this->bootstrapDatabase();
-  mUAManager = new UserAgentManager;
+  mUAManager = new UserAgentManager(this);
   this->loadFromDatabase();
   if (!telephones.keys().length()) {
     this->startGuide();
@@ -205,6 +206,17 @@ void KTelephoneManager::deleteTelephone(Telephone_t telephone)
     qWarning() << "KTelephoneManager::deleteTelephone - ERROR: " << query.lastError().text();
     return;
   }
+}
+
+void KTelephoneManager::openPreferences(void) {
+  mPreferences = new KTelephonePreferences(this);
+  mPreferences->setManager(this);
+  mPreferences->show();
+}
+
+void KTelephoneManager::closePreferences() {
+  delete mPreferences;
+  mPreferences = NULL;
 }
 
 void KTelephoneManager::startGuide()

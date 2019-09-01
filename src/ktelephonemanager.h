@@ -1,11 +1,15 @@
 #ifndef KTELEPHONEMANAGER_H
 #define KTELEPHONEMANAGER_H
 
+#include <QWidget>
+#include <QObject>
 #include <QHash>
 #include <QSqlDatabase>
 
 class KTelephone;
 class KTelephoneGuide;
+class KTelephoneCall;
+class KTelephonePreferences;
 
 struct Telephone {
   QString id;
@@ -23,11 +27,12 @@ typedef struct Telephone Telephone_t;
 
 class UserAgentManager;
 
-class KTelephoneManager
+class KTelephoneManager : public QWidget
 {
+  Q_OBJECT
  public:
-    explicit KTelephoneManager();
-    ~KTelephoneManager();
+   explicit KTelephoneManager(QWidget *parent = 0);
+   ~KTelephoneManager();
 
     void newKTelephone(Telephone_t);
     void updateKTelephone(QString, Telephone_t);
@@ -38,10 +43,14 @@ class KTelephoneManager
     QHash<QString, KTelephone*> getTelephones();
     UserAgentManager *getUserAgentManager();
 
+    void openPreferences();
+    void closePreferences();
+
  protected:
     QHash<QString, KTelephone*> telephones;
     KTelephone *mTelephone = NULL;
     KTelephoneGuide *mGuide = NULL;
+    KTelephonePreferences *mPreferences = NULL;
     UserAgentManager *mUAManager = NULL;
     void startGuide();
     void connectDatabase();

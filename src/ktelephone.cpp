@@ -24,6 +24,9 @@ KTelephone::KTelephone(QWidget *parent) :
   connect(ui->statusComboBox,
           SIGNAL(currentIndexChanged(int)), this,
           SLOT(changeStatus(int)));
+  connect(ui->sipInput,
+          SIGNAL(returnPressed()), this,
+          SLOT(actionOutboundCall()));
 }
 
 KTelephone::~KTelephone()
@@ -44,15 +47,13 @@ KTelephoneManager* KTelephone::getManager()
 
 void KTelephone::changeRegistrationStatus(bool status)
 {
+  static const char* statusNames[]  = { "Unregistered",
+                                        "Registered",
+                                        nullptr };
   disconnect(ui->statusComboBox,
              SIGNAL(currentIndexChanged(int)), 0, 0);
-  if (status) {
-    statusLabel->setText("Registered");
-    ui->statusComboBox->setCurrentIndex(0);
-  } else {
-    statusLabel->setText("Unregistered");
-    ui->statusComboBox->setCurrentIndex(1);
-  }
+  statusMessage(statusNames[status]);
+  ui->statusComboBox->setCurrentIndex(!status);
   connect(ui->statusComboBox,
           SIGNAL(currentIndexChanged(int)), this,
           SLOT(changeStatus(int)));
@@ -66,19 +67,38 @@ void KTelephone::statusMessage(QString message)
 void KTelephone::setTelephone(Telephone_t telephone)
 {
   mTelephone = telephone;
-  QString title = QString("");
+  QString title = "";
   title.append(mTelephone.username);
   if (!mTelephone.description.isEmpty()) {
-    title.append(QString(" - "));
+    title.append(" - ");
     title.append(mTelephone.description);
   }
   this->setWindowTitle(title);
 }
 
+void KTelephone::actionInboundCall(MyCall* call)
+{
+  KTelephoneCall *dialog = new KTelephoneCall(this, "inbound", mTelephone.username);
+  dialog->setInstance(call);
+  call->setInstance(dialog);
+  dialog->show();
+}
+
+void KTelephone::actionOutboundCall()
+{
+  const QString dest = ui->sipInput->text();
+  if (!dest.isEmpty()) {
+    MyCall* call = mManager->getUserAgentManager()->placeCall(mTelephone.username, dest);
+    KTelephoneCall *dialog = new KTelephoneCall(this, "outbound", mTelephone.username);
+    dialog->setInstance(call);
+    call->setInstance(dialog);
+    dialog->show();
+  }
+}
+
 void KTelephone::actionPreferences()
 {
-  preferences = new KTelephonePreferences(this);
-  preferences->show();
+  mManager->openPreferences();
 }
 
 void KTelephone::actionAbout()

@@ -6,17 +6,21 @@
 
 #include "ktelephone.h"
 
+class KTelephoneManager;
+
 namespace Ui {
   class settings;
 }
 
-class KTelephonePreferences : public QDialog
+class KTelephonePreferences : public QMainWindow
 {
   Q_OBJECT
 
  public:
-   explicit KTelephonePreferences(KTelephone *parent = 0);
+   explicit KTelephonePreferences(QWidget *parent = 0);
    ~KTelephonePreferences();
+
+   void setManager(KTelephoneManager *manager);
 
  private:
    Ui::settings *ui;
@@ -24,7 +28,7 @@ class KTelephonePreferences : public QDialog
  protected:
    QHash<QString, KTelephone*> mTelephones;
    Telephone_t mTelephone;
-   KTelephone *mParent;
+   KTelephoneManager *mManager;
    QListWidgetItem *currentTelephone;
 
  public slots:

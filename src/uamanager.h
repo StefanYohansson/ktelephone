@@ -1,10 +1,12 @@
 #ifndef KTELEPHONEUAMANAGER_H
 #define KTELEPHONEUAMANAGER_H
 
+#include <QObject>
 #include <pjsua2.hpp>
 #include <QHash>
 
 #include "ua.h"
+#include "mycall.h"
 #include "ktelephonemanager.h"
 
 using namespace pj;
@@ -12,15 +14,17 @@ using namespace pj;
 class UserAgent;
 class KTelephoneManager;
 
-class UserAgentManager
+class UserAgentManager : public QObject
 {
+  Q_OBJECT
  public:
-  UserAgentManager();
+  explicit UserAgentManager(QObject *parent = 0);
   ~UserAgentManager();
   AccountConfig getAccountConfig(Telephone_t mTelephone);
   void newUserAgent(KTelephone* telephone, QString username, AccountConfig acfg);
   void removeUserAgent(QString domain);
   void setRegister(QString domain, bool status);
+  MyCall* placeCall(const QString& username, const QString& dest);
   void start(int port);
 
  protected:
