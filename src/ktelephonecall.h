@@ -2,6 +2,7 @@
 #define CALL_H
 
 #include <QDialog>
+#include <QSound>
 
 class MyCall;
 
@@ -27,6 +28,8 @@ class KTelephoneCall : public QDialog
    MyCall *mCall = NULL;
    QString callDirection;
    QString calleeUsername;
+   QSound *inboundAudio = NULL;
+   QSound *outboundAudio = NULL;
    bool answered = false;
    bool hold = false;
    bool mute = false;
