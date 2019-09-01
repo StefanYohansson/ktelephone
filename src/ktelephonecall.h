@@ -20,6 +20,7 @@ class KTelephoneCall : public QDialog
    ~KTelephoneCall();
    void setInstance(MyCall* telephoneCall);
    void callDestroy();
+   void callbackAnswer();
 
  private:
    Ui::call *ui;

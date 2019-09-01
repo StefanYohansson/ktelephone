@@ -28,6 +28,10 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction) :
           SIGNAL(clicked()), this,
           SLOT(actionTransfer()));
 
+  ui->dtmfInput->hide();
+  ui->dtmfInput->hide();
+  ui->callAction->hide();
+
   if (callDirection == "outbound") {
     ui->answerButton->deleteLater();
   }
@@ -61,10 +65,19 @@ void KTelephoneCall::callDestroy()
   this->close();
 }
 
+void KTelephoneCall::callbackAnswer()
+{
+  ui->dtmfInput->show();
+  ui->callAction->show();
+}
+
 void KTelephoneCall::actionAnswer()
 {
   ui->answerButton->setEnabled(false);
   this->mCall->doAnswer();
+
+  ui->dtmfInput->show();
+  ui->callAction->show();
 }
 
 void KTelephoneCall::actionHangup()
