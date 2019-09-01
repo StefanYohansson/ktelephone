@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QLabel>
+#include <QShortcut>
 
 #include "ktelephonemanager.h"
 #include "ktelephonepreferences.h"

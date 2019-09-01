@@ -15,6 +15,11 @@ KTelephone::KTelephone(QWidget *parent) :
   statusLabel = new QLabel(this);
   ui->statusBar->addPermanentWidget(statusLabel);
 
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Comma), this,
+                SLOT(actionPreferences()));
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this,
+                SLOT(close()));
+
   connect(ui->actionPreferences,
           SIGNAL(triggered()), this,
           SLOT(actionPreferences()));
