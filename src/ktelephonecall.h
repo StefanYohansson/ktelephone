@@ -2,6 +2,7 @@
 #define CALL_H
 
 #include <QDialog>
+#include <QShortcut>
 
 class MyCall;
 
