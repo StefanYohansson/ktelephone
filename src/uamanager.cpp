@@ -100,7 +100,7 @@ void UserAgentManager::setRegister(QString username, bool status)
   }
 }
 
-MyCall* UserAgentManager::placeCall(QString username, QString dest)
+MyCall* UserAgentManager::placeCall(const QString& username, const QString& dest)
 {
   QString sip = "sip:";
   QString sipUri = QString();
