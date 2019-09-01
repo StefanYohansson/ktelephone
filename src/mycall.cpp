@@ -44,6 +44,26 @@ void MyCall::doHangup()
   this->hangup(prm);
 }
 
+void MyCall::doDtmf(QString digit)
+{
+  this->dialDtmf(digit.toStdString());
+}
+
+void MyCall::doTransfer(QString destination, QString callee)
+{
+  CallOpParam prm;
+
+  QString sip = "sip:";
+  QString sipUri = QString();
+
+  sipUri.append(sip);
+  sipUri.append(destination);
+  sipUri.append('@');
+  sipUri.append(callee.split('@').takeLast());
+
+  this->xfer(sipUri.toStdString(), prm);
+}
+
 void MyCall::doHold(bool hold)
 {
   if (!hold) {

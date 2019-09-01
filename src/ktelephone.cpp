@@ -24,7 +24,9 @@ KTelephone::KTelephone(QWidget *parent) :
   connect(ui->statusComboBox,
           SIGNAL(currentIndexChanged(int)), this,
           SLOT(changeStatus(int)));
-  connect(ui->sipInput, SIGNAL(returnPressed()), this, SLOT(actionOutboundCall()));
+  connect(ui->sipInput,
+          SIGNAL(returnPressed()), this,
+          SLOT(actionOutboundCall()));
 }
 
 KTelephone::~KTelephone()
@@ -76,7 +78,7 @@ void KTelephone::setTelephone(Telephone_t telephone)
 
 void KTelephone::actionInboundCall(MyCall* call)
 {
-  KTelephoneCall *dialog = new KTelephoneCall(this, "inbound");
+  KTelephoneCall *dialog = new KTelephoneCall(this, "inbound", mTelephone.username);
   dialog->setInstance(call);
   call->setInstance(dialog);
   dialog->show();
@@ -87,7 +89,7 @@ void KTelephone::actionOutboundCall()
   const QString dest = ui->sipInput->text();
   if (!dest.isEmpty()) {
     MyCall* call = mManager->getUserAgentManager()->placeCall(mTelephone.username, dest);
-    KTelephoneCall *dialog = new KTelephoneCall(this, "outbound");
+    KTelephoneCall *dialog = new KTelephoneCall(this, "outbound", mTelephone.username);
     dialog->setInstance(call);
     call->setInstance(dialog);
     dialog->show();

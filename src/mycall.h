@@ -24,6 +24,8 @@ class MyCall : public Call
 
   void doHold(bool);
   void doMute(bool);
+  void doDtmf(QString);
+  void doTransfer(QString, QString);
   void doAnswer();
   void doHangup();
 

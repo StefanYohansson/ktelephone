@@ -3,13 +3,14 @@
 #include "ui_call.h"
 #include <QDebug>
 
-KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction) :
+KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username) :
     QDialog(),
     ui(new Ui::call)
 {
   ui->setupUi(this);
 
-  callDirection = direction;
+  this->callDirection = direction;
+  this->calleeUsername = username;
 
   connect(ui->answerButton,
           SIGNAL(clicked()), this,
@@ -27,6 +28,9 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction) :
   connect(ui->transferButton,
           SIGNAL(clicked()), this,
           SLOT(actionTransfer()));
+  connect(ui->dtmfInput,
+          SIGNAL(textEdited(QString)), this,
+          SLOT(actionDtmf(QString)));
 
   ui->dtmfInput->hide();
   ui->dtmfInput->hide();
@@ -47,7 +51,7 @@ void KTelephoneCall::setInstance(MyCall* telephoneCall)
   this->mCall = telephoneCall;
   CallInfo ci = this->mCall->getInfo();
   QString whoLabel;
-  if (callDirection == "outbound") {
+  if (this->callDirection == "outbound") {
     whoLabel.append("To: ");
     whoLabel.append(QString::fromStdString(ci.remoteUri));
   } else {
@@ -69,6 +73,7 @@ void KTelephoneCall::callbackAnswer()
 {
   ui->dtmfInput->show();
   ui->callAction->show();
+  this->answered = true;
 }
 
 void KTelephoneCall::actionAnswer()
@@ -108,7 +113,22 @@ void KTelephoneCall::actionMute()
   this->mute = !this->mute;
 }
 
+void KTelephoneCall::actionDtmf(QString text)
+{
+  if (!this->answered
+      || this->previousDtmf.length() >= text.length()) {
+    this->previousDtmf = text;
+    return;
+  }
+  this->mCall->doDtmf(text.right(1));
+  this->previousDtmf = text;
+}
+
 void KTelephoneCall::actionTransfer()
 {
-
+  const QString destination = ui->dtmfInput->text();
+  if (destination.isEmpty()) {
+    return;
+  }
+  this->mCall->doTransfer(destination, this->calleeUsername);
 }
