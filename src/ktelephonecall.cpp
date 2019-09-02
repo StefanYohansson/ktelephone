@@ -65,9 +65,18 @@ void KTelephoneCall::setInstance(MyCall* telephoneCall)
   if (this->callDirection == "outbound") {
     whoLabel.append("To: ");
     whoLabel.append(QString::fromStdString(ci.remoteUri));
+    QSound* outboundAudio = new QSound("sounds/outbound-ring.wav");
+    outboundAudio->setLoops(QSound::Infinite);
+    outboundAudio->play();
+    this->outboundAudio = outboundAudio;
   } else {
+    // Ringing
     whoLabel.append("From: ");
     whoLabel.append(QString::fromStdString(ci.localContact));
+    QSound* inboundAudio = new QSound("sounds/inbound-ring.wav");
+    inboundAudio->setLoops(QSound::Infinite);
+    inboundAudio->play();
+    this->inboundAudio = inboundAudio;
   }
   ui->whoLabel->setText(whoLabel);
 }
@@ -85,6 +94,9 @@ void KTelephoneCall::callbackAnswer()
   ui->dtmfInput->show();
   ui->callAction->show();
   this->answered = true;
+  if (this->outboundAudio) {
+    this->outboundAudio->stop();
+  }
 }
 
 void KTelephoneCall::actionAnswer()
@@ -94,10 +106,19 @@ void KTelephoneCall::actionAnswer()
 
   ui->dtmfInput->show();
   ui->callAction->show();
+  if (this->inboundAudio) {
+    this->inboundAudio->stop();
+  }
 }
 
 void KTelephoneCall::actionHangup()
 {
+  if (this->outboundAudio) {
+    this->outboundAudio->stop();
+  }
+  if (this->inboundAudio) {
+    this->inboundAudio->stop();
+  }
   this->mCall->doHangup();
   this->close();
 }
