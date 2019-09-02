@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSound>
+#include <QShortcut>
 
 class MyCall;
 
