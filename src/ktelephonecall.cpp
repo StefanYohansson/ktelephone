@@ -12,6 +12,17 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
   this->callDirection = direction;
   this->calleeUsername = username;
 
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this,
+                SLOT(actionAnswer()));
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_W), this,
+                SLOT(actionHangup()));
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_H), this,
+                SLOT(actionHold()));
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_M), this,
+                SLOT(actionMute()));
+  new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this,
+                SLOT(actionTransfer()));
+
   connect(ui->answerButton,
           SIGNAL(clicked()), this,
           SLOT(actionAnswer()));
