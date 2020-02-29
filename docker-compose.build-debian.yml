@@ -1,0 +1,8 @@
+version: '3'
+services:
+  builderdebian:
+    build:
+        context: .
+        dockerfile: Dockerfile.debian
+    volumes:
+        - ./build:/build

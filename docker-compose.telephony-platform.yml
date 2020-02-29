@@ -1,0 +1,7 @@
+version: '3'
+services:
+  telephony:
+    build:
+        context: .
+        dockerfile: Dockerfile.telephony
+    network_mode: 'host'
