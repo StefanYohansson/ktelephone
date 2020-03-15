@@ -9,7 +9,14 @@ if you prefer to build using docker instead of use your local machine.
 
 ```
 $ mkdir build
-$ docker-compose -f docker-compose.build-debian.yml up
+$ docker build \
+    -t build \
+    -f Dockerfile.debian \
+    .
+$ docker create \
+    --name build \
+    build
+$ docker cp build:/usr/src/ktelephone/build/ktelephone ./build/ktelephone
 ```
 
 ### Telephony Platform
