@@ -17,10 +17,6 @@ UserAgentManager::UserAgentManager(QObject *parent)
   // @TODO: import codec on CMake and remove this line
   ep->codecSetPriority("opus/48000", 0);
   ep->codecSetPriority("G722/16000", 131);
-
-  for (auto c : ep->codecEnum()) {
-    qDebug() << " - " << QString::fromStdString(c->codecId) << " (priority: " << QString::fromStdString(std::to_string(static_cast<int>(c->priority))) << ")\n";
-  }
 }
 
 UserAgentManager::~UserAgentManager()
