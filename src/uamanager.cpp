@@ -108,8 +108,8 @@ MyCall* UserAgentManager::placeCall(const QString& username, const QString& dest
   sipUri.append(username.split('@').takeLast());
   try {
     call->makeCall(sipUri.toStdString(), prm);
-    return call;
   } catch(Error& err) {
     qDebug() << "Cannot place call";
   }
+  return call;
 }
