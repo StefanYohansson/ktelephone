@@ -7,11 +7,27 @@ KTelephone
 
 if you prefer to build using docker instead of use your local machine.
 
+1. Debian
+
 ```
 $ mkdir build
 $ docker build \
     -t build \
     -f Dockerfile.debian \
+    .
+$ docker create \
+    --name build \
+    build
+$ docker cp build:/usr/src/ktelephone/build/ktelephone ./build/ktelephone
+```
+
+2. Arch
+
+```
+$ mkdir build
+$ docker build \
+    -t build \
+    -f Dockerfile.arch \
     .
 $ docker create \
     --name build \
