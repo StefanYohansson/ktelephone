@@ -11,16 +11,19 @@ if (PKG_CONFIG_FOUND)
   include_directories(${PJSIP_INCLUDE_DIRS})
 endif()
 
+include_directories(src/telephony)
+include_directories(src/gui)
+
 set(ktelephone_SRC
   src/main.cpp
-  src/ktelephonemanager.cpp
-  src/ktelephoneguide.cpp
-  src/ktelephone.cpp
-  src/ktelephonepreferences.cpp
-  src/mycall.cpp
-  src/ua.cpp
-  src/uamanager.cpp
-  src/ktelephonecall.cpp
+  src/gui/ktelephonemanager.cpp
+  src/gui/ktelephoneguide.cpp
+  src/gui/ktelephone.cpp
+  src/gui/ktelephonepreferences.cpp
+  src/gui/ktelephonecall.cpp
+  src/telephony/mycall.cpp
+  src/telephony/ua.cpp
+  src/telephony/uamanager.cpp
 )
 
 qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/settings.ui src/ui/call.ui)
