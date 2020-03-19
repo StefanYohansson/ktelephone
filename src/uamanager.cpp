@@ -17,10 +17,6 @@ UserAgentManager::UserAgentManager(QObject *parent)
   // @TODO: import codec on CMake and remove this line
   ep->codecSetPriority("opus/48000", 0);
   ep->codecSetPriority("G722/16000", 131);
-
-  for (auto c : ep->codecEnum()) {
-    qDebug() << " - " << QString::fromStdString(c->codecId) << " (priority: " << QString::fromStdString(std::to_string(static_cast<int>(c->priority))) << ")\n";
-  }
 }
 
 UserAgentManager::~UserAgentManager()
@@ -112,8 +108,8 @@ MyCall* UserAgentManager::placeCall(const QString& username, const QString& dest
   sipUri.append(username.split('@').takeLast());
   try {
     call->makeCall(sipUri.toStdString(), prm);
-    return call;
   } catch(Error& err) {
     qDebug() << "Cannot place call";
   }
+  return call;
 }
