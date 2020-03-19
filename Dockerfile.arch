@@ -3,7 +3,7 @@ RUN echo '[alerque]' >> /etc/pacman.conf
 RUN echo 'Server = https://arch.alerque.com/$arch' >> /etc/pacman.conf
 RUN echo 'SigLevel = Never' >> /etc/pacman.conf
 RUN pacman -Syyu --noconfirm
-RUN pacman -S --noconfirm cmake gcc make libconfig qt5-base qt5-multimedia pjproject
+RUN pacman -S --noconfirm cmake pkgconf gcc make libconfig qt5-base qt5-multimedia pjproject bcg729
 ADD . /usr/src/ktelephone
 WORKDIR /usr/src/ktelephone
 RUN mkdir -p build/
