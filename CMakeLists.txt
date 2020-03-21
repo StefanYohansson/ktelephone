@@ -14,6 +14,8 @@ endif()
 include_directories(src/telephony)
 include_directories(src/gui)
 
+file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 set(ktelephone_SRC
   src/main.cpp
   src/gui/ktelephonemanager.cpp
