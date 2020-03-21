@@ -72,7 +72,11 @@ UserAgentManager* KTelephoneManager::getUserAgentManager()
 
 void KTelephoneManager::newKTelephone(Telephone_t telephone)
 {
-  mTelephone = new KTelephone();
+  if (telephones.contains(telephone.username)) {
+      mTelephone = telephones[telephone.username];
+  } else {
+      mTelephone = new KTelephone();
+  }
   mTelephone->setManager(this);
   mTelephone->setTelephone(telephone);
   telephones[telephone.username] = mTelephone;
