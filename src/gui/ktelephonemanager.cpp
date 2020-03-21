@@ -13,7 +13,7 @@ KTelephoneManager::KTelephoneManager(QWidget *parent) :
     QWidget(parent)
 {
   this->trayIcon = new QSystemTrayIcon(this);
-  this->trayIcon->setToolTip("Telephone");
+  this->trayIcon->setToolTip("KTelephone");
 
   this->trayIconMenu = new QMenu(this);
   const auto openAction = this->trayIconMenu->addAction(tr("Open"));
