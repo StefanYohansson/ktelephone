@@ -1,6 +1,9 @@
 KTelephone
 ----------------------
 
+![image](https://raw.githubusercontent.com/StefanYohansson/ktelephone/master/screenshots/ktelephone-kdeneon.png)
+
+
 ## Docker
 
 ### Build
