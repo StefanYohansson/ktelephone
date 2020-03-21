@@ -1,10 +1,13 @@
 #ifndef KTELEPHONEMANAGER_H
 #define KTELEPHONEMANAGER_H
 
+#include <QApplication>
 #include <QWidget>
 #include <QObject>
 #include <QHash>
 #include <QSqlDatabase>
+#include <QSystemTrayIcon>
+#include <QMenu>
 
 class KTelephone;
 class KTelephoneGuide;
@@ -45,6 +48,14 @@ class KTelephoneManager : public QWidget
 
     void openPreferences();
     void closePreferences();
+
+ private:
+    void bootstrap();
+    QSystemTrayIcon *trayIcon = NULL;
+    QMenu *trayIconMenu = NULL;
+
+ private slots:
+    void open();
 
  protected:
     QHash<QString, KTelephone*> telephones;

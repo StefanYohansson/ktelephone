@@ -36,7 +36,7 @@ KTelephone::KTelephone(QWidget *parent) :
 
 KTelephone::~KTelephone()
 {
-  mManager->getUserAgentManager()->removeUserAgent(mTelephone.username);
+  mManager->removeKTelephone(mTelephone);
   delete ui;
 }
 

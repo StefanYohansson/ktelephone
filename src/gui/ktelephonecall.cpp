@@ -65,7 +65,7 @@ void KTelephoneCall::setInstance(MyCall* telephoneCall)
   if (this->callDirection == "outbound") {
     whoLabel.append("To: ");
     whoLabel.append(QString::fromStdString(ci.remoteUri));
-    QSound* outboundAudio = new QSound("sounds/outbound-ring.wav");
+    QSound* outboundAudio = new QSound("data/sounds/outbound-ring.wav");
     outboundAudio->setLoops(QSound::Infinite);
     outboundAudio->play();
     this->outboundAudio = outboundAudio;
@@ -73,7 +73,7 @@ void KTelephoneCall::setInstance(MyCall* telephoneCall)
     // Ringing
     whoLabel.append("From: ");
     whoLabel.append(QString::fromStdString(ci.localContact));
-    QSound* inboundAudio = new QSound("sounds/inbound-ring.wav");
+    QSound* inboundAudio = new QSound("data/sounds/inbound-ring.wav");
     inboundAudio->setLoops(QSound::Infinite);
     inboundAudio->play();
     this->inboundAudio = inboundAudio;

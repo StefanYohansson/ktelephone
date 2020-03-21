@@ -12,14 +12,28 @@
 KTelephoneManager::KTelephoneManager(QWidget *parent) :
     QWidget(parent)
 {
+  this->trayIcon = new QSystemTrayIcon(this);
+  this->trayIcon->setToolTip("Telephone");
+
+  this->trayIconMenu = new QMenu(this);
+  const auto openAction = this->trayIconMenu->addAction(tr("Open"));
+  const auto exitAction = this->trayIconMenu->addAction(tr("Exit"));
+  this->trayIcon->setContextMenu(this->trayIconMenu);
+  this->trayIconMenu->show();
+
+  const auto appIcon = QIcon("data/ktelephone.png");
+  this->trayIcon->setIcon(appIcon);
+  this->setWindowIcon(appIcon);
+
+  connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
+  connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+  this->trayIcon->show();
+
   this->connectDatabase();
   this->bootstrapDatabase();
   mUAManager = new UserAgentManager(this);
-  this->loadFromDatabase();
-  if (!telephones.keys().length()) {
-    this->startGuide();
-    return;
-  }
+  this->bootstrap();
 }
 
 KTelephoneManager::~KTelephoneManager()
@@ -37,6 +51,20 @@ KTelephoneManager::~KTelephoneManager()
   }
 }
 
+void KTelephoneManager::bootstrap()
+{
+  this->loadFromDatabase();
+  if (!telephones.keys().length()) {
+    this->startGuide();
+    return;
+  }
+}
+
+void KTelephoneManager::open()
+{
+  this->bootstrap();
+}
+
 UserAgentManager* KTelephoneManager::getUserAgentManager()
 {
   return mUAManager;
@@ -44,7 +72,11 @@ UserAgentManager* KTelephoneManager::getUserAgentManager()
 
 void KTelephoneManager::newKTelephone(Telephone_t telephone)
 {
-  mTelephone = new KTelephone();
+  if (telephones.contains(telephone.username)) {
+      mTelephone = telephones[telephone.username];
+  } else {
+      mTelephone = new KTelephone();
+  }
   mTelephone->setManager(this);
   mTelephone->setTelephone(telephone);
   telephones[telephone.username] = mTelephone;
