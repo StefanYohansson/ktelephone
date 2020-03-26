@@ -2,6 +2,7 @@
 #include "ktelephone.h"
 #include "ui_ktelephone.h"
 
+#include <QApplication>
 #include <QDebug>
 
 KTelephone::KTelephone(QWidget *parent) :
@@ -84,6 +85,7 @@ void KTelephone::setTelephone(Telephone_t telephone)
 void KTelephone::actionInboundCall(MyCall* call)
 {
   KTelephoneCall *dialog = new KTelephoneCall(this, "inbound", mTelephone.username);
+  qApp->alert(this);
   dialog->setInstance(call);
   call->setInstance(dialog);
   dialog->show();
