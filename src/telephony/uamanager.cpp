@@ -15,8 +15,17 @@ UserAgentManager::UserAgentManager(QObject *parent)
   this->start(5090);
 
   // @TODO: import codec on CMake and remove this line
-  ep->codecSetPriority("opus/48000", 0);
-  ep->codecSetPriority("G722/16000", 131);
+  try {
+    ep->codecSetPriority("opus/48000", 0);
+  } catch(Error& err) {
+    qDebug() << "Cannot import opus codec";
+  }
+
+  try {
+    ep->codecSetPriority("G722/16000", 131);
+  } catch(Error& err) {
+    qDebug() << "Cannot import G722 codec";
+  }
 }
 
 UserAgentManager::~UserAgentManager()
