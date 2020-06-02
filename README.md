@@ -3,6 +3,11 @@ KTelephone
 
 ![image](https://raw.githubusercontent.com/StefanYohansson/ktelephone/master/screenshots/ktelephone-kdeneon.png)
 
+## Repositories
+
+### AUR
+
+- https://aur.archlinux.org/packages/ktelephone-git/ (special thanks to [Scrumplex](https://github.com/Scrumplex))
 
 ## Docker
 
