@@ -27,6 +27,8 @@ $ docker create \
     --name build \
     build
 $ docker cp build:/usr/src/ktelephone/build/ktelephone ./build/ktelephone
+$ docker cp build:/usr/src/ktelephone/build/data ./build/data
+$ (cd build && ./ktelephone)
 ```
 
 2. Arch
@@ -41,6 +43,8 @@ $ docker create \
     --name build \
     build
 $ docker cp build:/usr/src/ktelephone/build/ktelephone ./build/ktelephone
+$ docker cp build:/usr/src/ktelephone/build/data ./build/data
+$ (cd build && ./ktelephone)
 ```
 
 ### Telephony Platform
