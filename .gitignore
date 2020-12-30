@@ -1,4 +1,5 @@
 build/
 .kdev4/
+vpn
 ktelephone.kdev4
 *.db

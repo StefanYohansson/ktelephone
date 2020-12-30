@@ -1,0 +1,21 @@
+version: '3'
+services:
+  vpn-client:
+    container_name: vpn-client
+    image: ekristen/openvpn-client
+    stdin_open: true
+    tty: true
+    command: --config /vpn/client.ovpn --auth-nocache
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    volumes:
+      - "./vpn:/vpn"
+  telephony:
+    depends_on:
+        - vpn-client
+    build:
+        context: .
+        dockerfile: Dockerfile.telephony
+    network_mode: "service:vpn-client"
