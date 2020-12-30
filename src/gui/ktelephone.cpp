@@ -95,11 +95,19 @@ void KTelephone::actionOutboundCall()
 {
   const QString dest = ui->sipInput->text();
   if (!dest.isEmpty()) {
-    MyCall* call = mManager->getUserAgentManager()->placeCall(mTelephone.username, dest);
-    KTelephoneCall *dialog = new KTelephoneCall(this, "outbound", mTelephone.username);
-    dialog->setInstance(call);
-    call->setInstance(dialog);
-    dialog->show();
+      try {
+          MyCall* call = mManager->getUserAgentManager()->placeCall(mTelephone.username, dest);
+          if (call == NULL) {
+              return;
+          }
+
+          KTelephoneCall *dialog = new KTelephoneCall(this, "outbound", mTelephone.username);
+          dialog->setInstance(call);
+          call->setInstance(dialog);
+          dialog->show();
+      } catch(Error& err) {
+          qDebug() << "Cannot place call";
+      }
   }
 }
 
