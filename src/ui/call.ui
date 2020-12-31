@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>call</class>
- <widget class="QDialog" name="call">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>302</width>
-    <height>131</height>
-   </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="windowTitle">
-   <string>Call</string>
-  </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="whoLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="cancelButton">
-       <property name="text">
-        <string>Hangup</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="answerButton">
-       <property name="text">
-        <string>Answer</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="descLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLineEdit" name="dtmfInput"/>
-   </item>
-   <item row="5" column="0">
-    <widget class="QWidget" name="callAction" native="true">
-     <layout class="QHBoxLayout" name="callActions">
-      <item>
-       <widget class="QPushButton" name="muteButton">
-        <property name="text">
-         <string>Mute</string>
+    <class>call</class>
+    <widget class="QDialog" name="call">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>302</width>
+                <height>131</height>
+            </rect>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="holdButton">
-        <property name="text">
-         <string>Hold</string>
+        <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="transferButton">
-        <property name="text">
-         <string>Transfer</string>
+        <property name="windowTitle">
+            <string>Call</string>
         </property>
-       </widget>
-      </item>
-     </layout>
+        <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+                <widget class="QLabel" name="whoLabel">
+                    <property name="text">
+                        <string/>
+                    </property>
+                </widget>
+            </item>
+            <item row="4" column="0">
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
+                        <widget class="QPushButton" name="cancelButton">
+                            <property name="text">
+                                <string>Hangup</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QPushButton" name="answerButton">
+                            <property name="text">
+                                <string>Answer</string>
+                            </property>
+                        </widget>
+                    </item>
+                </layout>
+            </item>
+            <item row="2" column="0">
+                <widget class="QLabel" name="descLabel">
+                    <property name="text">
+                        <string/>
+                    </property>
+                </widget>
+            </item>
+            <item row="3" column="0">
+                <widget class="QLineEdit" name="dtmfInput"/>
+            </item>
+            <item row="5" column="0">
+                <widget class="QWidget" name="callAction" native="true">
+                    <layout class="QHBoxLayout" name="callActions">
+                        <item>
+                            <widget class="QPushButton" name="muteButton">
+                                <property name="text">
+                                    <string>Mute</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="holdButton">
+                                <property name="text">
+                                    <string>Hold</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="transferButton">
+                                <property name="text">
+                                    <string>Transfer</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+        </layout>
     </widget>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections/>
+    <resources/>
+    <connections/>
 </ui>

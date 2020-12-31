@@ -5,43 +5,54 @@
 #include <QLabel>
 #include <QShortcut>
 
-#include "ktelephonemanager.h"
-#include "ktelephonepreferences.h"
-#include "mycall.h"
+#include "ktelephonemanager.hpp"
+#include "ktelephonepreferences.hpp"
+#include "mycall.hpp"
 
 class KTelephoneManager;
 
 namespace Ui {
-  class ktelephone;
+    class ktelephone;
 }
 
-class KTelephone : public QMainWindow
-{
-    Q_OBJECT
+class KTelephone : public QMainWindow {
+Q_OBJECT
 
 public:
     explicit KTelephone(QWidget *parent = 0);
+
     ~KTelephone();
+
     void setManager(KTelephoneManager *manager);
+
     void setTelephone(Telephone_t telephone);
+
     void statusMessage(QString);
+
     void changeRegistrationStatus(bool status);
-    KTelephoneManager* getManager();
+
+    KTelephoneManager *getManager();
+
     Telephone_t mTelephone;
-    QLabel* statusLabel;
+    QLabel *statusLabel;
 
 private:
     Ui::ktelephone *ui;
     KTelephonePreferences *preferences;
 
- protected:
+protected:
     KTelephoneManager *mManager = NULL;
 
- public slots:
+public slots:
+
     void actionPreferences();
+
     void actionAbout();
+
     void changeStatus(int index);
-    void actionInboundCall(MyCall* call);
+
+    void actionInboundCall(MyCall *call);
+
     void actionOutboundCall();
 };
 

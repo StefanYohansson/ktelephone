@@ -1,10 +1,9 @@
 #include <QApplication>
 
-#include "ktelephone.h"
-#include "ktelephonemanager.h"
+#include "ktelephone.hpp"
+#include "ktelephonemanager.hpp"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     const auto appIcon = QIcon("data/ktelephone.png");
     app.setWindowIcon(appIcon);
