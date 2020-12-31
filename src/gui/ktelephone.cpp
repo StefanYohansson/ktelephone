@@ -97,6 +97,7 @@ void KTelephone::actionOutboundCall() {
             call->setInstance(dialog);
             dialog->show();
         } catch (Error &err) {
+            ui->statusBar->showMessage(QString::fromStdString(err.reason), 2000);
             qDebug() << "Cannot place call";
         }
     }
