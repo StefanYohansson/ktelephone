@@ -20,7 +20,7 @@ void UserAgent::onRegState(OnRegStateParam &prm) {
 void UserAgent::onIncomingCall(OnIncomingCallParam &iprm) {
     MyCall *call = new MyCall(*this, iprm.callId);
     emit sNewCall(call);
-    mCalls.insert(QString::fromStdString(std::to_string(iprm.callId)), call);
+    // mCalls.insert(QString::fromStdString(std::to_string(iprm.callId)), call);
 }
 
 void UserAgent::setInstance(KTelephone *telephone) {
