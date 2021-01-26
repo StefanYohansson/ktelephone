@@ -22,16 +22,18 @@ file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 set(ktelephone_SRC
   src/main.cpp
   src/gui/ktelephonemanager.cpp
+  src/gui/ktelephoneabout.cpp
   src/gui/ktelephoneguide.cpp
   src/gui/ktelephone.cpp
   src/gui/ktelephonepreferences.cpp
   src/gui/ktelephonecall.cpp
   src/telephony/mycall.cpp
   src/telephony/ua.cpp
-  src/telephony/uamanager.cpp
-)
+  src/telephony/uamanager.cpp)
 
-qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/settings.ui src/ui/call.ui)
+qt5_add_resources(ktelephone_SRC resources.qrc)
+
+qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/settings.ui src/ui/call.ui src/ui/about.ui)
 
 add_executable(ktelephone ${ktelephone_SRC})
 

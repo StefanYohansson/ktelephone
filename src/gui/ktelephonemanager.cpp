@@ -1,6 +1,7 @@
 #include "ktelephone.hpp"
 #include "ktelephoneguide.hpp"
 #include "ktelephonemanager.hpp"
+#include "ktelephoneabout.hpp"
 
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -228,14 +229,29 @@ void KTelephoneManager::deleteTelephone(Telephone_t telephone) {
 }
 
 void KTelephoneManager::openPreferences(void) {
+	if (mPreferences) {
+		return;
+	}
+
     mPreferences = new KTelephonePreferences(this);
     mPreferences->setManager(this);
     mPreferences->show();
 }
 
 void KTelephoneManager::closePreferences() {
-    delete mPreferences;
-    mPreferences = NULL;
+	if (mPreferences) {
+		delete mPreferences;
+		mPreferences = NULL;
+	}
+}
+
+void KTelephoneManager::openAbout() {
+	if (mAbout) {
+		return;
+	}
+
+	mAbout = new KTelephoneAbout(this);
+	mAbout->show();
 }
 
 void KTelephoneManager::startGuide() {

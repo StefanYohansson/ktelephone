@@ -17,6 +17,8 @@ class KTelephoneCall;
 
 class KTelephonePreferences;
 
+class KTelephoneAbout;
+
 struct Telephone {
     QString id;
     QString description;
@@ -60,6 +62,8 @@ public:
 
     void closePreferences();
 
+	void openAbout();
+
 private:
     void bootstrap();
 
@@ -75,6 +79,7 @@ protected:
     KTelephone *mTelephone = NULL;
     KTelephoneGuide *mGuide = NULL;
     KTelephonePreferences *mPreferences = NULL;
+    KTelephoneAbout *mAbout = NULL;
     UserAgentManager *mUAManager = NULL;
 
     void startGuide();
