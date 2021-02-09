@@ -1,6 +1,8 @@
 #ifndef KTELEPHONEGUIDE_H
 #define KTELEPHONEGUIDE_H
 
+#include <QPushButton>
+#include <QLineEdit>
 #include <QDialog>
 
 class KTelephoneManager;
@@ -28,6 +30,7 @@ protected:
 public slots:
 
     void accept();
+	void usernameChanged(const QString &text);
 
 };
 
