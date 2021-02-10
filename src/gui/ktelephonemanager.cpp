@@ -231,6 +231,9 @@ void KTelephoneManager::deleteTelephone(Telephone_t telephone) {
 void KTelephoneManager::openPreferences(void) {
 	if (mPreferences) {
 		mPreferences->show();
+		mPreferences->activateWindow();
+		mPreferences->raise();
+		mPreferences->setFocus();
 		return;
 	}
 
@@ -242,6 +245,9 @@ void KTelephoneManager::openPreferences(void) {
 void KTelephoneManager::openAbout() {
 	if (mAbout) {
 		mAbout->show();
+		mAbout->activateWindow();
+		mAbout->raise();
+		mAbout->setFocus();
 		return;
 	}
 
