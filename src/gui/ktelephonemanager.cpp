@@ -230,23 +230,18 @@ void KTelephoneManager::deleteTelephone(Telephone_t telephone) {
 
 void KTelephoneManager::openPreferences(void) {
 	if (mPreferences) {
+		mPreferences->show();
 		return;
 	}
 
-    mPreferences = new KTelephonePreferences(this);
+	mPreferences = new KTelephonePreferences(this);
     mPreferences->setManager(this);
     mPreferences->show();
 }
 
-void KTelephoneManager::closePreferences() {
-	if (mPreferences) {
-		delete mPreferences;
-		mPreferences = NULL;
-	}
-}
-
 void KTelephoneManager::openAbout() {
 	if (mAbout) {
+		mAbout->show();
 		return;
 	}
 

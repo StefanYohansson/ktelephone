@@ -60,8 +60,6 @@ public:
 
     void openPreferences();
 
-    void closePreferences();
-
 	void openAbout();
 
 private:

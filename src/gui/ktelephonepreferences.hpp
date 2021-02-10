@@ -40,7 +40,6 @@ public slots:
     void newItem();
 
     void removeItem();
-
 };
 
 #endif // KTELEPHONEPREFERENCES_H

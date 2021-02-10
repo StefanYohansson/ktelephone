@@ -109,7 +109,6 @@ void KTelephone::actionPreferences() {
 
 void KTelephone::actionAbout() {
     mManager->openAbout();
-	qDebug() << "about";
 }
 
 void KTelephone::changeStatus(int index) {
