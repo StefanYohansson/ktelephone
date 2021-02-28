@@ -105,8 +105,10 @@ MyCall *UserAgentManager::placeCall(const QString &username, const QString &dest
     CallOpParam prm(true);
     sipUri.append(sip);
     sipUri.append(dest);
-    sipUri.append('@');
-    sipUri.append(username.split('@').takeLast());
+    if (!dest.split('@').isEmpty()) {
+    	sipUri.append('@');
+    	sipUri.append(username.split('@').takeLast());
+    }
     call->makeCall(sipUri.toStdString(), prm);
     return call;
 }
