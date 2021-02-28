@@ -94,7 +94,11 @@ void UserAgentManager::removeUserAgent(QString username) {
 
 void UserAgentManager::setRegister(QString username, bool status) {
     if (mAccounts[username]) {
-        mAccounts[username]->setRegistration(status);
+        try {
+            mAccounts[username]->setRegistration(status);
+        } catch (Error &err) {
+            mAccounts[username]->dispatchUiMessage(QString::fromStdString(err.reason));
+        }
     }
 }
 

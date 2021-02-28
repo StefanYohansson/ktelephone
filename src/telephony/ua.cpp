@@ -27,3 +27,8 @@ void UserAgent::setInstance(KTelephone *telephone) {
     this->mTelephone = telephone;
     QObject::connect(this, SIGNAL(sNewCall(MyCall * )), this->mTelephone, SLOT(actionInboundCall(MyCall * )));
 }
+
+void UserAgent::dispatchUiMessage(QString message) {
+    QStatusBar *status = this->mTelephone->statusBar();
+    status->showMessage(message);
+}
