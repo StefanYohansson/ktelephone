@@ -28,10 +28,6 @@ KTelephonePreferences::~KTelephonePreferences() {
 }
 
 void KTelephonePreferences::setManager(KTelephoneManager *manager) {
-    if (!mManager) {
-        return;
-    }
-
     mManager = manager;
 
     mTelephones = mManager->getTelephones();
