@@ -20,6 +20,8 @@ public:
 
     ~KTelephonePreferences();
 
+    void show();
+    void reload();
     void setManager(KTelephoneManager *manager);
 
 private:

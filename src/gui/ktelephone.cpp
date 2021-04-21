@@ -35,7 +35,7 @@ KTelephone::KTelephone(QWidget *parent) :
 }
 
 KTelephone::~KTelephone() {
-    mManager->removeKTelephone(mTelephone);
+	mManager->removeKTelephone(mTelephone);
     delete ui;
 }
 

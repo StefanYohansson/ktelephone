@@ -27,20 +27,34 @@ KTelephonePreferences::~KTelephonePreferences() {
     delete ui;
 }
 
+void KTelephonePreferences::show() {
+	QWidget::show();
+
+	this->reload();
+}
+
+void KTelephonePreferences::reload() {
+	ui->telephonesList->clear();
+	ui->toolBox->hide();
+	mTelephones = mManager->getTelephones();
+
+	foreach(QString item, mTelephones.keys()) {
+		ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
+	}
+}
+
 void KTelephonePreferences::setManager(KTelephoneManager *manager) {
     mManager = manager;
 
-    mTelephones = mManager->getTelephones();
-
-            foreach(QString item, mTelephones.keys()) {
-            ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
-        }
+    this->reload();
 }
 
 void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
     if (!current || !mTelephones.contains(current->text())) {
         return;
     }
+
+	ui->toolBox->show();
 
     const KTelephone *item = mTelephones.value(current->text());
     mTelephone = item->mTelephone;

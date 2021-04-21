@@ -2,7 +2,7 @@
 #define KTELEPHONEMANAGER_H
 
 #include <QApplication>
-#include <QWidget>
+#include <QMainWindow>
 #include <QObject>
 #include <QHash>
 #include <QSqlDatabase>
@@ -35,7 +35,7 @@ typedef struct Telephone Telephone_t;
 
 class UserAgentManager;
 
-class KTelephoneManager : public QWidget {
+class KTelephoneManager : public QMainWindow {
 Q_OBJECT
 public:
     explicit KTelephoneManager(QWidget *parent = 0);

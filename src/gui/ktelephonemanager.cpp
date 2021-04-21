@@ -11,7 +11,7 @@
 #include <QDebug>
 
 KTelephoneManager::KTelephoneManager(QWidget *parent) :
-        QWidget(parent) {
+        QMainWindow(parent) {
     this->trayIcon = new QSystemTrayIcon(this);
     this->trayIcon->setToolTip("KTelephone");
 
@@ -98,6 +98,9 @@ void KTelephoneManager::updateKTelephone(QString oldUsername, Telephone_t teleph
     qDebug() << telephones;
 
     mUAManager->removeUserAgent(oldUsername);
+	if (mPreferences) {
+		mPreferences->reload();
+	}
     if (telephone.active == 1) {
         mUAManager->newUserAgent(mTelephone,
                                  telephone.username,
@@ -110,6 +113,9 @@ void KTelephoneManager::updateKTelephone(QString oldUsername, Telephone_t teleph
 void KTelephoneManager::removeKTelephone(Telephone_t telephone) {
     telephones.remove(telephone.username);
     mUAManager->removeUserAgent(telephone.username);
+    if (mPreferences) {
+	    mPreferences->reload();
+    }
     qDebug() << telephones;
     mTelephone = NULL;
 }
@@ -161,9 +167,9 @@ void KTelephoneManager::loadFromDatabase() {
 
 void KTelephoneManager::unloadKTelephones() {
     const QHash<QString, KTelephone *> telephones = this->getTelephones();
-            foreach(QString item, telephones.keys()) {
-            mUAManager->removeUserAgent(item);
-        }
+    foreach(QString item, telephones.keys()) {
+        mUAManager->removeUserAgent(item);
+    }
 }
 
 void KTelephoneManager::saveTelephone(Telephone_t *telephone) {
