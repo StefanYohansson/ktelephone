@@ -36,7 +36,7 @@ void KTelephonePreferences::show() {
 void KTelephonePreferences::reload() {
 	ui->telephonesList->clear();
 	ui->toolBox->hide();
-	mTelephones = mManager->getTelephones();
+	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
 
 	foreach(QString item, mTelephones.keys()) {
 		ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
@@ -50,6 +50,7 @@ void KTelephonePreferences::setManager(KTelephoneManager *manager) {
 }
 
 void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
+	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
     if (!current || !mTelephones.contains(current->text())) {
         return;
     }
@@ -101,7 +102,7 @@ void KTelephonePreferences::saveChanges() {
     ui->passwordEdit->setEnabled(shouldEnableInputs);
 
     mManager->updateKTelephone(oldUsername, mTelephone);
-    mTelephones = mManager->getTelephones();
+	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
 
     if (currentTelephone) {
         currentTelephone->setText(mTelephone.username);
@@ -129,10 +130,10 @@ void KTelephonePreferences::newItem() {
     mManager->saveTelephone(&telephone);
     mManager->newKTelephone(telephone);
     ui->telephonesList->addItem(telephone.username);
-    mTelephones = mManager->getTelephones();
 }
 
 void KTelephonePreferences::removeItem() {
+	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
     if (!currentTelephone || !mTelephones.contains(currentTelephone->text())) {
         qDebug() << "No item selected";
         return;

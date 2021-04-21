@@ -28,7 +28,6 @@ private:
     Ui::settings *ui;
 
 protected:
-    QHash<QString, KTelephone *> mTelephones;
     Telephone_t mTelephone;
     KTelephoneManager *mManager;
     QListWidgetItem *currentTelephone;
