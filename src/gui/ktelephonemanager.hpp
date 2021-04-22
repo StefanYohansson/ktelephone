@@ -44,15 +44,15 @@ public:
 
     void newKTelephone(Telephone_t);
 
-    void updateKTelephone(QString, Telephone_t);
+    void updateKTelephone(QString, Telephone_t *);
 
     void saveTelephone(Telephone_t *);
 
-    void updateTelephone(Telephone_t);
+    void updateTelephone(Telephone_t *);
 
-    void deleteTelephone(Telephone_t);
+    void deleteTelephone(Telephone_t *);
 
-    void removeKTelephone(Telephone_t);
+    void removeKTelephone(Telephone_t *);
 
     QHash<QString, KTelephone *> getTelephones();
 

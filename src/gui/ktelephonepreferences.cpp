@@ -34,9 +34,10 @@ void KTelephonePreferences::show() {
 }
 
 void KTelephonePreferences::reload() {
+	currentTelephone = NULL;
 	ui->telephonesList->clear();
 	ui->toolBox->hide();
-	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
+	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
 
 	foreach(QString item, mTelephones.keys()) {
 		ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
@@ -50,15 +51,15 @@ void KTelephonePreferences::setManager(KTelephoneManager *manager) {
 }
 
 void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
-	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
+	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
     if (!current || !mTelephones.contains(current->text())) {
         return;
     }
 
 	ui->toolBox->show();
 
-    const KTelephone *item = mTelephones.value(current->text());
-    mTelephone = item->mTelephone;
+    KTelephone *item = mTelephones.value(current->text());
+    const Telephone_t mTelephone = item->mTelephone;
 
     bool shouldEnableInputs = true;
     if (mTelephone.active) {
@@ -81,7 +82,19 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 }
 
 void KTelephonePreferences::saveChanges() {
-    const bool shouldUpdateInstance = mTelephone.active != ui->activeCheckbox->checkState();
+	if (currentTelephone == NULL) {
+		return;
+	}
+
+	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
+	if (!mTelephones.contains(currentTelephone->text())) {
+		return;
+	}
+
+	KTelephone *item = mTelephones.value(currentTelephone->text());
+	Telephone_t mTelephone = item->mTelephone;
+
+	const bool shouldUpdateInstance = mTelephone.active != ui->activeCheckbox->checkState();
     const QString oldUsername = mTelephone.username;
     mTelephone.description = ui->descriptionEdit->text();
     mTelephone.name = ui->nameEdit->text();
@@ -101,8 +114,8 @@ void KTelephonePreferences::saveChanges() {
     ui->usernameEdit->setEnabled(shouldEnableInputs);
     ui->passwordEdit->setEnabled(shouldEnableInputs);
 
-    mManager->updateKTelephone(oldUsername, mTelephone);
-	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
+    mManager->updateKTelephone(oldUsername, &mTelephone);
+	mTelephones = mManager->getTelephones();
 
     if (currentTelephone) {
         currentTelephone->setText(mTelephone.username);
@@ -133,14 +146,18 @@ void KTelephonePreferences::newItem() {
 }
 
 void KTelephonePreferences::removeItem() {
-	const QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
-    if (!currentTelephone || !mTelephones.contains(currentTelephone->text())) {
-        qDebug() << "No item selected";
-        return;
-    }
+	if (currentTelephone == NULL) {
+		return;
+	}
 
-    const KTelephone *item = mTelephones.value(currentTelephone->text());
-    mTelephone = item->mTelephone;
+	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
+	if (!mTelephones.contains(currentTelephone->text())) {
+		qDebug() << "No item selected";
+		return;
+	}
+
+    KTelephone *item = mTelephones.value(currentTelephone->text());
+	Telephone_t *mTelephone = &item->mTelephone;
 
     mManager->deleteTelephone(mTelephone);
     mManager->removeKTelephone(mTelephone);

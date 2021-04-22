@@ -77,7 +77,7 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone) {
     telephones[telephone.username] = mTelephone;
     if (telephone.active == 1) {
         mTelephone->show();
-        AccountConfig acfg = mUAManager->getAccountConfig(telephone);
+        AccountConfig acfg = mUAManager->getAccountConfig(&telephone);
         mUAManager->newUserAgent(mTelephone,
                                  telephone.username,
                                  acfg);
@@ -87,36 +87,38 @@ void KTelephoneManager::newKTelephone(Telephone_t telephone) {
     qDebug() << telephones;
 }
 
-void KTelephoneManager::updateKTelephone(QString oldUsername, Telephone_t telephone) {
+void KTelephoneManager::updateKTelephone(QString oldUsername, Telephone_t *telephone) {
     mTelephone = telephones[oldUsername];
-    mTelephone->setTelephone(telephone);
-    if (QString::compare(telephone.username, oldUsername)) {
+    mTelephone->setTelephone(*telephone);
+    if (QString::compare(telephone->username, oldUsername)) {
         telephones.remove(oldUsername);
     }
-    telephones[telephone.username] = mTelephone;
+    telephones[telephone->username] = mTelephone;
     this->updateTelephone(telephone);
-    qDebug() << telephones;
 
     mUAManager->removeUserAgent(oldUsername);
 	if (mPreferences) {
 		mPreferences->reload();
 	}
-    if (telephone.active == 1) {
+    if (telephone->active == 1) {
         mUAManager->newUserAgent(mTelephone,
-                                 telephone.username,
+                                 telephone->username,
                                  mUAManager->getAccountConfig(telephone));
         mTelephone->statusMessage("Registering...");
     }
     mTelephone = NULL;
 }
 
-void KTelephoneManager::removeKTelephone(Telephone_t telephone) {
-    telephones.remove(telephone.username);
-    mUAManager->removeUserAgent(telephone.username);
+void KTelephoneManager::removeKTelephone(Telephone_t *telephone) {
+	KTelephone *removedTelephone = telephones.value(telephone->username);
+	telephones.remove(telephone->username);
+	if (telephone->active) {
+		removedTelephone->close();
+	}
+    mUAManager->removeUserAgent(telephone->username);
     if (mPreferences) {
 	    mPreferences->reload();
     }
-    qDebug() << telephones;
     mTelephone = NULL;
 }
 
@@ -193,8 +195,8 @@ void KTelephoneManager::saveTelephone(Telephone_t *telephone) {
     }
 }
 
-void KTelephoneManager::updateTelephone(Telephone_t telephone) {
-    if (telephone.id.isEmpty() || telephone.id.isNull()) {
+void KTelephoneManager::updateTelephone(Telephone_t *telephone) {
+    if (telephone->id.isEmpty() || telephone->id.isNull()) {
         qWarning() << "No id provided on update.";
         return;
     }
@@ -202,15 +204,15 @@ void KTelephoneManager::updateTelephone(Telephone_t telephone) {
     QSqlQuery query;
     query.prepare(
             "UPDATE telephones SET description=:description, name=:name, domain=:domain, username=:username, password=:password, active=:active WHERE id = :id");
-    query.bindValue(":description", telephone.description);
-    query.bindValue(":name", telephone.name);
-    query.bindValue(":domain", telephone.domain);
-    query.bindValue(":username", telephone.username);
-    query.bindValue(":password", telephone.password);
-    query.bindValue(":active", telephone.active);
-    query.bindValue(":id", telephone.id);
+    query.bindValue(":description", telephone->description);
+    query.bindValue(":name", telephone->name);
+    query.bindValue(":domain", telephone->domain);
+    query.bindValue(":username", telephone->username);
+    query.bindValue(":password", telephone->password);
+    query.bindValue(":active", telephone->active);
+    query.bindValue(":id", telephone->id);
 
-    qDebug() << telephone.id;
+    qDebug() << telephone->id;
 
     if (!query.exec()) {
         qWarning() << "KTelephoneManager::updateTelephone - ERROR: " << query.lastError().text();
@@ -218,15 +220,15 @@ void KTelephoneManager::updateTelephone(Telephone_t telephone) {
     }
 }
 
-void KTelephoneManager::deleteTelephone(Telephone_t telephone) {
-    if (telephone.id.isEmpty() || telephone.id.isNull()) {
+void KTelephoneManager::deleteTelephone(Telephone_t *telephone) {
+    if (telephone->id.isEmpty() || telephone->id.isNull()) {
         qWarning() << "No id provided on delete.";
         return;
     }
 
     QSqlQuery query;
     query.prepare("DELETE FROM telephones WHERE id = :id");
-    query.bindValue(":id", telephone.id);
+    query.bindValue(":id", telephone->id);
 
     if (!query.exec()) {
         qWarning() << "KTelephoneManager::deleteTelephone - ERROR: " << query.lastError().text();

@@ -22,7 +22,7 @@ public:
 
     ~UserAgentManager();
 
-    AccountConfig getAccountConfig(Telephone_t mTelephone);
+    AccountConfig getAccountConfig(Telephone_t *mTelephone);
 
     void newUserAgent(KTelephone *telephone, QString username, AccountConfig acfg);
 
@@ -30,7 +30,7 @@ public:
 
     void setRegister(QString domain, bool status);
 
-    MyCall *placeCall(const QString &username, const QString &dest);
+    MyCall *placeCall(QString &username, const QString &dest);
 
     void start(int port);
 

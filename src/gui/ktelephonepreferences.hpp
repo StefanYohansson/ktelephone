@@ -28,9 +28,8 @@ private:
     Ui::settings *ui;
 
 protected:
-    Telephone_t mTelephone;
     KTelephoneManager *mManager;
-    QListWidgetItem *currentTelephone;
+    QListWidgetItem *currentTelephone = NULL;
 
 public slots:
 

@@ -50,24 +50,24 @@ void UserAgentManager::start(int port) {
     }
 }
 
-AccountConfig UserAgentManager::getAccountConfig(Telephone_t mTelephone) {
+AccountConfig UserAgentManager::getAccountConfig(Telephone_t *mTelephone) {
     // Configure an AccountConfig
     AccountConfig acfg;
     QString sip = "sip:";
     QString sipUri = QString();
-    acfg.idUri = sipUri.append(sip).append(mTelephone.username).toStdString();
+    acfg.idUri = sipUri.append(sip).append(mTelephone->username).toStdString();
     QString username = QString();
     QString domain = QString();
     domain.append(sip);
-    if (!mTelephone.username.split('@').isEmpty()) {
-        domain.append(mTelephone.username.split('@').takeLast());
-        username.append(mTelephone.username.split('@').takeFirst());
+    if (!mTelephone->username.split('@').isEmpty()) {
+        domain.append(mTelephone->username.split('@').takeLast());
+        username.append(mTelephone->username.split('@').takeFirst());
     } else {
-        username.append(mTelephone.username);
+        username.append(mTelephone->username);
     }
     acfg.regConfig.registrarUri = domain.toStdString();
 
-    AuthCredInfo cred("digest", "*", username.toStdString(), 0, mTelephone.password.toStdString());
+    AuthCredInfo cred("digest", "*", username.toStdString(), 0, mTelephone->password.toStdString());
     acfg.sipConfig.authCreds.push_back(cred);
     return acfg;
 }
@@ -102,7 +102,7 @@ void UserAgentManager::setRegister(QString username, bool status) {
     }
 }
 
-MyCall *UserAgentManager::placeCall(const QString &username, const QString &dest) {
+MyCall *UserAgentManager::placeCall(QString &username, const QString &dest) {
     QString sip = "sip:";
     QString sipUri = QString();
     MyCall *call = new MyCall(*mAccounts[username]);
