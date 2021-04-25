@@ -71,6 +71,7 @@ private:
 private slots:
 
     void open();
+	void openPreferencesSlot();
 
 protected:
     QHash<QString, KTelephone *> telephones;

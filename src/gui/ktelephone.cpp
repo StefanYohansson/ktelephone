@@ -35,12 +35,12 @@ KTelephone::KTelephone(QWidget *parent) :
 }
 
 KTelephone::~KTelephone() {
-	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
-	if (mTelephones.value(mTelephone.username)) {
-		mTelephone.active = 0;
-		mManager->updateKTelephone(mTelephone.username, &mTelephone);
-	}
-    delete ui;
+	delete ui;
+}
+
+void KTelephone::closeEvent(QCloseEvent *event) {
+	this->hide();
+	event->ignore();
 }
 
 void KTelephone::setManager(KTelephoneManager *manager) {

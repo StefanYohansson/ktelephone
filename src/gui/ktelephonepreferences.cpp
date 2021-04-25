@@ -27,6 +27,11 @@ KTelephonePreferences::~KTelephonePreferences() {
     delete ui;
 }
 
+void KTelephonePreferences::closeEvent(QCloseEvent *event) {
+	this->hide();
+	event->ignore();
+}
+
 void KTelephonePreferences::show() {
 	QWidget::show();
 

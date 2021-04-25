@@ -17,6 +17,7 @@ KTelephoneManager::KTelephoneManager(QWidget *parent) :
 
     this->trayIconMenu = new QMenu(this);
     const auto openAction = this->trayIconMenu->addAction(tr("Open"));
+	const auto settingsAction = this->trayIconMenu->addAction(tr("Settings"));
     const auto exitAction = this->trayIconMenu->addAction(tr("Exit"));
     this->trayIcon->setContextMenu(this->trayIconMenu);
     this->trayIconMenu->show();
@@ -26,6 +27,7 @@ KTelephoneManager::KTelephoneManager(QWidget *parent) :
     this->setWindowIcon(appIcon);
 
     connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
+	connect(settingsAction, SIGNAL(triggered()), this, SLOT(openPreferencesSlot()));
     connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     this->trayIcon->show();
@@ -60,6 +62,10 @@ void KTelephoneManager::bootstrap() {
 
 void KTelephoneManager::open() {
     this->bootstrap();
+}
+
+void KTelephoneManager::openPreferencesSlot() {
+	this->openPreferences();
 }
 
 UserAgentManager *KTelephoneManager::getUserAgentManager() {

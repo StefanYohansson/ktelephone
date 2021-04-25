@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QShortcut>
+#include <QCloseEvent>
 
 #include "ktelephonemanager.hpp"
 #include "ktelephonepreferences.hpp"
@@ -42,6 +43,7 @@ private:
 
 protected:
     KTelephoneManager *mManager = NULL;
+	void closeEvent(QCloseEvent *event) override;
 
 public slots:
 

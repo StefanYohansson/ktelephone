@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QCloseEvent>
 
 #include "ktelephone.hpp"
 
@@ -30,6 +31,7 @@ private:
 protected:
     KTelephoneManager *mManager;
     QListWidgetItem *currentTelephone = NULL;
+	void closeEvent(QCloseEvent *event) override;
 
 public slots:
 
