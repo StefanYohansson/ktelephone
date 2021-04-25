@@ -12,25 +12,25 @@ using namespace pj;
 class UserAgent : public QObject, public Account {
 Q_OBJECT
 public:
-    explicit UserAgent(QObject *parent = 0);
+	explicit UserAgent(QObject *parent = 0);
 
-    ~UserAgent();
+	~UserAgent();
 
-    virtual void onRegState(OnRegStateParam &prm);
+	virtual void onRegState(OnRegStateParam &prm);
 
-    virtual void onIncomingCall(OnIncomingCallParam &iprm);
+	virtual void onIncomingCall(OnIncomingCallParam &iprm);
 
-    void setInstance(KTelephone *telephone);
+	void setInstance(KTelephone *telephone);
 
-    void dispatchUiMessage(QString message);
+	void dispatchUiMessage(QString message);
 
 protected:
-    KTelephone *mTelephone = NULL;
-    QHash<QString, MyCall *> mCalls;
+	KTelephone *mTelephone = NULL;
+	QHash<QString, MyCall *> mCalls;
 
 signals:
 
-    void sNewCall(MyCall *call);
+	void sNewCall(MyCall *call);
 };
 
 #endif // KTELEPHONEUA_H
