@@ -66,6 +66,7 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t *mTelephone) {
 		username.append(mTelephone->username);
 	}
 	acfg.regConfig.registrarUri = domain.toStdString();
+	acfg.regConfig.registerOnAdd = mTelephone->should_register_startup;
 
 	AuthCredInfo cred("digest", "*", username.toStdString(), 0, mTelephone->password.toStdString());
 	acfg.sipConfig.authCreds.push_back(cred);
