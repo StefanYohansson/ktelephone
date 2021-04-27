@@ -144,14 +144,14 @@ void KTelephoneManager::connectDatabase() {
 
 void KTelephoneManager::bootstrapDatabase() {
 	QSqlQuery query(
-			"CREATE TABLE IF NOT EXISTS telephones (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, name TEXT, domain TEXT, username TEXT, password TEXT, active integer)");
+			"CREATE TABLE IF NOT EXISTS telephones (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, name TEXT, domain TEXT, username TEXT, password TEXT, active integer, should_register_startup integer, should_subscribe_presence integer, should_publish_presence integer, should_use_blf integer, should_disable_ringback_tone integer, custom_ringtone TEXT, transport integer, subscription_expiry_delay integer, keep_alive_expiry_delay integer, registration_expiry_delay integer, use_stun integer, stun_server TEXT)");
 	if (!query.isActive())
 		qWarning() << "KTelephoneManager::bootstrapDatabase - ERROR: " << query.lastError().text();
 }
 
 void KTelephoneManager::loadFromDatabase() {
 	QSqlQuery query;
-	query.prepare("SELECT id, description, name, domain, username, password, active FROM telephones;");
+	query.prepare("SELECT id, description, name, domain, username, password, active, should_register_startup, should_subscribe_presence, should_publish_presence, should_use_blf, should_disable_ringback_tone, custom_ringtone, transport, subscription_expiry_delay, keep_alive_expiry_delay, registration_expiry_delay, use_stun, stun_server FROM telephones;");
 
 	if (!query.exec()) {
 		qWarning() << "KTelephoneManager::loadFromDatabase - ERROR: " << query.lastError().text();
@@ -167,6 +167,21 @@ void KTelephoneManager::loadFromDatabase() {
 				query.value(4).toString(),
 				query.value(5).toString(),
 				query.value(6).toInt(),
+
+				query.value(7).toInt(),
+				query.value(8).toInt(),
+				query.value(9).toInt(),
+				query.value(10).toInt(),
+				query.value(11).toInt(),
+				query.value(12).toInt(),
+				query.value(13).toInt(),
+
+				query.value(14).toInt(),
+				query.value(15).toInt(),
+				query.value(16).toInt(),
+				query.value(17).toInt(),
+				query.value(18).toInt(),
+				query.value(19).toInt(),
 		};
 
 		this->newKTelephone(telephone);
@@ -175,21 +190,33 @@ void KTelephoneManager::loadFromDatabase() {
 
 void KTelephoneManager::unloadKTelephones() {
 	const QHash<QString, KTelephone *> telephones = this->getTelephones();
-			foreach(QString item, telephones.keys()) {
-			mUAManager->removeUserAgent(item);
-		}
+	foreach(QString item, telephones.keys()) {
+		mUAManager->removeUserAgent(item);
+	}
 }
 
 void KTelephoneManager::saveTelephone(Telephone_t *telephone) {
 	QSqlQuery query;
 	query.prepare(
-			"INSERT INTO telephones (description, name, domain, username, password, active) VALUES (:description, :name, :domain, :username, :password, :active)");
+			"INSERT INTO telephones (description, name, domain, username, password, active, should_register_startup, should_subscribe_presence, should_publish_presence, should_use_blf, should_disable_ringback_tone, custom_ringtone, transport, subscription_expiry_delay, keep_alive_expiry_delay, registration_expiry_delay, use_stun, stun_server) VALUES (:description, :name, :domain, :username, :password, :active, :should_register_startup, :should_subscribe_presence, :should_publish_presence, :should_use_blf, :should_disable_ringback_tone, :custom_ringtone, :transport, :subscription_expiry_delay, :keep_alive_expiry_delay, :registration_expiry_delay, :use_stun, :stun_server)");
 	query.bindValue(":description", telephone->description);
 	query.bindValue(":name", telephone->name);
 	query.bindValue(":domain", telephone->domain);
 	query.bindValue(":username", telephone->username);
 	query.bindValue(":password", telephone->password);
 	query.bindValue(":active", telephone->active);
+	query.bindValue(":should_register_startup", telephone->should_register_startup);
+	query.bindValue(":should_subscribe_presence", telephone->should_subscribe_presence);
+	query.bindValue(":should_publish_presence", telephone->should_publish_presence);
+	query.bindValue(":should_use_blf", telephone->should_use_blf);
+	query.bindValue(":should_disable_ringback_tone", telephone->should_disable_ringback_tone);
+	query.bindValue(":custom_ringtone", telephone->custom_ringtone);
+	query.bindValue(":transport", telephone->transport);
+	query.bindValue(":subscription_expiry_delay", telephone->subscription_expiry_delay);
+	query.bindValue(":keep_alive_expiry_delay", telephone->keep_alive_expiry_delay);
+	query.bindValue(":registration_expiry_delay", telephone->registration_expiry_delay);
+	query.bindValue(":use_stun", telephone->use_stun);
+	query.bindValue(":stun_server", telephone->stun_server);
 
 	if (!query.exec()) {
 		qWarning() << "KTelephoneManager::saveTelephone - ERROR: " << query.lastError().text();
@@ -209,13 +236,25 @@ void KTelephoneManager::updateTelephone(Telephone_t *telephone) {
 
 	QSqlQuery query;
 	query.prepare(
-			"UPDATE telephones SET description=:description, name=:name, domain=:domain, username=:username, password=:password, active=:active WHERE id = :id");
+			"UPDATE telephones SET description=:description, name=:name, domain=:domain, username=:username, password=:password, active=:active, should_register_startup=:should_register_startup, should_subscribe_presence=:should_subscribe_presence, should_publish_presence=:should_publish_presence, should_use_blf=:should_use_blf, should_disable_ringback_tone=:should_disable_ringback_tone, custom_ringtone=:custom_ringtone, transport=:transport, subscription_expiry_delay=:subscription_expiry_delay, keep_alive_expiry_delay=:keep_alive_expiry_delay, registration_expiry_delay=:registration_expiry_delay, use_stun=:use_stun, stun_server=:stun_server WHERE id = :id");
 	query.bindValue(":description", telephone->description);
 	query.bindValue(":name", telephone->name);
 	query.bindValue(":domain", telephone->domain);
 	query.bindValue(":username", telephone->username);
 	query.bindValue(":password", telephone->password);
 	query.bindValue(":active", telephone->active);
+	query.bindValue(":should_register_startup", telephone->should_register_startup);
+	query.bindValue(":should_subscribe_presence", telephone->should_subscribe_presence);
+	query.bindValue(":should_publish_presence", telephone->should_publish_presence);
+	query.bindValue(":should_use_blf", telephone->should_use_blf);
+	query.bindValue(":should_disable_ringback_tone", telephone->should_disable_ringback_tone);
+	query.bindValue(":custom_ringtone", telephone->custom_ringtone);
+	query.bindValue(":transport", telephone->transport);
+	query.bindValue(":subscription_expiry_delay", telephone->subscription_expiry_delay);
+	query.bindValue(":keep_alive_expiry_delay", telephone->keep_alive_expiry_delay);
+	query.bindValue(":registration_expiry_delay", telephone->registration_expiry_delay);
+	query.bindValue(":use_stun", telephone->use_stun);
+	query.bindValue(":stun_server", telephone->stun_server);
 	query.bindValue(":id", telephone->id);
 
 	qDebug() << telephone->id;
