@@ -70,8 +70,8 @@ sudo ldconfig
 Compile:
 
 ```sh
-mkdir -p /your/ktelephone/build
-cd /your/ktelephone/build
+mkdir -p ./build
+cd ./build
 cmake ../
 make
 ```
@@ -79,13 +79,13 @@ make
 To compile for debugging, use:
 
 ```sh
-mkdir -p /your/ktelephone/build
-cd /your/ktelephone/build
-cmake -DCMAKE_BUILD_TYPE=Debug ..
+mkdir -p ./build
+cd ./build
+cmake -DCMAKE_BUILD_TYPE=Debug ../
 make
 ```
 
-Executing (if you're inside `build` folder.)
+Executing (if you're still inside `build` folder.)
 
 ```sh
 ./ktelephone
