@@ -116,7 +116,10 @@ void KTelephoneManager::updateKTelephone(QString oldUsername, Telephone_t teleph
 }
 
 void KTelephoneManager::removeKTelephone(Telephone_t telephone) {
-    telephones.remove(telephone.username);
+    if (telephones.contains(telephone.username)) {
+        telephones.value(telephone.username)->close();
+        telephones.remove(telephone.username);
+    }
     mUAManager->removeUserAgent(telephone.username);
     qDebug() << telephones;
     mTelephone = NULL;
