@@ -42,7 +42,7 @@ You need `Qt5`, `CMake 2.8.11` or higher and `pjproject 2.10` before anything el
 For example, on Ubuntu:
 
 ```
-sudo apt install -y git cmake g++ qtbase5-dev qtmultimedia5-dev
+sudo apt install -y git cmake g++ qtbase5-dev qtmultimedia5-dev libasound2-dev
 ```
 
 Inspect `Dockerfile.*` files for other instructions if you want.
