@@ -89,6 +89,8 @@ protected:
     void loadFromDatabase();
 
     void unloadKTelephones();
+
+    bool hasActiveAccounts();
 };
 
 #endif // KTELEPHONEMANAGER_H

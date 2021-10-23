@@ -52,8 +52,13 @@ KTelephoneManager::~KTelephoneManager() {
 
 void KTelephoneManager::bootstrap() {
     this->loadFromDatabase();
-    if (!telephones.keys().length()) {
+    if (telephones.isEmpty()) {
         this->startGuide();
+        return;
+    }
+
+    if (!this->hasActiveAccounts()) {
+        this->openPreferences();
         return;
     }
 }
@@ -157,6 +162,19 @@ void KTelephoneManager::loadFromDatabase() {
 
         this->newKTelephone(telephone);
     }
+}
+
+bool KTelephoneManager::hasActiveAccounts() {
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(id) FROM telephones WHERE active = 1;");
+
+    if (!query.exec()) {
+        qWarning() << "KTelephoneManager::hasActiveAccounts - ERROR: " << query.lastError().text();
+        return false;
+    }
+
+    query.first();
+    return query.value(0).toInt() > 0;
 }
 
 void KTelephoneManager::unloadKTelephones() {
