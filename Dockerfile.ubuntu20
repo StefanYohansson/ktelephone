@@ -1,11 +1,11 @@
 FROM ubuntu:20.04
 RUN apt update -y
 RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
-RUN DEBIAN_FRONTEND=noninteractive apt install -y git cmake g++ qtbase5-dev qtmultimedia5-dev
+RUN DEBIAN_FRONTEND=noninteractive apt install -y git cmake g++ qtbase5-dev qtmultimedia5-dev libasound2-dev
 RUN git clone https://github.com/pjsip/pjproject.git /pjproject
 RUN cd /pjproject && \
 git checkout 2.10 && \
-./configure --prefix=/usr/lib --enable-static --disable-sound --disable-resample --disable-video --disable-opencore-amr && \
+./configure --prefix=/usr/lib --enable-static --disable-resample --disable-video --disable-opencore-amr && \
 make dep && \
 make && \
 make install && ldconfig
