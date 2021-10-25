@@ -1,5 +1,3 @@
-#include <cstdlib>
-
 #include "ktelephone.hpp"
 #include "ktelephoneguide.hpp"
 #include "ktelephonemanager.hpp"
