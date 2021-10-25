@@ -7,8 +7,11 @@
 #include <QSqlDriver>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QDir>
 
 #include <QDebug>
+
+const char* KTELEPHONE_CONF_DIR = std::getenv("KTELEPHONE_CONF_DIR");
 
 KTelephoneManager::KTelephoneManager(QWidget *parent) :
         QWidget(parent) {
@@ -127,9 +130,16 @@ void KTelephoneManager::connectDatabase() {
     const QString DRIVER("QSQLITE");
     if (QSqlDatabase::isDriverAvailable(DRIVER)) {
         QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
-        db.setDatabaseName("ktelephone.db");
-        if (!db.open())
+        QDir confDir = QDir(KTELEPHONE_CONF_DIR);
+
+        if (!confDir.exists()) {
+            confDir.mkdir(confDir.path());
+        }
+
+        db.setDatabaseName(confDir.filePath("ktelephone.db"));
+        if (!db.open()) {
             qWarning() << "ERROR: " << db.lastError();
+        }
     }
 }
 
