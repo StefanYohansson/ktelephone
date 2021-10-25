@@ -5,31 +5,25 @@
 
 UserAgentManager::UserAgentManager(QObject *parent)
         : QObject(parent) {
-    Endpoint *ep = new Endpoint;
-    ep->libCreate();
+    ep.libCreate();
 
     // Initialize endpoint
-    ep->libInit(ep_cfg);
+    ep.libInit(ep_cfg);
 
     this->start(5090);
 
     // @TODO: import codec on CMake and remove this line
     try {
-        ep->codecSetPriority("opus/48000", 0);
+        ep.codecSetPriority("opus/48000", 0);
     } catch (Error &err) {
         qDebug() << "Cannot import opus codec";
     }
 
     try {
-        ep->codecSetPriority("G722/16000", 131);
+        ep.codecSetPriority("G722/16000", 131);
     } catch (Error &err) {
         qDebug() << "Cannot import G722 codec";
     }
-}
-
-UserAgentManager::~UserAgentManager() {
-    //  ep->libDestroy();
-    //  delete ep;
 }
 
 void UserAgentManager::start(int port) {
@@ -37,10 +31,10 @@ void UserAgentManager::start(int port) {
         // Create SIP transport. Error handling sample is shown
         tcfg.port = port;
 
-        ep->transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
+        ep.transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
 
         // Start the library (worker threads etc)
-        ep->libStart();
+        ep.libStart();
 
         qDebug() << "*** PJSUA2 STARTED ***";
     } catch (Error &err) {

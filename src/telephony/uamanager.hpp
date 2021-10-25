@@ -20,8 +20,6 @@ Q_OBJECT
 public:
     explicit UserAgentManager(QObject *parent = 0);
 
-    ~UserAgentManager();
-
     AccountConfig getAccountConfig(Telephone_t mTelephone);
 
     void newUserAgent(KTelephone *telephone, QString username, AccountConfig acfg);
@@ -36,10 +34,9 @@ public:
 
 protected:
     QHash<QString, UserAgent *> mAccounts;
-    Endpoint *ep;
+    Endpoint ep;
     EpConfig ep_cfg;
     TransportConfig tcfg;
-
 };
 
 #endif // KTELEPHONEUAMANAGER_H
