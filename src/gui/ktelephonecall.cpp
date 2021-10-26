@@ -85,6 +85,15 @@ void KTelephoneCall::callDestroy() {
     this->close();
 }
 
+void KTelephoneCall::closeEvent(QCloseEvent* event) {
+    if (this->outboundAudio) {
+        this->outboundAudio->stop();
+    }
+    if (this->inboundAudio) {
+        this->inboundAudio->stop();
+    }
+}
+
 void KTelephoneCall::callbackAnswer() {
     ui->dtmfInput->show();
     ui->callAction->show();
@@ -106,12 +115,6 @@ void KTelephoneCall::actionAnswer() {
 }
 
 void KTelephoneCall::actionHangup() {
-    if (this->outboundAudio) {
-        this->outboundAudio->stop();
-    }
-    if (this->inboundAudio) {
-        this->inboundAudio->stop();
-    }
     this->mCall->doHangup();
     this->close();
 }

@@ -39,6 +39,9 @@ private:
     bool mute = false;
     QString previousDtmf;
 
+protected:
+    void closeEvent(QCloseEvent*);
+
 public slots:
 
     void actionHangup();
