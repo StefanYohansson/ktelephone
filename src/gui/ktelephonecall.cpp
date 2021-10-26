@@ -81,6 +81,7 @@ void KTelephoneCall::setInstance(MyCall *telephoneCall) {
 void KTelephoneCall::callDestroy() {
     if (this->mCall) {
         delete this->mCall;
+        this->mCall = NULL;
     }
     this->close();
 }
@@ -91,6 +92,10 @@ void KTelephoneCall::closeEvent(QCloseEvent* event) {
     }
     if (this->inboundAudio) {
         this->inboundAudio->stop();
+    }
+    if (this->mCall) {
+        this->mCall->doHangup();
+        delete this->mCall;
     }
 }
 
@@ -115,7 +120,6 @@ void KTelephoneCall::actionAnswer() {
 }
 
 void KTelephoneCall::actionHangup() {
-    this->mCall->doHangup();
     this->close();
 }
 
