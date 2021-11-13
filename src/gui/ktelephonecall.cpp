@@ -43,6 +43,10 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
             SIGNAL(textEdited(QString)), this,
             SLOT(actionDtmf(QString)));
 
+    connect(this,
+            SIGNAL(rejected()), this,
+            SLOT(onWindowClose()));
+
     ui->dtmfInput->hide();
     ui->dtmfInput->hide();
     ui->callAction->hide();
@@ -90,6 +94,10 @@ void KTelephoneCall::callDestroy() {
 }
 
 void KTelephoneCall::closeEvent(QCloseEvent* event) {
+    this->onWindowClose();
+}
+
+void KTelephoneCall::onWindowClose() {
     if (this->outboundAudio) {
         this->outboundAudio->stop();
     }

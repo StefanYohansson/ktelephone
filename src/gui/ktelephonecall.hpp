@@ -61,6 +61,8 @@ public slots:
 
 private slots:
     void openTransferCallDialog();
+
+    void onWindowClose();
 };
 
 
