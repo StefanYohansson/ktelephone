@@ -1,4 +1,5 @@
 #include "ktelephonecall.hpp"
+#include "ktelephonetransfercall.hpp"
 
 #include "ui_call.h"
 #include <QDebug>
@@ -20,7 +21,7 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_M), this,
                   SLOT(actionMute()));
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this,
-                  SLOT(actionTransfer()));
+                  SLOT(openTransferCallDialog()));
 
     connect(ui->answerButton,
             SIGNAL(clicked()), this,
@@ -37,7 +38,7 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
             SLOT(actionHold()));
     connect(ui->transferButton,
             SIGNAL(clicked()), this,
-            SLOT(actionTransfer()));
+            SLOT(openTransferCallDialog()));
     connect(ui->dtmfInput,
             SIGNAL(textEdited(QString)), this,
             SLOT(actionDtmf(QString)));
@@ -66,6 +67,7 @@ void KTelephoneCall::setInstance(MyCall *telephoneCall) {
         outboundAudio->setLoops(QSound::Infinite);
         outboundAudio->play();
         this->outboundAudio = outboundAudio;
+        this->contact = QString::fromStdString(ci.remoteUri);
     } else {
         // Ringing
         whoLabel.append("From: ");
@@ -74,6 +76,7 @@ void KTelephoneCall::setInstance(MyCall *telephoneCall) {
         inboundAudio->setLoops(QSound::Infinite);
         inboundAudio->play();
         this->inboundAudio = inboundAudio;
+        this->contact = QString::fromStdString(ci.localContact);
     }
     ui->whoLabel->setText(whoLabel);
 }
@@ -96,6 +99,9 @@ void KTelephoneCall::closeEvent(QCloseEvent* event) {
     if (this->mCall) {
         this->mCall->doHangup();
         delete this->mCall;
+    }
+    if (this->transferCall) {
+        this->transferCall->close();
     }
 }
 
@@ -153,10 +159,19 @@ void KTelephoneCall::actionDtmf(QString text) {
     this->previousDtmf = text;
 }
 
-void KTelephoneCall::actionTransfer() {
-    const QString destination = ui->dtmfInput->text();
-    if (destination.isEmpty()) {
+void KTelephoneCall::actionTransfer(QString destinationNumber) {
+    if (destinationNumber.isEmpty() || destinationNumber.isNull()) {
         return;
     }
-    this->mCall->doTransfer(destination, this->calleeUsername);
+    this->mCall->doTransfer(destinationNumber, this->calleeUsername);
+    this->transferCall->close();
+}
+
+void KTelephoneCall::openTransferCallDialog() {
+    if (!this->transferCall) {
+        const auto onClickTransfer = std::bind(&KTelephoneCall::actionTransfer, this, std::placeholders::_1);
+        this->transferCall = new KTelphoneTransferCall(onClickTransfer);
+        this->transferCall->setWindowTitle(contact);
+    }
+    this->transferCall->show();
 }
