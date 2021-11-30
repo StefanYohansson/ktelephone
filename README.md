@@ -91,6 +91,16 @@ Executing (if you're still inside `build` folder.)
 ./ktelephone
 ```
 
+To run tests, use:
+
+```sh
+mkdir -p ./build
+cd ./build
+cmake .. -DENABLE_TESTING=true
+make
+make test ARGS="-V"
+```
+
 ### For WSL
 
 You'll need something [like X-Server and Terminator](https://medium.com/javarevisited/using-wsl-2-with-x-server-linux-on-windows-a372263533c3)
