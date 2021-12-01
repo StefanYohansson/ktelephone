@@ -1,5 +1,6 @@
 #include "ktelephonecall.hpp"
 #include "ktelephonetransfercall.hpp"
+#include "ktelephoneutil.hpp"
 
 #include "ui_call.h"
 #include <QDebug>
@@ -64,23 +65,22 @@ void KTelephoneCall::setInstance(MyCall *telephoneCall) {
     this->mCall = telephoneCall;
     CallInfo ci = this->mCall->getInfo();
     QString whoLabel;
+    this->contact = getNumberFromURI(QString::fromStdString(ci.remoteUri));
     if (this->callDirection == "outbound") {
         whoLabel.append("To: ");
-        whoLabel.append(QString::fromStdString(ci.remoteUri));
+        whoLabel.append(this->contact);
         QSound *outboundAudio = new QSound("data/sounds/outbound-ring.wav");
         outboundAudio->setLoops(QSound::Infinite);
         outboundAudio->play();
         this->outboundAudio = outboundAudio;
-        this->contact = QString::fromStdString(ci.remoteUri);
     } else {
         // Ringing
         whoLabel.append("From: ");
-        whoLabel.append(QString::fromStdString(ci.localContact));
+        whoLabel.append(this->contact);
         QSound *inboundAudio = new QSound("data/sounds/inbound-ring.wav");
         inboundAudio->setLoops(QSound::Infinite);
         inboundAudio->play();
         this->inboundAudio = inboundAudio;
-        this->contact = QString::fromStdString(ci.localContact);
     }
     ui->whoLabel->setText(whoLabel);
 }
