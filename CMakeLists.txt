@@ -28,6 +28,7 @@ set(ktelephone_SRC
   src/gui/ktelephonepreferences.cpp
   src/gui/ktelephonecall.cpp
   src/gui/ktelephonetransfercall.cpp
+  src/gui/ktelephoneutil.cpp
   src/telephony/mycall.cpp
   src/telephony/ua.cpp
   src/telephony/uamanager.cpp)
