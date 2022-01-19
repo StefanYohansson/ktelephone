@@ -4,6 +4,13 @@
 
 #include "ui_call.h"
 #include <QDebug>
+#include <QRegularExpression>
+
+bool isDTMFDigit(QString digit) {
+    QRegularExpression re("[0-9a-dA-D*#]");
+    QRegularExpressionMatch match = re.match(digit);
+    return match.hasMatch();
+}
 
 KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username) :
         QDialog(),
@@ -40,9 +47,6 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
     connect(ui->transferButton,
             SIGNAL(clicked()), this,
             SLOT(openTransferCallDialog()));
-    connect(ui->dtmfInput,
-            SIGNAL(textEdited(QString)), this,
-            SLOT(actionDtmf(QString)));
 
     connect(this,
             SIGNAL(rejected()), this,
@@ -51,7 +55,9 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
     ui->dtmfInput->hide();
     ui->dtmfInput->hide();
     ui->callAction->hide();
-
+    ui->dtmfInput->setReadOnly(true);
+    ui->dtmfInput->setEnabled(false);
+    ui->dtmfInput->setFrame(false);
     if (callDirection == "outbound") {
         ui->answerButton->deleteLater();
     }
@@ -95,6 +101,12 @@ void KTelephoneCall::callDestroy() {
 
 void KTelephoneCall::closeEvent(QCloseEvent* event) {
     this->onWindowClose();
+}
+
+void KTelephoneCall::keyPressEvent(QKeyEvent *event) {
+    if (isDTMFDigit(event->text())) {
+        this->actionDtmf(event->text());
+    }
 }
 
 void KTelephoneCall::onWindowClose() {
@@ -157,14 +169,15 @@ void KTelephoneCall::actionMute() {
     this->mute = !this->mute;
 }
 
-void KTelephoneCall::actionDtmf(QString text) {
-    if (!this->answered
-        || this->previousDtmf.length() >= text.length()) {
-        this->previousDtmf = text;
-        return;
+void KTelephoneCall::actionDtmf(QString digit) {
+    if (this->answered) {
+        try {
+            this->mCall->doDtmf(digit);
+            ui->dtmfInput->insert(digit);
+        } catch (Error &err) {
+            qDebug() << "DTMF Error " << QString::fromStdString(err.reason);
+        }
     }
-    this->mCall->doDtmf(text.right(1));
-    this->previousDtmf = text;
 }
 
 void KTelephoneCall::actionTransfer(QString destinationNumber) {
