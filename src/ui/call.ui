@@ -45,13 +45,6 @@
                     </item>
                 </layout>
             </item>
-            <item row="2" column="0">
-                <widget class="QLabel" name="descLabel">
-                    <property name="text">
-                        <string/>
-                    </property>
-                </widget>
-            </item>
             <item row="3" column="0">
                 <widget class="QLineEdit" name="dtmfInput"/>
             </item>
