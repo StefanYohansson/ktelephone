@@ -4,13 +4,6 @@
 
 #include "ui_call.h"
 #include <QDebug>
-#include <QRegularExpression>
-
-bool isDTMFDigit(QString digit) {
-    QRegularExpression re("[0-9a-dA-D*#]");
-    QRegularExpressionMatch match = re.match(digit);
-    return match.hasMatch();
-}
 
 KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username) :
         QDialog(),
@@ -104,9 +97,7 @@ void KTelephoneCall::closeEvent(QCloseEvent* event) {
 }
 
 void KTelephoneCall::keyPressEvent(QKeyEvent *event) {
-    if (isDTMFDigit(event->text())) {
-        this->actionDtmf(event->text());
-    }
+    this->actionDtmf(event->text());
 }
 
 void KTelephoneCall::onWindowClose() {
