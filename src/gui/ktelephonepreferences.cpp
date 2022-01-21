@@ -82,6 +82,7 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 	ui->passwordEdit->setText(mTelephone.password);
 	ui->passwordEdit->setEnabled(shouldEnableInputs);
 	ui->activeCheckbox->setChecked(mTelephone.active);
+	ui->registerStartupCheckbox->setChecked(mTelephone.should_register_startup);
 
 	currentTelephone = current;
 }
@@ -107,6 +108,7 @@ void KTelephonePreferences::saveChanges() {
 	mTelephone.password = ui->passwordEdit->text();
 	mTelephone.domain = ui->domainEdit->text();
 	mTelephone.active = ui->activeCheckbox->isChecked();
+	mTelephone.should_register_startup = ui->registerStartupCheckbox->isChecked();
 
 	bool shouldEnableInputs = true;
 	if (mTelephone.active) {
@@ -142,7 +144,10 @@ void KTelephonePreferences::newItem() {
 			QString("0.0.0.0"),
 			QString("dummy@0.0.0.0"),
 			QString("dummypass"),
-			0 // active
+			0, // active
+
+			// prefs
+			1, // should_register_startup
 	};
 
 	mManager->saveTelephone(&telephone);
