@@ -173,15 +173,14 @@ void KTelephoneManager::loadFromDatabase() {
 				query.value(9).toInt(),
 				query.value(10).toInt(),
 				query.value(11).toInt(),
-				query.value(12).toInt(),
+				query.value(12).toString(),
 				query.value(13).toInt(),
 
 				query.value(14).toInt(),
 				query.value(15).toInt(),
 				query.value(16).toInt(),
 				query.value(17).toInt(),
-				query.value(18).toInt(),
-				query.value(19).toInt(),
+				query.value(18).toString()
 		};
 
 		this->newKTelephone(telephone);
