@@ -39,6 +39,7 @@ void UserAgentManager::start(int port) {
 
 		ep->transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
 		ep->transportCreate(PJSIP_TRANSPORT_TCP, tcfg);
+		ep->transportCreate(PJSIP_TRANSPORT_TLS, tcfg);
 
 		// Start the library (worker threads etc)
 		ep->libStart();
@@ -66,6 +67,13 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t *mTelephone) {
 	} else {
 		username.append(mTelephone->username);
 	}
+
+	if (mTelephone->transport == PJSIP_TRANSPORT_TCP) {
+		domain.append(";transport=tcp");
+	} else if (mTelephone->transport == PJSIP_TRANSPORT_TLS) {
+		domain.append(";transport=tls");
+	}
+
 	acfg.regConfig.registrarUri = domain.toStdString();
 	acfg.regConfig.registerOnAdd = mTelephone->should_register_startup;
 
