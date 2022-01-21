@@ -83,6 +83,7 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 	ui->passwordEdit->setEnabled(shouldEnableInputs);
 	ui->activeCheckbox->setChecked(mTelephone.active);
 	ui->registerStartupCheckbox->setChecked(mTelephone.should_register_startup);
+	ui->ringbackCheckbox->setChecked(mTelephone.should_disable_ringback_tone);
 	ui->transportCombobox->setCurrentIndex(mTelephone.transport - 1);
 
 	currentTelephone = current;
@@ -110,6 +111,7 @@ void KTelephonePreferences::saveChanges() {
 	mTelephone.domain = ui->domainEdit->text();
 	mTelephone.active = ui->activeCheckbox->isChecked();
 	mTelephone.should_register_startup = ui->registerStartupCheckbox->isChecked();
+	mTelephone.should_disable_ringback_tone = ui->ringbackCheckbox->isChecked();
 	mTelephone.transport = ui->transportCombobox->currentIndex() + 1;
 
 	bool shouldEnableInputs = true;

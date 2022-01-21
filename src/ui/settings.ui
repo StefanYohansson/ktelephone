@@ -1,591 +1,619 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>settings</class>
-    <widget class="QMainWindow" name="settings">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>684</width>
-                <height>514</height>
-            </rect>
-        </property>
-        <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-            </sizepolicy>
-        </property>
-        <property name="minimumSize">
-            <size>
-                <width>684</width>
-                <height>514</height>
-            </size>
-        </property>
-        <property name="maximumSize">
-            <size>
-                <width>684</width>
-                <height>514</height>
-            </size>
-        </property>
-        <property name="windowTitle">
-            <string>Settings</string>
-        </property>
-        <widget class="QWidget" name="centralWidget">
+ <class>settings</class>
+ <widget class="QMainWindow" name="settings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>684</width>
+    <height>514</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>684</width>
+    <height>514</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>684</width>
+    <height>514</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>684</width>
+     <height>514</height>
+    </size>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QListWidget" name="telephonesList">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_8"/>
+    </item>
+    <item row="0" column="2">
+     <widget class="QToolBox" name="toolBox">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="sipinfo">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>404</width>
+         <height>356</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>SIP Basics</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QCheckBox" name="activeCheckbox">
+          <property name="text">
+           <string>Active</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Username</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="usernameEdit">
+            <property name="toolTip">
+             <string>extension@domain</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Password</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="passwordEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="sipadvanced">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>404</width>
+         <height>356</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>SIP Advanced</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Description</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="descriptionEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Full Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="nameEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_3">
             <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Domain</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="domainEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="registerStartupCheckbox">
+          <property name="text">
+           <string>Register on startup</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="subPresenceCheckbox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Subscribe presence</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="pubPresenceCheckbox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Publish presence</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="blfCheckbox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Use BLF</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="ringbackCheckbox">
+          <property name="text">
+           <string>Disable ringback tone</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="customRingtoneButton">
+          <property name="text">
+           <string>Custom ringtone</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="network">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>404</width>
+         <height>356</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Network</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>190</width>
+              <height>0</height>
+             </size>
             </property>
             <property name="maximumSize">
-                <size>
-                    <width>684</width>
-                    <height>514</height>
-                </size>
+             <size>
+              <width>190</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <layout class="QGridLayout" name="gridLayout">
-                <item row="1" column="0">
-                    <layout class="QHBoxLayout" name="horizontalLayout_8"/>
-                </item>
-                <item row="2" column="0" colspan="3">
-                    <layout class="QHBoxLayout" name="horizontalLayout_7">
-                        <item>
-                            <widget class="QPushButton" name="addButton">
-                                <property name="text">
-                                    <string>Add</string>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QPushButton" name="removeButton">
-                                <property name="text">
-                                    <string>Remove</string>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <spacer name="horizontalSpacer">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>QSizePolicy::Fixed</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>277</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                        <item>
-                            <widget class="QPushButton" name="saveButton">
-                                <property name="text">
-                                    <string>Save</string>
-                                </property>
-                            </widget>
-                        </item>
-                    </layout>
-                </item>
-                <item row="0" column="0">
-                    <widget class="QListWidget" name="telephonesList">
-                        <property name="sizePolicy">
-                            <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                    </widget>
-                </item>
-                <item row="0" column="2">
-                    <widget class="QToolBox" name="toolBox">
-                        <property name="currentIndex">
-                            <number>0</number>
-                        </property>
-                        <widget class="QWidget" name="sipinfo">
-                            <property name="geometry">
-                                <rect>
-                                    <x>0</x>
-                                    <y>0</y>
-                                    <width>398</width>
-                                    <height>362</height>
-                                </rect>
-                            </property>
-                            <attribute name="label">
-                                <string>SIP Basics</string>
-                            </attribute>
-                            <layout class="QVBoxLayout" name="verticalLayout_4">
-                                <item>
-                                    <widget class="QCheckBox" name="activeCheckbox">
-                                        <property name="text">
-                                            <string>Active</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_5">
-                                        <item>
-                                            <widget class="QLabel" name="label_4">
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>100</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Username</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="usernameEdit">
-                                                <property name="toolTip">
-                                                    <string>extension@domain</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_6">
-                                        <item>
-                                            <widget class="QLabel" name="label_5">
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>100</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Password</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="passwordEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <spacer name="verticalSpacer">
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                        <property name="sizeHint" stdset="0">
-                                            <size>
-                                                <width>20</width>
-                                                <height>40</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                </item>
-                            </layout>
-                        </widget>
-                        <widget class="QWidget" name="sipadvanced">
-                            <property name="geometry">
-                                <rect>
-                                    <x>0</x>
-                                    <y>0</y>
-                                    <width>398</width>
-                                    <height>362</height>
-                                </rect>
-                            </property>
-                            <attribute name="label">
-                                <string>SIP Advanced</string>
-                            </attribute>
-                            <layout class="QVBoxLayout" name="verticalLayout_5">
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_2">
-                                        <item>
-                                            <widget class="QLabel" name="label">
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>100</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Description</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="descriptionEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                                        <item>
-                                            <widget class="QLabel" name="label_2">
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>100</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Full Name</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="nameEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_4">
-                                        <item>
-                                            <widget class="QLabel" name="label_3">
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>100</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Domain</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="domainEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <widget class="QCheckBox" name="registerStartupCheckbox">
-                                        <property name="text">
-                                            <string>Register on startup</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QCheckBox" name="subPresenceCheckbox">
-                                        <property name="text">
-                                            <string>Subscribe presence</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QCheckBox" name="pubPresenceCheckbox">
-                                        <property name="text">
-                                            <string>Publish presence</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QCheckBox" name="blfCheckbox">
-                                        <property name="text">
-                                            <string>Use BLF</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QCheckBox" name="ringbackCheckbox">
-                                        <property name="text">
-                                            <string>Disable ringback tone</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QPushButton" name="customRingtoneButton">
-                                        <property name="text">
-                                            <string>Custom ringtone</string>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <spacer name="verticalSpacer_2">
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                        <property name="sizeHint" stdset="0">
-                                            <size>
-                                                <width>20</width>
-                                                <height>40</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                </item>
-                            </layout>
-                        </widget>
-                        <widget class="QWidget" name="network">
-                            <attribute name="label">
-                                <string>Network</string>
-                            </attribute>
-                            <layout class="QVBoxLayout" name="verticalLayout">
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_11">
-                                        <item>
-                                            <widget class="QLabel" name="label_6">
-                                                <property name="enabled">
-                                                    <bool>true</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>16777215</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Transport</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QComboBox" name="transportCombobox">
-                                                <item>
-                                                    <property name="text">
-                                                        <string>UDP</string>
-                                                    </property>
-                                                </item>
-                                                <item>
-                                                    <property name="text">
-                                                        <string>TCP</string>
-                                                    </property>
-                                                </item>
-                                                <item>
-                                                    <property name="text">
-                                                        <string>TLS</string>
-                                                    </property>
-                                                </item>
-                                            </widget>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_12">
-                                        <item>
-                                            <widget class="QLabel" name="label_8">
-                                                <property name="enabled">
-                                                    <bool>true</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>16777215</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Subscription expiry delay</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="subDelayEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_13">
-                                        <item>
-                                            <widget class="QLabel" name="label_9">
-                                                <property name="enabled">
-                                                    <bool>true</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>16777215</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Keep alive expiry delay</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="keepAliveDelayEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout">
-                                        <item>
-                                            <widget class="QLabel" name="label_7">
-                                                <property name="enabled">
-                                                    <bool>true</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>16777215</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Registration expiry delay</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="registrationDelayEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_14">
-                                        <item>
-                                            <widget class="QLabel" name="label_10">
-                                                <property name="enabled">
-                                                    <bool>true</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>16777215</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>Use STUN</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QComboBox" name="stunCombobox">
-                                                <item>
-                                                    <property name="text">
-                                                        <string>Use global STUN</string>
-                                                    </property>
-                                                </item>
-                                                <item>
-                                                    <property name="text">
-                                                        <string>Don't use STUN</string>
-                                                    </property>
-                                                </item>
-                                                <item>
-                                                    <property name="text">
-                                                        <string>Use custom STUN</string>
-                                                    </property>
-                                                </item>
-                                            </widget>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <layout class="QHBoxLayout" name="horizontalLayout_15">
-                                        <item>
-                                            <widget class="QLabel" name="label_11">
-                                                <property name="enabled">
-                                                    <bool>true</bool>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="minimumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>0</height>
-                                                    </size>
-                                                </property>
-                                                <property name="maximumSize">
-                                                    <size>
-                                                        <width>190</width>
-                                                        <height>16777215</height>
-                                                    </size>
-                                                </property>
-                                                <property name="text">
-                                                    <string>STUN Server</string>
-                                                </property>
-                                            </widget>
-                                        </item>
-                                        <item>
-                                            <widget class="QLineEdit" name="stunEdit"/>
-                                        </item>
-                                    </layout>
-                                </item>
-                                <item>
-                                    <spacer name="verticalSpacer_3">
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                        <property name="sizeHint" stdset="0">
-                                            <size>
-                                                <width>20</width>
-                                                <height>310</height>
-                                            </size>
-                                        </property>
-                                    </spacer>
-                                </item>
-                            </layout>
-                        </widget>
-                    </widget>
-                </item>
-            </layout>
-        </widget>
-    </widget>
-    <resources/>
-    <connections/>
+            <property name="text">
+             <string>Transport</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="transportCombobox">
+            <item>
+             <property name="text">
+              <string>UDP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TCP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TLS</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>190</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>190</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Subscription expiry delay</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="subDelayEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QLabel" name="label_9">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>190</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>190</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Keep alive expiry delay</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="keepAliveDelayEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>190</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>190</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Registration expiry delay</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="registrationDelayEdit"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QLabel" name="label_10">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>190</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>190</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Use STUN</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="stunCombobox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>Use global STUN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Don't use STUN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Use custom STUN</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>190</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>190</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>STUN Server</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="stunEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>310</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QPushButton" name="addButton">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeButton">
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>277</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="saveButton">
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

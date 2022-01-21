@@ -3,13 +3,14 @@
 #include "ui_call.h"
 #include <QDebug>
 
-KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username) :
+KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username, int disableRingback) :
 		QDialog(),
 		ui(new Ui::call) {
 	ui->setupUi(this);
 
 	this->callDirection = direction;
 	this->calleeUsername = username;
+	this->disableRingback = (bool) disableRingback;
 
 	new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this,
 	              SLOT(actionAnswer()));
@@ -62,18 +63,25 @@ void KTelephoneCall::setInstance(MyCall *telephoneCall) {
 	if (this->callDirection == "outbound") {
 		whoLabel.append("To: ");
 		whoLabel.append(QString::fromStdString(ci.remoteUri));
+
 		QSound *outboundAudio = new QSound("data/sounds/outbound-ring.wav");
 		outboundAudio->setLoops(QSound::Infinite);
-		outboundAudio->play();
 		this->outboundAudio = outboundAudio;
+
+		if (!this->disableRingback) {
+			outboundAudio->play();
+		}
 	} else {
 		// Ringing
 		whoLabel.append("From: ");
 		whoLabel.append(QString::fromStdString(ci.localContact));
+
 		QSound *inboundAudio = new QSound("data/sounds/inbound-ring.wav");
 		inboundAudio->setLoops(QSound::Infinite);
-		inboundAudio->play();
 		this->inboundAudio = inboundAudio;
+		if (!this->disableRingback) {
+			inboundAudio->play();
+		}
 	}
 	ui->whoLabel->setText(whoLabel);
 }

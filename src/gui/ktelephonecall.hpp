@@ -17,7 +17,7 @@ class KTelephoneCall : public QDialog {
 Q_OBJECT
 
 public:
-	explicit KTelephoneCall(KTelephone *parent = 0, QString direction = "inbound", QString username = "");
+	explicit KTelephoneCall(KTelephone *parent = 0, QString direction = "inbound", QString username = "", int disableRingback = 0);
 
 	~KTelephoneCall();
 
@@ -37,6 +37,7 @@ private:
 	bool answered = false;
 	bool hold = false;
 	bool mute = false;
+	bool disableRingback = false;
 	QString previousDtmf;
 
 public slots:
