@@ -140,16 +140,28 @@ void KTelephonePreferences::saveChanges() {
 
 void KTelephonePreferences::newItem() {
 	Telephone_t telephone{
-			QString("0"),
-			QString("dummy"),
-			QString("dummy"),
-			QString("0.0.0.0"),
-			QString("dummy@0.0.0.0"),
-			QString("dummypass"),
-			0, // active
+			.id=QString("0"),
+			.description=QString("dummy"),
+			.name=QString("dummy"),
+			.domain=QString("0.0.0.0"),
+			.username=QString("dummy@0.0.0.0"),
+			.password=QString("dummypass"),
+			.active=0, // active
 
 			// prefs
-			1, // should_register_startup
+			.should_register_startup=1,
+			.should_subscribe_presence=0,
+			.should_publish_presence=0,
+			.should_use_blf=0,
+			.should_disable_ringback_tone=0,
+			.custom_ringtone=QString(""),
+
+			.transport=1,
+			.subscription_expiry_delay=0,
+			.keep_alive_expiry_delay=0,
+			.registration_expiry_delay=0,
+			.use_stun=0,
+			.stun_server=QString("")
 	};
 
 	mManager->saveTelephone(&telephone);
