@@ -38,6 +38,7 @@ void UserAgentManager::start(int port) {
 		tcfg.port = port;
 
 		ep->transportCreate(PJSIP_TRANSPORT_UDP, tcfg);
+		ep->transportCreate(PJSIP_TRANSPORT_TCP, tcfg);
 
 		// Start the library (worker threads etc)
 		ep->libStart();
