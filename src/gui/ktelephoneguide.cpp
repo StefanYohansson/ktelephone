@@ -54,13 +54,28 @@ void KTelephoneGuide::accept() {
 	}
 
 	Telephone_t telephone{
-			QString("0"),
-			ui->descriptionEdit->text(),
-			ui->nameEdit->text(),
-			ui->domainEdit->text(),
-			ui->usernameEdit->text(),
-			ui->passwordEdit->text(),
-			1
+		.id=QString("0"),
+		.description=ui->descriptionEdit->text(),
+		.name=ui->nameEdit->text(),
+		.domain=ui->domainEdit->text(),
+		.username=ui->usernameEdit->text(),
+		.password=ui->passwordEdit->text(),
+		.active=1, // active
+
+		// prefs
+		.should_register_startup=1,
+		.should_subscribe_presence=0,
+		.should_publish_presence=0,
+		.should_use_blf=0,
+		.should_disable_ringback_tone=0,
+		.custom_ringtone=QString(""),
+
+		.transport=1,
+		.subscription_expiry_delay=0,
+		.keep_alive_expiry_delay=15,
+		.registration_expiry_delay=300,
+		.use_stun=0,
+		.stun_server=QString("")
 	};
 
 	mManager->saveTelephone(&telephone);

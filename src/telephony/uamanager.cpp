@@ -76,6 +76,8 @@ AccountConfig UserAgentManager::getAccountConfig(Telephone_t *mTelephone) {
 
 	acfg.regConfig.registrarUri = domain.toStdString();
 	acfg.regConfig.registerOnAdd = mTelephone->should_register_startup;
+	acfg.regConfig.timeoutSec = mTelephone->registration_expiry_delay;
+	acfg.natConfig.udpKaIntervalSec = mTelephone->keep_alive_expiry_delay;
 
 	AuthCredInfo cred("digest", "*", username.toStdString(), 0, mTelephone->password.toStdString());
 	acfg.sipConfig.authCreds.push_back(cred);

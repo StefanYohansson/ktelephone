@@ -85,6 +85,8 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 	ui->registerStartupCheckbox->setChecked(mTelephone.should_register_startup);
 	ui->ringbackCheckbox->setChecked(mTelephone.should_disable_ringback_tone);
 	ui->transportCombobox->setCurrentIndex(mTelephone.transport - 1);
+	ui->keepAliveDelayEdit->setText(QString::number(mTelephone.keep_alive_expiry_delay));
+	ui->registrationDelayEdit->setText(QString::number(mTelephone.registration_expiry_delay));
 
 	currentTelephone = current;
 }
@@ -113,6 +115,8 @@ void KTelephonePreferences::saveChanges() {
 	mTelephone.should_register_startup = ui->registerStartupCheckbox->isChecked();
 	mTelephone.should_disable_ringback_tone = ui->ringbackCheckbox->isChecked();
 	mTelephone.transport = ui->transportCombobox->currentIndex() + 1;
+	mTelephone.keep_alive_expiry_delay = ui->keepAliveDelayEdit->text().toInt();
+	mTelephone.registration_expiry_delay = ui->registrationDelayEdit->text().toInt();
 
 	bool shouldEnableInputs = true;
 	if (mTelephone.active) {
@@ -160,8 +164,8 @@ void KTelephonePreferences::newItem() {
 
 			.transport=1,
 			.subscription_expiry_delay=0,
-			.keep_alive_expiry_delay=0,
-			.registration_expiry_delay=0,
+			.keep_alive_expiry_delay=15,
+			.registration_expiry_delay=300,
 			.use_stun=0,
 			.stun_server=QString("")
 	};
