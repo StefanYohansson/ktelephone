@@ -17,7 +17,7 @@ class KTelephoneCall : public QDialog {
 Q_OBJECT
 
 public:
-	explicit KTelephoneCall(KTelephone *parent = 0, QString direction = "inbound", QString username = "", int disableRingback = 0);
+	explicit KTelephoneCall(KTelephone *parent = 0, QString direction = "inbound", QString username = "", int disableRingback = 0, QString customRingtone = "");
 
 	~KTelephoneCall();
 
@@ -32,6 +32,7 @@ private:
 	MyCall *mCall = NULL;
 	QString callDirection;
 	QString calleeUsername;
+	QString customRingtone;
 	QSound *inboundAudio = NULL;
 	QSound *outboundAudio = NULL;
 	bool answered = false;

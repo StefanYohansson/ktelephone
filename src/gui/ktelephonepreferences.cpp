@@ -21,6 +21,9 @@ KTelephonePreferences::KTelephonePreferences(QWidget *parent) :
 	connect(ui->saveButton,
 	        SIGNAL(released()), this,
 	        SLOT(saveChanges()));
+	connect(ui->customRingtoneButton,
+	        SIGNAL(released()), this,
+	        SLOT(findRingtone()));
 }
 
 KTelephonePreferences::~KTelephonePreferences() {
@@ -87,8 +90,37 @@ void KTelephonePreferences::itemChanged(QListWidgetItem *current, QListWidgetIte
 	ui->transportCombobox->setCurrentIndex(mTelephone.transport - 1);
 	ui->keepAliveDelayEdit->setText(QString::number(mTelephone.keep_alive_expiry_delay));
 	ui->registrationDelayEdit->setText(QString::number(mTelephone.registration_expiry_delay));
+	if (!mTelephone.custom_ringtone.isEmpty()) {
+		ui->customRingtoneButton->setText(mTelephone.custom_ringtone);
+	}
 
 	currentTelephone = current;
+}
+
+void KTelephonePreferences::findRingtone() {
+	if (currentTelephone == NULL) {
+		return;
+	}
+
+	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
+	if (!mTelephones.contains(currentTelephone->text())) {
+		return;
+	}
+
+	KTelephone *item = mTelephones.value(currentTelephone->text());
+	Telephone_t mTelephone = item->mTelephone;
+
+	QUrl fileName = QFileDialog::getOpenFileUrl(this,
+    tr("Open Audio"), QUrl(), tr("Audio Files (*.wav *.mp3 *.ogg)"));
+
+	if (fileName.isEmpty() || !fileName.isValid()) {
+		return;
+	}
+
+	mTelephone.custom_ringtone = fileName.toString();
+
+	mManager->updateKTelephone(mTelephone.username, &mTelephone);
+	mTelephones = mManager->getTelephones();
 }
 
 void KTelephonePreferences::saveChanges() {

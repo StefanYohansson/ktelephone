@@ -80,7 +80,7 @@ void KTelephone::setTelephone(Telephone_t telephone) {
 }
 
 void KTelephone::actionInboundCall(MyCall *call) {
-	KTelephoneCall *dialog = new KTelephoneCall(this, "inbound", mTelephone.username, mTelephone.should_disable_ringback_tone);
+	KTelephoneCall *dialog = new KTelephoneCall(this, "inbound", mTelephone.username, mTelephone.should_disable_ringback_tone, mTelephone.custom_ringtone);
 	qApp->alert(this);
 	dialog->setInstance(call);
 	call->setInstance(dialog);
@@ -96,7 +96,7 @@ void KTelephone::actionOutboundCall() {
 				return;
 			}
 
-			KTelephoneCall *dialog = new KTelephoneCall(this, "outbound", mTelephone.username, mTelephone.should_disable_ringback_tone);
+			KTelephoneCall *dialog = new KTelephoneCall(this, "outbound", mTelephone.username, mTelephone.should_disable_ringback_tone, mTelephone.custom_ringtone);
 			dialog->setInstance(call);
 			call->setInstance(dialog);
 			dialog->show();

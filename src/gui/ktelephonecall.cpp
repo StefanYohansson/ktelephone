@@ -3,7 +3,7 @@
 #include "ui_call.h"
 #include <QDebug>
 
-KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username, int disableRingback) :
+KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString username, int disableRingback, QString customRingtone) :
 		QDialog(),
 		ui(new Ui::call) {
 	ui->setupUi(this);
@@ -11,6 +11,7 @@ KTelephoneCall::KTelephoneCall(KTelephone *parent, QString direction, QString us
 	this->callDirection = direction;
 	this->calleeUsername = username;
 	this->disableRingback = (bool) disableRingback;
+	this->customRingtone = customRingtone;
 
 	new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this,
 	              SLOT(actionAnswer()));
@@ -64,19 +65,25 @@ void KTelephoneCall::setInstance(MyCall *telephoneCall) {
 		whoLabel.append("To: ");
 		whoLabel.append(QString::fromStdString(ci.remoteUri));
 
-		QSound *outboundAudio = new QSound("data/sounds/outbound-ring.wav");
-		outboundAudio->setLoops(QSound::Infinite);
+    QSound *outboundAudio = new QSound("data/sounds/outbound-ring.wav");
+    outboundAudio->setLoops(QSound::Infinite);
 		this->outboundAudio = outboundAudio;
 
 		if (!this->disableRingback) {
 			outboundAudio->play();
 		}
 	} else {
+    QSound *inboundAudio = NULL;
 		// Ringing
 		whoLabel.append("From: ");
 		whoLabel.append(QString::fromStdString(ci.localContact));
 
-		QSound *inboundAudio = new QSound("data/sounds/inbound-ring.wav");
+		if (this->customRingtone.isEmpty()) {
+			inboundAudio = new QSound("data/sounds/inbound-ring.wav");
+		} else {
+			inboundAudio = new QSound(this->customRingtone);
+		}
+
 		inboundAudio->setLoops(QSound::Infinite);
 		this->inboundAudio = inboundAudio;
 		if (!this->disableRingback) {

@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QListWidgetItem>
 #include <QCloseEvent>
+#include <QFileDialog>
 
 #include "ktelephone.hpp"
 
@@ -45,6 +46,8 @@ public slots:
 	void newItem();
 
 	void removeItem();
+
+	void findRingtone();
 };
 
 #endif // KTELEPHONEPREFERENCES_H
