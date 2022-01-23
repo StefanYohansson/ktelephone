@@ -3,10 +3,18 @@
 #include "ktelephone.hpp"
 #include "ktelephonemanager.hpp"
 
+QString readStyleSheet(QString path) {
+    QFile file(path);
+    file.open(QFile::ReadOnly);
+    return QString(file.readAll());
+}
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    const auto appIcon = QIcon("data/ktelephone.png");
+    QIcon appIcon("data/ktelephone.png");
     app.setWindowIcon(appIcon);
+    app.setStyleSheet(readStyleSheet(":/qss/style.qss"));
+
     KTelephoneManager m;
     return app.exec();
 }

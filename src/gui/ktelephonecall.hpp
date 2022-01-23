@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QSound>
 #include <QShortcut>
+#include <QKeyEvent>
 
 class MyCall;
 
@@ -39,11 +40,12 @@ private:
     bool answered = false;
     bool hold = false;
     bool mute = false;
-    QString previousDtmf;
     KTelphoneTransferCall *transferCall = NULL;
 
 protected:
     void closeEvent(QCloseEvent*);
+
+    void keyPressEvent(QKeyEvent*);
 
 public slots:
 
