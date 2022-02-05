@@ -1,0 +1,11 @@
+QDialog#call > QLineEdit#dtmfInput {
+    font-size: 8pt;
+    background: transparent;
+    color: black;
+    opacity: 100
+}
+
+QDialog#call > QLabel#whoLabel {
+    font-size: 8pt;
+    color: black;
+}

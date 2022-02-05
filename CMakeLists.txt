@@ -27,13 +27,15 @@ set(ktelephone_SRC
   src/gui/ktelephone.cpp
   src/gui/ktelephonepreferences.cpp
   src/gui/ktelephonecall.cpp
+  src/gui/ktelephonetransfercall.cpp
+  src/gui/ktelephoneutil.cpp
   src/telephony/mycall.cpp
   src/telephony/ua.cpp
   src/telephony/uamanager.cpp)
 
 qt5_add_resources(ktelephone_SRC resources.qrc)
 
-qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/settings.ui src/ui/call.ui src/ui/about.ui)
+qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/settings.ui src/ui/call.ui src/ui/about.ui src/ui/transfercall.ui)
 
 add_executable(ktelephone ${ktelephone_SRC})
 
@@ -42,3 +44,7 @@ target_link_libraries(ktelephone Qt5::Widgets Qt5::Sql Qt5::Multimedia)
 target_link_libraries(ktelephone ${PJSIP_LIBRARIES})
 
 install(TARGETS ktelephone DESTINATION bin)
+
+if (ENABLE_TESTING)
+  include(tests/CMakeLists.txt)
+endif()

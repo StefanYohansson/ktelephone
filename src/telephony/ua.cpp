@@ -14,7 +14,7 @@ void UserAgent::onRegState(OnRegStateParam &prm) {
 	ai.regIsActive ? this->mTelephone->changeRegistrationStatus(true) : this->mTelephone->changeRegistrationStatus(
 			false);
 	qDebug() << (ai.regIsActive ? "*** Register:" : "*** Unregister:")
-	         << " code=" << prm.code;
+			 << " code=" << prm.code;
 }
 
 void UserAgent::onIncomingCall(OnIncomingCallParam &iprm) {

@@ -2,4 +2,7 @@
   <qresource prefix="logo">
     <file>data/ktelephone.png</file>
   </qresource>
+  <qresource prefix="/">
+    <file>qss/style.qss</file>
+  </qresource>
 </RCC>

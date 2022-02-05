@@ -4,10 +4,12 @@
 #include <QDialog>
 #include <QSound>
 #include <QShortcut>
+#include <QKeyEvent>
 
 class MyCall;
 
 #include "ktelephone.hpp"
+#include "ktelephonetransfercall.hpp"
 
 namespace Ui {
 	class call;
@@ -33,13 +35,19 @@ private:
 	QString callDirection;
 	QString calleeUsername;
 	QString customRingtone;
+	QString contact;
 	QSound *inboundAudio = NULL;
 	QSound *outboundAudio = NULL;
 	bool answered = false;
 	bool hold = false;
 	bool mute = false;
 	bool disableRingback = false;
-	QString previousDtmf;
+	KTelphoneTransferCall *transferCall = NULL;
+
+protected:
+	void closeEvent(QCloseEvent *);
+
+	void keyPressEvent(QKeyEvent *);
 
 public slots:
 
@@ -53,8 +61,13 @@ public slots:
 
 	void actionDtmf(QString);
 
-	void actionTransfer();
+	void actionTransfer(QString);
 
+private slots:
+
+	void openTransferCallDialog();
+
+	void onWindowClose();
 };
 
 

@@ -10,11 +10,11 @@ KTelephoneGuide::KTelephoneGuide(QWidget *parent) :
 	ui->setupUi(this);
 
 	connect(ui->buttonBox,
-	        SIGNAL(accepted()), this,
-	        SLOT(accept()), Qt::UniqueConnection);
+			SIGNAL(accepted()), this,
+			SLOT(accept()), Qt::UniqueConnection);
 	connect(ui->usernameEdit,
-	        SIGNAL(textEdited(const QString &)), this,
-	        SLOT(usernameChanged(const QString &)));
+			SIGNAL(textEdited(const QString &)), this,
+			SLOT(usernameChanged(const QString &)));
 
 	ui->usernameEdit->setPlaceholderText("extension@domain");
 	ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
@@ -46,10 +46,10 @@ void KTelephoneGuide::usernameChanged(const QString &text) {
 
 void KTelephoneGuide::accept() {
 	if (ui->descriptionEdit->text() == '\0' ||
-	    ui->nameEdit->text() == '\0' ||
-	    ui->domainEdit->text() == '\0' ||
-	    ui->usernameEdit->text() == '\0' ||
-	    ui->passwordEdit->text() == '\0') {
+		ui->nameEdit->text() == '\0' ||
+		ui->domainEdit->text() == '\0' ||
+		ui->usernameEdit->text() == '\0' ||
+		ui->passwordEdit->text() == '\0') {
 		return;
 	}
 

@@ -16,25 +16,26 @@ KTelephone::KTelephone(QWidget *parent) :
 	ui->statusBar->addPermanentWidget(statusLabel);
 
 	new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Comma), this,
-	              SLOT(actionPreferences()));
+				  SLOT(actionPreferences()));
 	new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this,
-	              SLOT(close()));
+				  SLOT(close()));
 
 	connect(ui->actionPreferences,
-	        SIGNAL(triggered()), this,
-	        SLOT(actionPreferences()));
+			SIGNAL(triggered()), this,
+			SLOT(actionPreferences()));
 	connect(ui->actionAbout,
-	        SIGNAL(triggered()), this,
-	        SLOT(actionAbout()));
+			SIGNAL(triggered()), this,
+			SLOT(actionAbout()));
 	connect(ui->statusComboBox,
-	        SIGNAL(currentIndexChanged(int)), this,
-	        SLOT(changeStatus(int)));
+			SIGNAL(currentIndexChanged(int)), this,
+			SLOT(changeStatus(int)));
 	connect(ui->sipInput,
-	        SIGNAL(returnPressed()), this,
-	        SLOT(actionOutboundCall()));
+			SIGNAL(returnPressed()), this,
+			SLOT(actionOutboundCall()));
 }
 
 KTelephone::~KTelephone() {
+	mManager->removeKTelephone(mTelephone);
 	delete ui;
 }
 
@@ -53,15 +54,15 @@ KTelephoneManager *KTelephone::getManager() {
 
 void KTelephone::changeRegistrationStatus(bool status) {
 	static const char *statusNames[] = {"Unregistered",
-	                                    "Registered",
-	                                    nullptr};
+										"Registered",
+										nullptr};
 	disconnect(ui->statusComboBox,
-	           SIGNAL(currentIndexChanged(int)), 0, 0);
+			   SIGNAL(currentIndexChanged(int)), 0, 0);
 	statusMessage(statusNames[status]);
 	ui->statusComboBox->setCurrentIndex(!status);
 	connect(ui->statusComboBox,
-	        SIGNAL(currentIndexChanged(int)), this,
-	        SLOT(changeStatus(int)));
+			SIGNAL(currentIndexChanged(int)), this,
+			SLOT(changeStatus(int)));
 }
 
 void KTelephone::statusMessage(QString message) {
