@@ -8,28 +8,29 @@
 class KTelephoneManager;
 
 namespace Ui {
-    class guide;
+	class guide;
 }
 
 class KTelephoneGuide : public QDialog {
 Q_OBJECT
 
 public:
-    explicit KTelephoneGuide(QWidget *parent = 0);
+	explicit KTelephoneGuide(QWidget *parent = 0);
 
-    ~KTelephoneGuide();
+	~KTelephoneGuide();
 
-    void setManager(KTelephoneManager *manager);
+	void setManager(KTelephoneManager *manager);
 
 private:
-    Ui::guide *ui;
+	Ui::guide *ui;
 
 protected:
-    KTelephoneManager *mManager;
+	KTelephoneManager *mManager;
 
 public slots:
 
-    void accept();
+	void accept();
+
 	void usernameChanged(const QString &text);
 
 };

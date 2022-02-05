@@ -12,59 +12,60 @@ class MyCall;
 #include "ktelephonetransfercall.hpp"
 
 namespace Ui {
-    class call;
+	class call;
 }
 
 class KTelephoneCall : public QDialog {
 Q_OBJECT
 
 public:
-    explicit KTelephoneCall(KTelephone *parent = 0, QString direction = "inbound", QString username = "");
+	explicit KTelephoneCall(KTelephone *parent = 0, QString direction = "inbound", QString username = "");
 
-    ~KTelephoneCall();
+	~KTelephoneCall();
 
-    void setInstance(MyCall *telephoneCall);
+	void setInstance(MyCall *telephoneCall);
 
-    void callDestroy();
+	void callDestroy();
 
-    void callbackAnswer();
+	void callbackAnswer();
 
 private:
-    Ui::call *ui;
-    MyCall *mCall = NULL;
-    QString callDirection;
-    QString calleeUsername;
-    QString contact;
-    QSound *inboundAudio = NULL;
-    QSound *outboundAudio = NULL;
-    bool answered = false;
-    bool hold = false;
-    bool mute = false;
-    KTelphoneTransferCall *transferCall = NULL;
+	Ui::call *ui;
+	MyCall *mCall = NULL;
+	QString callDirection;
+	QString calleeUsername;
+	QString contact;
+	QSound *inboundAudio = NULL;
+	QSound *outboundAudio = NULL;
+	bool answered = false;
+	bool hold = false;
+	bool mute = false;
+	KTelphoneTransferCall *transferCall = NULL;
 
 protected:
-    void closeEvent(QCloseEvent*);
+	void closeEvent(QCloseEvent *);
 
-    void keyPressEvent(QKeyEvent*);
+	void keyPressEvent(QKeyEvent *);
 
 public slots:
 
-    void actionHangup();
+	void actionHangup();
 
-    void actionAnswer();
+	void actionAnswer();
 
-    void actionMute();
+	void actionMute();
 
-    void actionHold();
+	void actionHold();
 
-    void actionDtmf(QString);
+	void actionDtmf(QString);
 
-    void actionTransfer(QString);
+	void actionTransfer(QString);
 
 private slots:
-    void openTransferCallDialog();
 
-    void onWindowClose();
+	void openTransferCallDialog();
+
+	void onWindowClose();
 };
 
 

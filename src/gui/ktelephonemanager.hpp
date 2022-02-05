@@ -20,13 +20,13 @@ class KTelephonePreferences;
 class KTelephoneAbout;
 
 struct Telephone {
-    QString id;
-    QString description;
-    QString name;
-    QString domain;
-    QString username;
-    QString password;
-    int active;
+	QString id;
+	QString description;
+	QString name;
+	QString domain;
+	QString username;
+	QString password;
+	int active;
 };
 
 typedef struct Telephone Telephone_t;
@@ -38,59 +38,59 @@ class UserAgentManager;
 class KTelephoneManager : public QWidget {
 Q_OBJECT
 public:
-    explicit KTelephoneManager(QWidget *parent = 0);
+	explicit KTelephoneManager(QWidget *parent = 0);
 
-    ~KTelephoneManager();
+	~KTelephoneManager();
 
-    void newKTelephone(Telephone_t);
+	void newKTelephone(Telephone_t);
 
-    void updateKTelephone(QString, Telephone_t);
+	void updateKTelephone(QString, Telephone_t);
 
-    void saveTelephone(Telephone_t *);
+	void saveTelephone(Telephone_t *);
 
-    void updateTelephone(Telephone_t);
+	void updateTelephone(Telephone_t);
 
-    void deleteTelephone(Telephone_t);
+	void deleteTelephone(Telephone_t);
 
-    void removeKTelephone(Telephone_t);
+	void removeKTelephone(Telephone_t);
 
-    QHash<QString, KTelephone *> getTelephones();
+	QHash<QString, KTelephone *> getTelephones();
 
-    UserAgentManager *getUserAgentManager();
+	UserAgentManager *getUserAgentManager();
 
-    void openPreferences();
+	void openPreferences();
 
 	void openAbout();
 
 private:
-    void bootstrap();
+	void bootstrap();
 
-    QSystemTrayIcon *trayIcon = NULL;
-    QMenu *trayIconMenu = NULL;
+	QSystemTrayIcon *trayIcon = NULL;
+	QMenu *trayIconMenu = NULL;
 
 private slots:
 
-    void open();
+	void open();
 
 protected:
-    QHash<QString, KTelephone *> telephones;
-    KTelephone *mTelephone = NULL;
-    KTelephoneGuide *mGuide = NULL;
-    KTelephonePreferences *mPreferences = NULL;
-    KTelephoneAbout *mAbout = NULL;
-    UserAgentManager *mUAManager = NULL;
+	QHash<QString, KTelephone *> telephones;
+	KTelephone *mTelephone = NULL;
+	KTelephoneGuide *mGuide = NULL;
+	KTelephonePreferences *mPreferences = NULL;
+	KTelephoneAbout *mAbout = NULL;
+	UserAgentManager *mUAManager = NULL;
 
-    void startGuide();
+	void startGuide();
 
-    void connectDatabase();
+	void connectDatabase();
 
-    void bootstrapDatabase();
+	void bootstrapDatabase();
 
-    void loadFromDatabase();
+	void loadFromDatabase();
 
-    void unloadKTelephones();
+	void unloadKTelephones();
 
-    bool hasActiveAccounts();
+	bool hasActiveAccounts();
 };
 
 #endif // KTELEPHONEMANAGER_H

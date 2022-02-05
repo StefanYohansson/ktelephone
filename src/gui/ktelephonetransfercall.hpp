@@ -6,31 +6,32 @@
 #include "ui_transfercall.h"
 
 namespace Ui {
-    class transfercall;
+	class transfercall;
 }
 
 class KTelphoneTransferCall : public QDialog {
 Q_OBJECT
 
 public:
-    explicit KTelphoneTransferCall(std::function<void(QString)> onTransferClick);
+	explicit KTelphoneTransferCall(std::function<void(QString)> onTransferClick);
 
-    ~KTelphoneTransferCall();
+	~KTelphoneTransferCall();
 
 private:
-    Ui::transfercall *ui;
-    std::function<void(QString)> onTransferClick;
+	Ui::transfercall *ui;
+	std::function<void(QString)> onTransferClick;
 
 
 protected:
-    void closeEvent(QCloseEvent*);
+	void closeEvent(QCloseEvent *);
 
 private slots:
-    void actionTransfer();
 
-    void actionCancel();
+	void actionTransfer();
 
-    void resetState();
+	void actionCancel();
+
+	void resetState();
 };
 
 #endif // KTELEPHONETRANSFERCALL_H

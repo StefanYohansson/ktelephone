@@ -11,31 +11,31 @@ class KTelephoneCall;
 
 class MyCall : public Call {
 public:
-    MyCall(Account &acc, int call_id = PJSUA_INVALID_ID)
-            : Call(acc, call_id) {}
+	MyCall(Account &acc, int call_id = PJSUA_INVALID_ID)
+			: Call(acc, call_id) {}
 
-    // Notification when call's state has changed.
-    virtual void onCallState(OnCallStateParam &prm);
+	// Notification when call's state has changed.
+	virtual void onCallState(OnCallStateParam &prm);
 
-    // Notification when call's media state has changed.
-    virtual void onCallMediaState(OnCallMediaStateParam &prm);
+	// Notification when call's media state has changed.
+	virtual void onCallMediaState(OnCallMediaStateParam &prm);
 
-    void setInstance(KTelephoneCall *telephoneCall);
+	void setInstance(KTelephoneCall *telephoneCall);
 
-    void doHold(bool);
+	void doHold(bool);
 
-    void doMute(bool);
+	void doMute(bool);
 
-    void doDtmf(QString);
+	void doDtmf(QString);
 
-    void doTransfer(QString, QString);
+	void doTransfer(QString, QString);
 
-    void doAnswer();
+	void doAnswer();
 
-    void doHangup();
+	void doHangup();
 
 protected:
-    KTelephoneCall *mCall = NULL;
+	KTelephoneCall *mCall = NULL;
 };
 
 #endif // KTELEPHONEMYCALL_H

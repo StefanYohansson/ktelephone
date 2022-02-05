@@ -5,27 +5,27 @@
 #include <QDebug>
 
 KTelephoneGuide::KTelephoneGuide(QWidget *parent) :
-        QDialog(parent),
-        ui(new Ui::guide) {
-    ui->setupUi(this);
+		QDialog(parent),
+		ui(new Ui::guide) {
+	ui->setupUi(this);
 
-    connect(ui->buttonBox,
-            SIGNAL(accepted()), this,
-            SLOT(accept()), Qt::UniqueConnection);
+	connect(ui->buttonBox,
+			SIGNAL(accepted()), this,
+			SLOT(accept()), Qt::UniqueConnection);
 	connect(ui->usernameEdit,
-	        SIGNAL(textEdited(const QString &)), this,
-	        SLOT(usernameChanged(const QString &)));
+			SIGNAL(textEdited(const QString &)), this,
+			SLOT(usernameChanged(const QString &)));
 
 	ui->usernameEdit->setPlaceholderText("extension@domain");
 	ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }
 
 KTelephoneGuide::~KTelephoneGuide() {
-    delete ui;
+	delete ui;
 }
 
 void KTelephoneGuide::setManager(KTelephoneManager *manager) {
-    mManager = manager;
+	mManager = manager;
 }
 
 void KTelephoneGuide::usernameChanged(const QString &text) {
@@ -45,25 +45,25 @@ void KTelephoneGuide::usernameChanged(const QString &text) {
 }
 
 void KTelephoneGuide::accept() {
-    if (ui->descriptionEdit->text() == '\0' ||
-        ui->nameEdit->text() == '\0' ||
-        ui->domainEdit->text() == '\0' ||
-        ui->usernameEdit->text() == '\0' ||
-        ui->passwordEdit->text() == '\0') {
-        return;
-    }
+	if (ui->descriptionEdit->text() == '\0' ||
+		ui->nameEdit->text() == '\0' ||
+		ui->domainEdit->text() == '\0' ||
+		ui->usernameEdit->text() == '\0' ||
+		ui->passwordEdit->text() == '\0') {
+		return;
+	}
 
-    Telephone_t telephone{
-            QString("0"),
-            ui->descriptionEdit->text(),
-            ui->nameEdit->text(),
-            ui->domainEdit->text(),
-            ui->usernameEdit->text(),
-            ui->passwordEdit->text(),
-            1
-    };
+	Telephone_t telephone{
+			QString("0"),
+			ui->descriptionEdit->text(),
+			ui->nameEdit->text(),
+			ui->domainEdit->text(),
+			ui->usernameEdit->text(),
+			ui->passwordEdit->text(),
+			1
+	};
 
-    mManager->saveTelephone(&telephone);
-    mManager->newKTelephone(telephone);
-    this->close();
+	mManager->saveTelephone(&telephone);
+	mManager->newKTelephone(telephone);
+	this->close();
 }
