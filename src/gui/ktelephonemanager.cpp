@@ -198,6 +198,19 @@ void KTelephoneManager::loadFromDatabase() {
 	}
 }
 
+bool KTelephoneManager::hasActiveAccounts() {
+	QSqlQuery query;
+	query.prepare("SELECT COUNT(id) FROM telephones WHERE active = 1;");
+
+	if (!query.exec()) {
+		qWarning() << "KTelephoneManager::hasActiveAccounts - ERROR: " << query.lastError().text();
+		return false;
+	}
+
+	query.first();
+	return query.value(0).toInt() > 0;
+}
+
 void KTelephoneManager::unloadKTelephones() {
 	const QHash<QString, KTelephone *> telephones = this->getTelephones();
 	foreach(QString item, telephones.keys()) {
@@ -289,6 +302,10 @@ void KTelephoneManager::deleteTelephone(Telephone_t *telephone) {
 		qWarning() << "KTelephoneManager::deleteTelephone - ERROR: " << query.lastError().text();
 		return;
 	}
+}
+
+void KTelephoneManager::open() {
+	this->bootstrap();
 }
 
 void KTelephoneManager::openPreferences(void) {
