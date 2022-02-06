@@ -13,17 +13,27 @@ UserAgentManager::UserAgentManager(QObject *parent)
 
 	this->start(5090);
 
-	// @TODO: import codec on CMake and remove this line
-	try {
-		ep->codecSetPriority("opus/48000", 0);
-	} catch (Error &err) {
-		qDebug() << "Cannot import opus codec";
+	auto _parent = (KTelephoneManager *) parent;
+	auto activeCodecs = _parent->getGlobal().active_codecs.split(",");
+	auto disabledCodecs = _parent->getAvailableCodecs();
+
+	int priority = 100;
+	int counter = 0;
+	foreach(auto codec, activeCodecs) {
+		try {
+			ep->codecSetPriority(codec.toStdString(), priority + counter);
+		} catch (Error &err) {
+			qDebug() << "Cannot import " << codec;
+		}
+		counter++;
 	}
 
-	try {
-		ep->codecSetPriority("G722/16000", 131);
-	} catch (Error &err) {
-		qDebug() << "Cannot import G722 codec";
+	foreach(auto codec, disabledCodecs) {
+		try {
+			ep->codecSetPriority(codec.toStdString(), 0);
+		} catch (Error &err) {
+			qDebug() << "Cannot disable " << codec;
+		}
 	}
 }
 

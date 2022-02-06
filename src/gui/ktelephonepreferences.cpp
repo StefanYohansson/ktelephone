@@ -47,9 +47,20 @@ void KTelephonePreferences::reload() {
 	ui->toolBox->hide();
 	QHash<QString, KTelephone *> mTelephones = mManager->getTelephones();
 
-			foreach(QString item, mTelephones.keys()) {
-			ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
-		}
+	foreach(QString item, mTelephones.keys()) {
+		ui->telephonesList->addItem(mTelephones[item]->mTelephone.username);
+	}
+
+	ui->codecSelector->availableListWidget()->clear();
+	ui->codecSelector->selectedListWidget()->clear();
+
+	foreach (QString codec, mManager->getAvailableCodecs()) {
+		ui->codecSelector->availableListWidget()->addItem(codec);
+	}
+
+	foreach (QString codec, mManager->getActiveCodecs()) {
+		ui->codecSelector->selectedListWidget()->addItem(codec);
+	}
 }
 
 void KTelephonePreferences::setManager(KTelephoneManager *manager) {
@@ -124,6 +135,15 @@ void KTelephonePreferences::findRingtone() {
 }
 
 void KTelephonePreferences::saveChanges() {
+	Globals_t global = mManager->getGlobal();
+
+	QStringList activeCodecs;
+	for (int i = 0; i < ui->codecSelector->selectedListWidget()->count(); i++) {
+		activeCodecs.append(ui->codecSelector->selectedListWidget()->item(i)->text());
+	}
+	global.active_codecs = activeCodecs.join(",");
+	mManager->updateGlobals(global);
+
 	if (currentTelephone == NULL) {
 		return;
 	}

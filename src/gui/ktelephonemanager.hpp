@@ -44,6 +44,11 @@ struct Telephone {
 	QString stun_server;
 };
 
+struct Globals {
+		QString active_codecs;
+};
+
+typedef struct Globals Globals_t;
 typedef struct Telephone Telephone_t;
 
 #include "uamanager.hpp"
@@ -73,12 +78,22 @@ public:
 
 	UserAgentManager *getUserAgentManager();
 
+	Globals_t getGlobal();
+
+	void updateGlobals(const Globals_t& global);
+
+	QStringList getAvailableCodecs();
+
+	QStringList getActiveCodecs();
+
 	void openPreferences();
 
 	void openAbout();
 
 private:
 	void bootstrap();
+
+	void bootstrapGlobal();
 
 	QSystemTrayIcon *trayIcon = NULL;
 	QMenu *trayIconMenu = NULL;
@@ -96,12 +111,14 @@ protected:
 	KTelephonePreferences *mPreferences = NULL;
 	KTelephoneAbout *mAbout = NULL;
 	UserAgentManager *mUAManager = NULL;
+	Globals_t global;
+
 
 	void startGuide();
 
 	void connectDatabase();
 
-	void bootstrapDatabase();
+	static void bootstrapDatabase();
 
 	void loadFromDatabase();
 
