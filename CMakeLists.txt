@@ -5,6 +5,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia)
+find_package(KF5WidgetsAddons)
 include (FindPkgConfig)
 if (PKG_CONFIG_FOUND)
   pkg_check_modules(PJSIP REQUIRED libpjproject)
@@ -39,7 +40,7 @@ qt5_wrap_ui(ktelephone_SRC src/ui/ktelephone.ui src/ui/startguide.ui src/ui/sett
 
 add_executable(ktelephone ${ktelephone_SRC})
 
-target_link_libraries(ktelephone Qt5::Widgets Qt5::Sql Qt5::Multimedia)
+target_link_libraries(ktelephone KF5::WidgetsAddons Qt5::Widgets Qt5::Sql Qt5::Multimedia)
 
 target_link_libraries(ktelephone ${PJSIP_LIBRARIES})
 

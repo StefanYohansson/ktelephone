@@ -37,6 +37,7 @@ KTelephoneManager::KTelephoneManager(QWidget *parent) :
 
 	this->connectDatabase();
 	this->bootstrapDatabase();
+	this->bootstrapGlobal();
 	mUAManager = new UserAgentManager(this);
 	this->bootstrap();
 }
@@ -52,6 +53,20 @@ KTelephoneManager::~KTelephoneManager() {
 	}
 	if (mUAManager) {
 		delete mUAManager;
+	}
+}
+
+void KTelephoneManager::bootstrapGlobal() {
+	QSqlQuery global_query;
+	global_query.prepare("SELECT active_codecs FROM config;");
+
+	if (!global_query.exec()) {
+		qWarning() << "KTelephoneManager::loadFromDatabase - ERROR: " << global_query.lastError().text();
+		return;
+	}
+
+	while (global_query.next()) {
+		global.active_codecs = global_query.value(0).toString();
 	}
 }
 
@@ -158,6 +173,21 @@ void KTelephoneManager::bootstrapDatabase() {
 			"CREATE TABLE IF NOT EXISTS telephones (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT, name TEXT, domain TEXT, username TEXT, password TEXT, active integer, should_register_startup integer, should_subscribe_presence integer, should_publish_presence integer, should_use_blf integer, should_disable_ringback_tone integer, custom_ringtone TEXT, transport integer, subscription_expiry_delay integer, keep_alive_expiry_delay integer, registration_expiry_delay integer, use_stun integer, stun_server TEXT)");
 	if (!query.isActive())
 		qWarning() << "KTelephoneManager::bootstrapDatabase - ERROR: " << query.lastError().text();
+
+	QSqlQuery global_query(
+			"CREATE TABLE IF NOT EXISTS config (id INTEGER PRIMARY KEY AUTOINCREMENT, active_codecs TEXT)");
+	if (!global_query.isActive())
+		qWarning() << "KTelephoneManager::bootstrapDatabase - ERROR: " << global_query.lastError().text();
+
+	QSqlQuery insert_global_query;
+	insert_global_query.prepare(
+			"INSERT INTO config (id, active_codecs) VALUES (1, :active_codecs)");
+	insert_global_query.bindValue(":active_codecs", "PCMU/8000/1,PCMA/8000/1,opus/48000/2");
+
+	if (!insert_global_query.exec()) {
+		qWarning() << "KTelephoneManager::bootstrapDatabase - ERROR: " << insert_global_query.lastError().text();
+		return;
+	}
 }
 
 void KTelephoneManager::loadFromDatabase() {
@@ -196,6 +226,36 @@ void KTelephoneManager::loadFromDatabase() {
 
 		this->newKTelephone(telephone);
 	}
+
+	QSqlQuery global_query;
+	global_query.prepare("SELECT active_codecs FROM config;");
+
+	if (!global_query.exec()) {
+		qWarning() << "KTelephoneManager::loadFromDatabase - ERROR: " << global_query.lastError().text();
+		return;
+	}
+
+	while (global_query.next()) {
+		global.active_codecs = global_query.value(0).toString();
+	}
+}
+
+Globals_t KTelephoneManager::getGlobal() {
+	return global;
+}
+
+void KTelephoneManager::updateGlobals(const Globals_t& _global) {
+	QSqlQuery update_global_query;
+	update_global_query.prepare(
+			"UPDATE config SET active_codecs=:active_codecs WHERE id=1");
+	update_global_query.bindValue(":active_codecs", _global.active_codecs);
+
+	if (!update_global_query.exec()) {
+		qWarning() << "KTelephoneManager::updateGlobals - ERROR: " << update_global_query.lastError().text();
+		return;
+	}
+
+	global.active_codecs = _global.active_codecs;
 }
 
 bool KTelephoneManager::hasActiveAccounts() {
@@ -212,7 +272,6 @@ bool KTelephoneManager::hasActiveAccounts() {
 }
 
 void KTelephoneManager::unloadKTelephones() {
-	const QHash<QString, KTelephone *> telephones = this->getTelephones();
 	foreach(QString item, telephones.keys()) {
 		mUAManager->removeUserAgent(item);
 	}
@@ -303,6 +362,28 @@ void KTelephoneManager::deleteTelephone(Telephone_t *telephone) {
 		return;
 	}
 }
+
+
+QStringList KTelephoneManager::getAvailableCodecs() {
+	QStringList _availableCodecs;
+	const auto _codecEnum = Endpoint::instance().codecEnum2();
+	std::for_each(_codecEnum.begin(), _codecEnum.end(), [&](const auto& item){
+		_availableCodecs.append(QString::fromStdString(item.codecId));
+	});
+
+	QStringListIterator i(this->getActiveCodecs());
+	while(i.hasNext()) {
+		_availableCodecs.removeAll(i.next());
+	}
+
+	return _availableCodecs;
+}
+
+QStringList KTelephoneManager::getActiveCodecs() {
+	QStringList active_codecs = global.active_codecs.split(",");
+	return active_codecs;
+}
+
 
 void KTelephoneManager::open() {
 	this->bootstrap();
