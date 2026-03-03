@@ -13,6 +13,13 @@ KTelephone
 If you prefer to build using Docker instead of use your local machine, just find an available `Dockerfile.*`
 and use it for the commands below (current options are: `arch`, `debian` and `ubuntu20`):
 
+``` sh
+DISTRO=fedora43 ./docker-builder.sh
+./build/run.sh
+```
+
+or run the commands one by one
+
 ```sh
 mkdir build
 
@@ -26,11 +33,13 @@ docker create \
     --name build \
     build
 
-docker cp build:/usr/src/ktelephone/build/ktelephone ./build/ktelephone
+mkdir -p build
 
-docker cp build:/usr/src/ktelephone/build/data ./build/data
+docker cp build:/export/. ./build/
 
-(cd build && ./ktelephone)
+cp -r run.sh build/
+
+(cd build && ./run.sh)
 ```
 
 ## Manually build application
