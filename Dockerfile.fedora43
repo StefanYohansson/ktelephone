@@ -5,6 +5,7 @@ RUN dnf update -y
 RUN dnf install -y \
     git cmake gcc-c++ \
     qt5-qtbase-devel qt5-qtmultimedia-devel \
+    kf5-kwidgetsaddons-devel \
     alsa-lib-devel \
     openssl-devel \
     && dnf clean all
@@ -26,6 +27,14 @@ WORKDIR /usr/src/ktelephone
 
 RUN mkdir -p build/
 WORKDIR /usr/src/ktelephone/build
-
-RUN PKG_CONFIG_PATH=/usr/lib/lib/pkgconfig/ BUILD_STATIC=1 cmake ..
+RUN PKG_CONFIG_PATH=/usr/lib/lib/pkgconfig/ \
+    BUILD_STATIC=1 \
+    CXXFLAGS="-I/usr/include/KF5/KWidgetsAddons -I/usr/include/KF5" \
+    cmake ..
 RUN make
+
+RUN mkdir -p /export && \
+    cp /usr/src/ktelephone/build/ktelephone /export/ && \
+    ldd /usr/src/ktelephone/build/ktelephone | grep "=> /" | awk '{print $3}' | \
+    xargs -I{} cp {} /export/ && \
+    cp -r /usr/src/ktelephone/build/data /export/
