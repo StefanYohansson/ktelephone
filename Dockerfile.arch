@@ -10,3 +10,8 @@ RUN mkdir -p build/
 WORKDIR /usr/src/ktelephone/build
 RUN CMAKE_C_COMPILER="/usr/bin/gcc" CMAKE_CXX_COMPILER="/usr/bin/g++" cmake ..
 RUN make
+RUN mkdir -p /export && \
+    cp /usr/src/ktelephone/build/ktelephone /export/ && \
+    ldd /usr/src/ktelephone/build/ktelephone | grep "=> /" | awk '{print $3}' | \
+    xargs -I{} cp {} /export/ && \
+    cp -r /usr/src/ktelephone/build/data /export/

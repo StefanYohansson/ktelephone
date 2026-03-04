@@ -15,3 +15,8 @@ RUN mkdir -p build/
 WORKDIR /usr/src/ktelephone/build
 RUN PKG_CONFIG_PATH=/usr/lib/lib/pkgconfig/ BUILD_STATIC=1 cmake ..
 RUN make
+RUN mkdir -p /export && \
+    cp /usr/src/ktelephone/build/ktelephone /export/ && \
+    ldd /usr/src/ktelephone/build/ktelephone | grep "=> /" | awk '{print $3}' | \
+    xargs -I{} cp {} /export/ && \
+    cp -r /usr/src/ktelephone/build/data /export/
